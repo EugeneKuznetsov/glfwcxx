@@ -9,4 +9,7 @@ include(BuildSettings)
 include(CompilerSettings)
 include(Packages)
 
+add_subdirectory(src)
+
 enable_testing()
+add_subdirectory(tests)

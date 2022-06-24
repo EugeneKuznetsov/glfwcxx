@@ -25,7 +25,7 @@ class GLFWCXX(ConanFile):
         cmakelists_txt = Path(self.recipe_folder) / "CMakeLists.txt"
         if cmakelists_txt.exists():
             content = tools.load(cmakelists_txt)
-            version_regex = "project[\S\s]*VERSION[\S\s](\d+\.\d+\.\d+)"
+            version_regex = "project[\S\s]*VERSION[\S\s](\d+\.\d+\.\d+\.\d+)"
             return re.findall(version_regex, content, re.MULTILINE)[0]
         return None
 
