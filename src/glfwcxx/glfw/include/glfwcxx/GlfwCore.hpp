@@ -9,9 +9,11 @@ class GlfwCore final {
     GlfwCore(GlfwCore&&) = delete;
     GlfwCore& operator=(GlfwCore&&) = delete;
 
+    explicit GlfwCore();
+    ~GlfwCore();
+
 public:
-    explicit GlfwCore() = default;
-    ~GlfwCore() = default;
+    static auto init() -> GlfwCore&;
 };
 
 }  // namespace glfwcxx
