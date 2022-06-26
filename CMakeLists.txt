@@ -8,6 +8,8 @@ project(
 include(BuildSettings)
 include(CompilerSettings)
 include(Packages)
+include(GNUInstallDirs)
+include(GenerateExportHeader)
 
 add_subdirectory(src)
 

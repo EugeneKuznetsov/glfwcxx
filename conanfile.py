@@ -34,6 +34,23 @@ class GLFWCXX(ConanFile):
             self.cmake.build()
         if self.should_test is True:
             self.cmake.test(output_on_failure=True)
+    
+    def package(self):
+        self.cmake.install()
+
+    def package_info(self):
+        self.cpp_info.names["cmake_find_package"] = "glfwcxx"
+
+        self.cpp_info.components["core"].names["cmake_find_package"] = "core"
+        self.cpp_info.components["core"].libs = ["core"]
+        self.cpp_info.components["core"].requires = ["opengl::opengl", "glfw::glfw"]
+
+        self.cpp_info.components["core-stub"].names["cmake_find_package"] = "core-stub"
+        self.cpp_info.components["core-stub"].libs = ["core-stub"]
+        self.cpp_info.components["core-stub"].requires = ["glfwstub"]
+
+        self.cpp_info.components["glfwstub"].names["cmake_find_package"] = "glfwstub"
+        self.cpp_info.components["glfwstub"].libs = ["glfwstub"]
 
     @property
     def cmake(self):
