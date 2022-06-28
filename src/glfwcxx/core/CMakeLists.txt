@@ -1,21 +1,19 @@
 set(CURRENT_TARGET core)
 set(CURRENT_STUB_TARGET ${CURRENT_TARGET}-stub)
 
-set(SOURCES Core.cpp)
+set(SOURCES Core.cpp CoreInitHints.cpp)
 
 add_library(${CURRENT_TARGET} STATIC ${SOURCES})
-target_include_directories(
-    ${CURRENT_TARGET}
-    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include/core>)
+target_include_directories(${CURRENT_TARGET}
+                           PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include/core>)
 target_link_libraries(${CURRENT_TARGET} PRIVATE $<BUILD_INTERFACE:glfw::glfw>)
 
 set(STUB_TARGET_SOURCES CoreStub.cpp)
 
 add_library(${CURRENT_STUB_TARGET} STATIC ${SOURCES} ${STUB_TARGET_SOURCES})
 target_include_directories(
-    ${CURRENT_STUB_TARGET}
-    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include/core>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include/stub>)
+    ${CURRENT_STUB_TARGET} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include/core>
+                                  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include/stub>)
 target_link_libraries(${CURRENT_STUB_TARGET} PRIVATE $<BUILD_INTERFACE:glfwstub>)
 target_compile_definitions(${CURRENT_STUB_TARGET} PUBLIC GLFWCXX_STUB)
 
@@ -31,5 +29,7 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     INCLUDES
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/core/glfwcxx DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/stub/glfwcxx DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/core/glfwcxx
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/stub/glfwcxx
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

@@ -48,7 +48,8 @@ class GLFWCXX(ConanFile):
         self.cpp_info.components["core-stub"].names["cmake_find_package"] = "core-stub"
         self.cpp_info.components["core-stub"].libs = ["core-stub"]
         self.cpp_info.components["core-stub"].defines = ["GLFWCXX_STUB"]
-        # self.cpp_info.components["core-stub"].requires = ["glfwstub"]
+        
+        self.deps_cpp_info["glfw"].include_paths.clear()
 
     @property
     def cmake(self):

@@ -4,6 +4,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include "glfwcxx/CoreInitHints.hpp"
+
 namespace glfwcxx {
 
 Core::Core()
@@ -20,6 +22,11 @@ Core::~Core()
 auto Core::init() -> std::unique_ptr<Core>
 {
     return std::unique_ptr<Core>{new Core{}};
+}
+
+auto Core::init(const CoreInitHints& /*hints*/) -> std::unique_ptr<Core>
+{
+    return init();
 }
 
 }  // namespace glfwcxx

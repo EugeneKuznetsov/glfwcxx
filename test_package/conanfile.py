@@ -28,5 +28,6 @@ class GLFWCXXConsumer(ConanFile):
     def cmake(self):
         if not hasattr(self, "_cmake"):
             self._cmake = CMake(self, generator="Ninja")
+            self._cmake.definitions["CMAKE_EXPORT_COMPILE_COMMANDS"] = True
             self._cmake.configure()
         return self._cmake
