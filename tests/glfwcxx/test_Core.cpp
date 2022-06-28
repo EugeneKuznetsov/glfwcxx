@@ -19,13 +19,13 @@ TEST(glfwcxx_core, successfully_initialized_after_call_to_init)
 TEST(glfwcxx_core, successfully_initialized_with_empty_init_hints)
 {
     glfwcxx::CoreStub::reset();
-    ASSERT_NO_THROW(glfwcxx::Core::init(glfwcxx::CoreInitHints{}));
+    ASSERT_NO_THROW(glfwcxx::Core::init({}));
     EXPECT_FALSE(glfwcxx::CoreStub::was_inited_with_joystick_hat_buttons());
     EXPECT_FALSE(glfwcxx::CoreStub::was_inited_with_cocoa_menubar());
     EXPECT_FALSE(glfwcxx::CoreStub::was_inited_with_cocoa_chdir_resources());
 }
 
-TEST(glfwcxx_core, successfully_initialized_with_joystick_and_menubar_init_hints)
+TEST(glfwcxx_core, successfully_initialized_with_joystick_and_cocoa_menubar_init_hints)
 {
     glfwcxx::CoreStub::reset();
     ASSERT_NO_THROW(glfwcxx::Core::init(glfwcxx::CoreInitHints{}.with_joystick_hat_buttons().with_cocoa_menubar()));
@@ -40,5 +40,14 @@ TEST(glfwcxx_core, successfully_initialized_with_cocoa_chdir_resources)
     ASSERT_NO_THROW(glfwcxx::Core::init(glfwcxx::CoreInitHints{}.with_cocoa_chdir_resources()));
     EXPECT_FALSE(glfwcxx::CoreStub::was_inited_with_joystick_hat_buttons());
     EXPECT_FALSE(glfwcxx::CoreStub::was_inited_with_cocoa_menubar());
+    EXPECT_TRUE(glfwcxx::CoreStub::was_inited_with_cocoa_chdir_resources());
+}
+
+TEST(glfwcxx_core, successfully_initialized_with_all_init_hints)
+{
+    glfwcxx::CoreStub::reset();
+    ASSERT_NO_THROW(glfwcxx::Core::init({true, true, true}));
+    EXPECT_TRUE(glfwcxx::CoreStub::was_inited_with_joystick_hat_buttons());
+    EXPECT_TRUE(glfwcxx::CoreStub::was_inited_with_cocoa_menubar());
     EXPECT_TRUE(glfwcxx::CoreStub::was_inited_with_cocoa_chdir_resources());
 }

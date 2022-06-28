@@ -8,7 +8,7 @@
 
 namespace glfwcxx {
 
-class CoreInitHints;
+struct CoreInitHints;
 
 class Core final {
     Core(const Core&) = delete;

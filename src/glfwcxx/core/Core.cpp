@@ -24,8 +24,14 @@ auto Core::init() -> std::unique_ptr<Core>
     return std::unique_ptr<Core>{new Core{}};
 }
 
-auto Core::init(const CoreInitHints& /*hints*/) -> std::unique_ptr<Core>
+auto Core::init(const CoreInitHints& hints) -> std::unique_ptr<Core>
 {
+    if (hints.joystick_hat_buttons)
+        glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_TRUE);
+    if (hints.cocoa_chdir_resources)
+        glfwInitHint(GLFW_COCOA_CHDIR_RESOURCES, GLFW_TRUE);
+    if (hints.cocoa_menubar)
+        glfwInitHint(GLFW_COCOA_MENUBAR, GLFW_TRUE);
     return init();
 }
 
