@@ -14,6 +14,11 @@ auto glfwInitHint(int hint, int value) -> void
     glfwcxx::CoreStub::init_hints_[hint] = value;
 }
 
+auto glfwGetError(const char** /*description*/) -> int
+{
+    return GLFW_NO_ERROR;
+}
+
 namespace glfwcxx {
 
 int CoreStub::init_return_value_ = GLFW_TRUE;

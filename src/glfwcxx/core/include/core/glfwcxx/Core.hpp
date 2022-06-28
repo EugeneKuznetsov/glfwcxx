@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 #ifdef GLFWCXX_STUB
 #include <glfwcxx/CoreStub.hpp>
@@ -24,6 +25,9 @@ public:
 
     static auto init() -> std::unique_ptr<Core>;
     static auto init(const CoreInitHints& hints) -> std::unique_ptr<Core>;
+
+private:
+    auto error_description() const -> std::string;
 };
 
 }  // namespace glfwcxx

@@ -10,8 +10,10 @@ namespace glfwcxx {
 
 Core::Core()
 {
+    using namespace std::string_literals;
+
     if (GLFW_FALSE == glfwInit())
-        throw std::runtime_error("Failed to initialize GLFW");
+        throw std::runtime_error("Failed to initialize GLFW: "s + error_description());
 }
 
 Core::~Core()
@@ -33,6 +35,14 @@ auto Core::init(const CoreInitHints& hints) -> std::unique_ptr<Core>
     if (hints.cocoa_menubar)
         glfwInitHint(GLFW_COCOA_MENUBAR, GLFW_TRUE);
     return init();
+}
+
+auto Core::error_description() const -> std::string
+{
+    const char* description{nullptr};
+    if (GLFW_NO_ERROR != glfwGetError(&description))
+        return std::string{description};
+    return "";
 }
 
 }  // namespace glfwcxx
