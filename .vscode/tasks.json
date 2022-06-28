@@ -1,0 +1,48 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "conan install",
+            "type": "shell",
+            "command": "conan install . --install-folder=build",
+            "problemMatcher": [],
+            "group": "none"
+        },
+        {
+            "label": "conan build",
+            "type": "shell",
+            "command": "conan build . --build-folder=build --configure --build",
+            "dependsOn": [
+                "conan install"
+            ],
+            "problemMatcher": [
+                "$msCompile",
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "conan test",
+            "type": "shell",
+            "command": "conan build . --build-folder=build --test",
+            "dependsOn": [
+                "conan build"
+            ],
+            "problemMatcher": [
+                "$msCompile",
+                "$gcc"
+            ],
+            "group": "test"
+        },
+        {
+            "label": "conan create package",
+            "type": "shell",
+            "command": "conan create .",
+            "problemMatcher": [
+                "$msCompile",
+                "$gcc"
+            ],
+            "group": "build"
+        }
+    ]
+}
