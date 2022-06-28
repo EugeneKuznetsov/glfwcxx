@@ -18,6 +18,8 @@ jobs:
         build_type: ["Debug", "Release"]
     env:
       DISPLAY: ":99"
+      CONAN_USERNAME: "gamedev"
+      CONAN_CHANNEL: "stable"
     steps:
       - uses: actions/checkout@v2
 
@@ -59,6 +61,9 @@ jobs:
         compiler:
           - { name: "Visual Studio 16", compiler: "Visual Studio", version: 16 }
         build_type: ["Debug", "Release"]
+    env:
+      CONAN_USERNAME: "gamedev"
+      CONAN_CHANNEL: "stable"
     steps:
       - uses: actions/checkout@v2
 
