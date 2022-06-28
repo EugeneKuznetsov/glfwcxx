@@ -1,4 +1,4 @@
-#include "glfwcxx/GlfwCore.hpp"
+#include "glfwcxx/Core.hpp"
 
 #include <stdexcept>
 
@@ -6,21 +6,20 @@
 
 namespace glfwcxx {
 
-GlfwCore::GlfwCore()
+Core::Core()
 {
     if (GLFW_FALSE == glfwInit())
         throw std::runtime_error("Failed to initialize GLFW");
 }
 
-GlfwCore::~GlfwCore()
+Core::~Core()
 {
     glfwTerminate();
 }
 
-auto GlfwCore::init() -> GlfwCore&
+auto Core::init() -> std::unique_ptr<Core>
 {
-    static GlfwCore glfw;
-    return glfw;
+    return std::unique_ptr<Core>{new Core{}};
 }
 
 }  // namespace glfwcxx

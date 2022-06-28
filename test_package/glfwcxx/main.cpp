@@ -1,9 +1,9 @@
 #include <cstdlib>
 
-#include <glfwcxx/GlfwCore.hpp>
+#include <glfwcxx/Core.hpp>
 
 auto main() -> int
 {
-    glfwcxx::GlfwCore::init();
+    glfwcxx::Core::init();
     return EXIT_SUCCESS;
 }

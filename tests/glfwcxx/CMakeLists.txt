@@ -1,1 +1,1 @@
-add_test_suite(test_GlfwCore $<BUILD_INTERFACE:core-stub>)
+add_test_suite(test_Core $<BUILD_INTERFACE:core-stub>)

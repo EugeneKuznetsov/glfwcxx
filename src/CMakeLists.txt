@@ -1,2 +1,2 @@
-add_subdirectory(glfwcxx/glfw)
+add_subdirectory(glfwcxx/core)
 add_subdirectory(glfwstub)

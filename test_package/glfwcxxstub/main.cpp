@@ -1,11 +1,16 @@
 #include <cstdlib>
+#include <stdexcept>
 
-#include <glfwcxx/GlfwCore.hpp>
-#include <GLFW/glfw3.h>
+#include <glfwcxx/Core.hpp>
 
 auto main() -> int
 {
-    glfwcxx::Stub::glfwInit = GLFW_TRUE;
-    glfwcxx::GlfwCore::init();
-    return EXIT_SUCCESS;
+    glfwcxx::CoreStub::init_failure();
+    try {
+        auto glfw = glfwcxx::Core::init();
+    }
+    catch (const std::runtime_error&) {
+        return EXIT_SUCCESS;
+    }
+    return EXIT_FAILURE;
 }
