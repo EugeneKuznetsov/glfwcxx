@@ -10,7 +10,7 @@ class GLFWCXX(ConanFile):
     author = "Eugene Kuznetsov"
     license = "MIT"
     description = "C++17 wrapper of GLFW"
-    url = "https://github.com/EugeneKuznetsov/glfwcxx"
+    url = "git@github.com:EugeneKuznetsov/glfwcxx.git"
     scm = {"type": "git", "url": "auto", "revision": "auto"}
     generators = "cmake_find_package"
     settings = "os", "compiler", "arch", "build_type"
