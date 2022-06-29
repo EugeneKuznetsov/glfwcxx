@@ -55,20 +55,17 @@ TEST_F(glfwcxx_window, successfully_makes_context_current_after_window_creation)
     ASSERT_NO_THROW(window->make_context_current());
 }
 
-TEST_F(glfwcxx_window, successfully_created_with_predefined_default_window_hints)
+TEST_F(glfwcxx_window, successfully_created_with_predefined_default_window_hints_without_underlying_call)
 {
     ASSERT_NO_THROW(glfwcxx::Window::create_window({123, 456}, "abc"));
     EXPECT_TRUE(glfwcxx::WindowStub::created_window_with_arguments(123, 456, "abc", nullptr, nullptr));
-    ASSERT_EQ(glfwcxx::WindowStub::window_hint_applied_count(), 3);
-    EXPECT_TRUE(glfwcxx::WindowStub::window_hint_applied(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE));
-    EXPECT_TRUE(glfwcxx::WindowStub::window_hint_applied(GLFW_CONTEXT_VERSION_MAJOR, 4));
-    EXPECT_TRUE(glfwcxx::WindowStub::window_hint_applied(GLFW_CONTEXT_VERSION_MINOR, 0));
+    ASSERT_EQ(glfwcxx::WindowStub::window_hint_applied_count(), 0);
 }
 
-TEST_F(glfwcxx_window, successfully_created_with_opengl_any_profile_window_hint)
+TEST_F(glfwcxx_window, successfully_created_with_opengl_any_profile_window_hint_without_underlying_call)
 {
     const auto& profile = glfwcxx::OpenGLProfile::ANY_PROFILE;
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_profile(profile), {{GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_profile(profile), {});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_opengl_core_profile_window_hint)
@@ -85,5 +82,5 @@ TEST_F(glfwcxx_window, successfully_created_with_opengl_compat_profile_window_hi
 
 TEST_F(glfwcxx_window, successfully_created_with_context_version_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_version(3, 2), {{GLFW_CONTEXT_VERSION_MAJOR, 3}, {GLFW_CONTEXT_VERSION_MINOR, 2}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_version({3, 2}), {{GLFW_CONTEXT_VERSION_MAJOR, 3}, {GLFW_CONTEXT_VERSION_MINOR, 2}});
 }

@@ -2,13 +2,15 @@
 
 namespace glfwcxx {
 
-auto WindowHints::opengl_profile(const OpenGLProfile& /*profile*/) -> WindowHints&
+auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
+    profile = value;
     return *this;
 }
 
-auto WindowHints::context_version(const int /*major*/, const int /*minor*/) -> WindowHints&
+auto WindowHints::context_version(const ContextVersion& value) -> WindowHints&
 {
+    version = value;
     return *this;
 }
 
