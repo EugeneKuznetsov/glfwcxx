@@ -22,8 +22,8 @@ class Core final {
 public:
     ~Core();
 
-    static auto init() -> std::unique_ptr<Core>;
-    static auto init(const CoreInitHints& hints) -> std::unique_ptr<Core>;
+    [[nodiscard]] static auto init() -> std::unique_ptr<Core>;
+    [[nodiscard]] static auto init(const CoreInitHints& hints) -> std::unique_ptr<Core>;
 };
 
 }  // namespace glfwcxx
