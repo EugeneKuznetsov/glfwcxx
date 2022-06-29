@@ -11,7 +11,7 @@ public:
 
     auto CREATE_AND_EXPECT(const glfwcxx::WindowHints& actual_hints, const std::list<std::pair<int, int>>& expected_hints) -> void
     {
-        EXPECT_NO_THROW(glfwcxx::Window::create_window({800, 600}, "", actual_hints));
+        EXPECT_NO_THROW(static_cast<void>(glfwcxx::Window::create_window({800, 600}, "", actual_hints)));
         EXPECT_EQ(glfwcxx::WindowStub::window_hint_applied_count(), expected_hints.size());
         for (const auto& expected_hint : expected_hints)
             EXPECT_TRUE(glfwcxx::WindowStub::window_hint_applied(expected_hint.first, expected_hint.second));
@@ -29,7 +29,7 @@ static constexpr int GLFW_OPENGL_COMPAT_PROFILE = 0x00032002;
 TEST_F(glfwcxx_window, throws_runtime_error_when_cannot_be_created_due_to_error)
 {
     glfwcxx::WindowStub::create_window_failure();
-    ASSERT_THROW(glfwcxx::Window::create_window({800, 600}, ""), std::runtime_error);
+    ASSERT_THROW(static_cast<void>(glfwcxx::Window::create_window({800, 600}, "")), std::runtime_error);
 }
 
 TEST_F(glfwcxx_window, throws_runtime_error_when_context_cannot_be_made_current_due_to_error)
@@ -57,7 +57,7 @@ TEST_F(glfwcxx_window, successfully_makes_context_current_after_window_creation)
 
 TEST_F(glfwcxx_window, successfully_created_with_predefined_default_window_hints_without_underlying_call)
 {
-    ASSERT_NO_THROW(glfwcxx::Window::create_window({123, 456}, "abc"));
+    ASSERT_NO_THROW(static_cast<void>(glfwcxx::Window::create_window({123, 456}, "abc")));
     EXPECT_TRUE(glfwcxx::WindowStub::created_window_with_arguments(123, 456, "abc", nullptr, nullptr));
     ASSERT_EQ(glfwcxx::WindowStub::window_hint_applied_count(), 0);
 }

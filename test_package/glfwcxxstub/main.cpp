@@ -3,6 +3,7 @@
 
 #include <glfwcxx/Core.hpp>
 #include <glfwcxx/CoreInitHints.hpp>
+#include <glfwcxx/Window.hpp>
 
 auto main() -> int
 {

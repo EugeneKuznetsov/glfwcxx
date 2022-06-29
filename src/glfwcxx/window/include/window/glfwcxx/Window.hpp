@@ -28,8 +28,9 @@ class Window {
     explicit Window(const WindowSize& size, const std::string& title);
 
 public:
-    static auto create_window(const WindowSize& size, const std::string& title) -> std::unique_ptr<Window>;
-    static auto create_window(const WindowSize& size, const std::string& title, const WindowHints& hints) -> std::unique_ptr<Window>;
+    [[nodiscard]] static auto create_window(const WindowSize& size, const std::string& title) -> std::unique_ptr<Window>;
+    [[nodiscard]] static auto create_window(const WindowSize& size, const std::string& title, const WindowHints& hints)
+        -> std::unique_ptr<Window>;
 
 public:
     auto make_context_current() -> void;
