@@ -25,7 +25,7 @@ class GLFWCXX(ConanFile):
         cmakelists_txt = Path(self.recipe_folder) / "CMakeLists.txt"
         if cmakelists_txt.exists():
             content = tools.load(cmakelists_txt)
-            version_regex = "project[\S\s]*VERSION[\S\s](\d+\.\d+\.\d+\.\d+)"
+            version_regex = "project[\S\s]*VERSION[\S\s](\d+\.\d+\.\d+)"
             return re.findall(version_regex, content, re.MULTILINE)[0]
         return None
 
@@ -46,6 +46,9 @@ class GLFWCXX(ConanFile):
 
         self.add_component(name="core", requires=["common"])
         self.add_component(name="core-stub", requires=["common-stub"], defines=["GLFWCXX_STUB"])
+
+        self.add_component(name="window", requires=["common"])
+        self.add_component(name="window-stub", requires=["common-stub"], defines=["GLFWCXX_STUB"])
 
         self.deps_cpp_info["glfw"].include_paths.clear()
 
