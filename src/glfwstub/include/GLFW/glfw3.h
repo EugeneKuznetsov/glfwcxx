@@ -10,7 +10,16 @@ static constexpr int GLFW_COCOA_MENUBAR = 0x00051002;
 static constexpr int GLFW_NO_ERROR = 0;
 static constexpr int GLFW_NOT_INITIALIZED = 0x00010001;
 
+extern struct GLFWmonitor;
+extern struct GLFWwindow;
+
+extern auto glfwGetError(const char** description) -> int;
+
 extern auto glfwInit() -> int;
 extern auto glfwTerminate() -> void;
 extern auto glfwInitHint(int hint, int value) -> void;
-extern auto glfwGetError(const char** description) -> int;
+
+extern auto glfwCreateWindow(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> GLFWwindow*;
+extern auto glfwDestroyWindow(GLFWwindow* window) -> void;
+extern auto glfwMakeContextCurrent(GLFWwindow* window) -> void;
+extern auto glfwWindowHint(int hint, int value) -> void;
