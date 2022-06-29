@@ -51,3 +51,12 @@ TEST(glfwcxx_core, successfully_initialized_with_all_init_hints)
     EXPECT_TRUE(glfwcxx::CoreStub::was_inited_with_cocoa_menubar());
     EXPECT_TRUE(glfwcxx::CoreStub::was_inited_with_cocoa_chdir_resources());
 }
+
+TEST(glfwcxx_core, successfully_deinitialized_when_out_of_scope)
+{
+    glfwcxx::CoreStub::reset();
+    {
+        ASSERT_NO_THROW(glfwcxx::Core::init({true, true, true}));
+    }
+    EXPECT_TRUE(glfwcxx::CoreStub::was_deinitialized());
+}
