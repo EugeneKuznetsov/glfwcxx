@@ -26,16 +26,15 @@ static constexpr int GLFW_NO_WINDOW_CONTEXT = 0x0001000A;
 const auto glfwcxx_common_errors_test_values = testing::Values(
     std::make_tuple(std::make_pair(GLFW_NO_ERROR, ""), std::make_pair(glfwcxx::Error::NO_ERROR, "")),
     std::make_tuple(std::make_pair(GLFW_NOT_INITIALIZED, "err1"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err1")),
-    std::make_tuple(std::make_pair(GLFW_NO_CURRENT_CONTEXT, "err2"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err2")),
-    std::make_tuple(std::make_pair(GLFW_INVALID_ENUM, "err3"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err3")),
-    std::make_tuple(std::make_pair(GLFW_INVALID_VALUE, "err4"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err4")),
-    std::make_tuple(std::make_pair(GLFW_OUT_OF_MEMORY, "err5"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err5")),
-    std::make_tuple(std::make_pair(GLFW_API_UNAVAILABLE, "err6"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err6")),
-    std::make_tuple(std::make_pair(GLFW_VERSION_UNAVAILABLE, "err7"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err7")),
-    std::make_tuple(std::make_pair(GLFW_PLATFORM_ERROR, "err8"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err8")),
-    std::make_tuple(std::make_pair(GLFW_PLATFORM_ERROR, "err9"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err9")),
-    std::make_tuple(std::make_pair(GLFW_FORMAT_UNAVAILABLE, "err10"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err10")),
-    std::make_tuple(std::make_pair(GLFW_NO_WINDOW_CONTEXT, "err11"), std::make_pair(glfwcxx::Error::NOT_INITIALIZED, "err11")));
+    std::make_tuple(std::make_pair(GLFW_NO_CURRENT_CONTEXT, "err2"), std::make_pair(glfwcxx::Error::NO_CURRENT_CONTEXT, "err2")),
+    std::make_tuple(std::make_pair(GLFW_INVALID_ENUM, "err3"), std::make_pair(glfwcxx::Error::INVALID_ENUM, "err3")),
+    std::make_tuple(std::make_pair(GLFW_INVALID_VALUE, "err4"), std::make_pair(glfwcxx::Error::INVALID_VALUE, "err4")),
+    std::make_tuple(std::make_pair(GLFW_OUT_OF_MEMORY, "err5"), std::make_pair(glfwcxx::Error::OUT_OF_MEMORY, "err5")),
+    std::make_tuple(std::make_pair(GLFW_API_UNAVAILABLE, "err6"), std::make_pair(glfwcxx::Error::API_UNAVAILABLE, "err6")),
+    std::make_tuple(std::make_pair(GLFW_VERSION_UNAVAILABLE, "err7"), std::make_pair(glfwcxx::Error::VERSION_UNAVAILABLE, "err7")),
+    std::make_tuple(std::make_pair(GLFW_PLATFORM_ERROR, "err8"), std::make_pair(glfwcxx::Error::PLATFORM_ERROR, "err8")),
+    std::make_tuple(std::make_pair(GLFW_FORMAT_UNAVAILABLE, "err9"), std::make_pair(glfwcxx::Error::FORMAT_UNAVAILABLE, "err9")),
+    std::make_tuple(std::make_pair(GLFW_NO_WINDOW_CONTEXT, "err10"), std::make_pair(glfwcxx::Error::NO_WINDOW_CONTEXT, "err10")));
 
 INSTANTIATE_TEST_SUITE_P(, glfwcxx_common_errors, glfwcxx_common_errors_test_values);
 
