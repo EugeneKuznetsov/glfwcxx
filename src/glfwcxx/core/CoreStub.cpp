@@ -7,27 +7,27 @@ auto glfwInit() -> int
     return glfwcxx::CoreStub::init_return_value_;
 }
 
-auto glfwTerminate() -> void {}
+auto glfwTerminate() -> void
+{
+    glfwcxx::CoreStub::deinitialized_ = true;
+}
 
 auto glfwInitHint(int hint, int value) -> void
 {
     glfwcxx::CoreStub::init_hints_[hint] = value;
 }
 
-auto glfwGetError(const char** /*description*/) -> int
-{
-    return GLFW_NO_ERROR;
-}
-
 namespace glfwcxx {
 
 int CoreStub::init_return_value_ = GLFW_TRUE;
 init_hints_map CoreStub::init_hints_ = {};
+bool CoreStub::deinitialized_ = false;
 
 auto CoreStub::reset() -> void
 {
     init_return_value_ = GLFW_TRUE;
     init_hints_.clear();
+    deinitialized_ = false;
 }
 
 auto CoreStub::init_failure() -> void
@@ -59,6 +59,11 @@ auto CoreStub::was_inited_with_cocoa_menubar(const int and_the_value_was /*= GLF
     if (init_hints_.cend() == init_hints_.find(GLFW_COCOA_MENUBAR))
         return false;
     return init_hints_[GLFW_COCOA_MENUBAR] == and_the_value_was;
+}
+
+auto CoreStub::was_deinitialized() -> bool
+{
+    return deinitialized_;
 }
 
 }  // namespace glfwcxx

@@ -1,6 +1,6 @@
-set(TARGET_NAME core)
-set(SOURCES Core.cpp CoreInitHints.cpp)
-set(STUB_SOURCES CoreStub.cpp)
+set(TARGET_NAME window)
+set(SOURCES Window.cpp WindowHints.cpp)
+set(STUB_SOURCES WindowStub.cpp)
 
 add_glfwcxx_target(
     NAME

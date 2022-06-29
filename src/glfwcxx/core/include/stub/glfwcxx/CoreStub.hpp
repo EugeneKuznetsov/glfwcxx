@@ -3,6 +3,7 @@
 #include <unordered_map>
 
 extern auto glfwInit() -> int;
+extern auto glfwTerminate() -> void;
 extern auto glfwInitHint(int hint, int value) -> void;
 
 namespace glfwcxx {
@@ -20,11 +21,15 @@ public:
     static auto was_inited_with_cocoa_chdir_resources(const int and_the_value_was = 1) -> bool;
     static auto was_inited_with_cocoa_menubar(const int and_the_value_was = 1) -> bool;
 
+    static auto was_deinitialized() -> bool;
+
 private:
     static int init_return_value_;
     static init_hints_map init_hints_;
+    static bool deinitialized_;
 
     friend auto ::glfwInit() -> int;
+    friend auto ::glfwTerminate() -> void;
     friend auto ::glfwInitHint(int hint, int value) -> void;
 };
 

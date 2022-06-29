@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <string>
 
 #ifdef GLFWCXX_STUB
 #include <glfwcxx/CoreStub.hpp>
@@ -23,11 +22,8 @@ class Core final {
 public:
     ~Core();
 
-    static auto init() -> std::unique_ptr<Core>;
-    static auto init(const CoreInitHints& hints) -> std::unique_ptr<Core>;
-
-private:
-    auto error_description() const -> std::string;
+    [[nodiscard]] static auto init() -> std::unique_ptr<Core>;
+    [[nodiscard]] static auto init(const CoreInitHints& hints) -> std::unique_ptr<Core>;
 };
 
 }  // namespace glfwcxx
