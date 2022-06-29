@@ -15,7 +15,7 @@ class GLFWCXX(ConanFile):
     generators = "cmake_find_package"
     settings = "os", "compiler", "arch", "build_type"
     tool_requires = "cmake/[>3.20.x]", "ninja/[^1.11.x]", "gtest/[~1.11.x]"
-    requires = "opengl/system", "glfw/3.3.7"
+    requires = "glfw/3.3.7"
 
     def __init__(self, output, runner, display_name="", user=None, channel=None):
         super().__init__(output, runner, display_name=display_name, user=user, channel=channel)
@@ -41,15 +41,19 @@ class GLFWCXX(ConanFile):
     def package_info(self):
         self.cpp_info.names["cmake_find_package"] = "glfwcxx"
 
-        self.cpp_info.components["core"].names["cmake_find_package"] = "core"
-        self.cpp_info.components["core"].libs = ["core"]
-        self.cpp_info.components["core"].requires = ["opengl::opengl", "glfw::glfw"]
+        self.add_component(name="common", requires=["glfw::glfw"])
+        self.add_component(name="common-stub", defines=["GLFWCXX_STUB"])
 
-        self.cpp_info.components["core-stub"].names["cmake_find_package"] = "core-stub"
-        self.cpp_info.components["core-stub"].libs = ["core-stub"]
-        self.cpp_info.components["core-stub"].defines = ["GLFWCXX_STUB"]
-        
+        self.add_component(name="core", requires=["common"])
+        self.add_component(name="core-stub", requires=["common-stub"], defines=["GLFWCXX_STUB"])
+
         self.deps_cpp_info["glfw"].include_paths.clear()
+
+    def add_component(self, name, requires = [], defines = []):
+        self.cpp_info.components[name].names["cmake_find_package"] = name
+        self.cpp_info.components[name].libs = [name]
+        self.cpp_info.components[name].requires = requires
+        self.cpp_info.components[name].defines = defines
 
     @property
     def cmake(self):
