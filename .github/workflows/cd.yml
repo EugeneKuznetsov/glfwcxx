@@ -20,6 +20,7 @@ jobs:
       DISPLAY: ":99"
       CONAN_USERNAME: "gamedev"
       CONAN_CHANNEL: "stable"
+      CONAN_REVISIONS_ENABLED: "1"
     steps:
       - uses: actions/checkout@v2
 
@@ -64,6 +65,7 @@ jobs:
     env:
       CONAN_USERNAME: "gamedev"
       CONAN_CHANNEL: "stable"
+      CONAN_REVISIONS_ENABLED: "1"
     steps:
       - uses: actions/checkout@v2
 
