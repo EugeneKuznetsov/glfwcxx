@@ -19,7 +19,6 @@ function(add_glfwcxx_target)
     set(CURRENT_STUB_TARGET ${CURRENT_TARGET}-stub)
     add_library(${CURRENT_STUB_TARGET} STATIC ${ARG_SOURCES} ${ARG_STUB_SOURCES})
     add_library(glfwcxx::${CURRENT_STUB_TARGET} ALIAS ${CURRENT_STUB_TARGET})
-    target_compile_definitions(${CURRENT_STUB_TARGET} PUBLIC GLFWCXX_STUB)
     target_include_directories(
         ${CURRENT_STUB_TARGET}
         PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include/${ARG_NAME}>

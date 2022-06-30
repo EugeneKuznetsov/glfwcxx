@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "glfwcxx/Common.hpp"
+#include <glfwcxx/CommonStub.hpp>
 
 class glfwcxx_common_errors
     : public testing::TestWithParam<std::tuple<std::pair<int, std::string>, std::pair<glfwcxx::Error, std::string>>> {

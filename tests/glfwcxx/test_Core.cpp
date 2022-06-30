@@ -2,6 +2,7 @@
 
 #include "glfwcxx/Core.hpp"
 #include "glfwcxx/CoreInitHints.hpp"
+#include <glfwcxx/CoreStub.hpp>
 
 class glfwcxx_core : public testing::Test {
 public:
