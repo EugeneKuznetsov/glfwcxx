@@ -3,7 +3,8 @@
 
 #include <gtest/gtest.h>
 
-#include "glfwcxx/Window.hpp"
+#include <glfwcxx/Window.hpp>
+#include <glfwcxx/WindowStub.hpp>
 
 class glfwcxx_window : public testing::Test {
 public:

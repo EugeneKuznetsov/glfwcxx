@@ -20,4 +20,9 @@ struct WindowHints {
     auto context_version(const ContextVersion& value) -> WindowHints&;
 };
 
+struct WindowSize {
+    int width;
+    int height;
+};
+
 }  // namespace glfwcxx

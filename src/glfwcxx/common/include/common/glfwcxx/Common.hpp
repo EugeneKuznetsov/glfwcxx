@@ -3,10 +3,6 @@
 #include <utility>
 #include <string>
 
-#ifdef GLFWCXX_STUB
-#include <glfwcxx/CommonStub.hpp>
-#endif
-
 namespace glfwcxx {
 
 enum class Error : int {

@@ -4,19 +4,34 @@
 
 #include <GLFW/glfw3.h>
 
-#include <glfwcxx/Common.hpp>
+#include "glfwcxx/Common.hpp"
 
 namespace glfwcxx {
+
+class Window::WindowDetails {
+public:
+    WindowDetails(const WindowSize& size, const std::string& title);
+
+public:
+    auto glfw_window() const -> GLFWwindow*;
+
+private:
+#ifdef __linux__
+    using Deleter = void (*)(GLFWwindow*);
+#else
+    using Deleter = void(__cdecl&)(GLFWwindow*);
+#endif
+    std::unique_ptr<GLFWwindow, Deleter> glfw_window_;
+};
 
 const WindowHints Window::default_window_hints_ = {};
 
 Window::Window(const WindowSize& size, const std::string& title)
-    : window_{nullptr, glfwDestroyWindow}
+    : window_{std::make_unique<WindowDetails>(size, title)}
 {
-    window_.reset(glfwCreateWindow(size.width, size.height, title.c_str(), nullptr, nullptr));
-    if (nullptr == window_)
-        throw std::runtime_error("Failed to create GLFW window: " + get_last_error().second);
 }
+
+Window::~Window() = default;
 
 auto Window::create_window(const WindowSize& size, const std::string& title) -> std::unique_ptr<Window>
 {
@@ -38,9 +53,22 @@ auto Window::create_window(const WindowSize& size, const std::string& title, con
 
 auto Window::make_context_current() -> void
 {
-    glfwMakeContextCurrent(window_.get());
+    glfwMakeContextCurrent(window_->glfw_window());
     if (auto last_error = get_last_error(); Error::NO_ERROR != last_error.first)
         throw std::runtime_error("Failed to make context current: " + last_error.second);
+}
+
+Window::WindowDetails::WindowDetails(const WindowSize& size, const std::string& title)
+    : glfw_window_{nullptr, glfwDestroyWindow}
+{
+    glfw_window_.reset(glfwCreateWindow(size.width, size.height, title.c_str(), nullptr, nullptr));
+    if (nullptr == glfw_window_)
+        throw std::runtime_error("Failed to create GLFW window: " + get_last_error().second);
+}
+
+auto Window::WindowDetails::glfw_window() const -> GLFWwindow*
+{
+    return glfw_window_.get();
 }
 
 }  // namespace glfwcxx

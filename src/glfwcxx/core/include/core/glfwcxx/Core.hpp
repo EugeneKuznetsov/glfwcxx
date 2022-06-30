@@ -2,10 +2,6 @@
 
 #include <memory>
 
-#ifdef GLFWCXX_STUB
-#include <glfwcxx/CoreStub.hpp>
-#endif
-
 namespace glfwcxx {
 
 struct CoreInitHints;
