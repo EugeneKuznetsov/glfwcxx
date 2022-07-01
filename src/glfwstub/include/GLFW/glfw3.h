@@ -27,3 +27,6 @@ extern auto glfwCreateWindow(int width, int height, const char* title, GLFWmonit
 extern auto glfwDestroyWindow(GLFWwindow* window) -> void;
 extern auto glfwMakeContextCurrent(GLFWwindow* window) -> void;
 extern auto glfwWindowHint(int hint, int value) -> void;
+extern auto glfwPollEvents() -> void;
+extern auto glfwSwapBuffers(GLFWwindow* window) -> void;
+extern auto glfwWindowShouldClose(GLFWwindow* window) -> int;

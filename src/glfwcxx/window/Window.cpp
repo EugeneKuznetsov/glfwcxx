@@ -58,6 +58,21 @@ auto Window::make_context_current() -> void
         throw std::runtime_error("Failed to make context current: " + last_error.second);
 }
 
+auto Window::poll_events() -> void
+{
+    glfwPollEvents();
+}
+
+auto Window::swap_buffers() -> void
+{
+    glfwSwapBuffers(window_->glfw_window());
+}
+
+auto Window::should_close() const -> bool
+{
+    return 0 != glfwWindowShouldClose(window_->glfw_window());
+}
+
 Window::WindowDetails::WindowDetails(const WindowSize& size, const std::string& title)
     : glfw_window_{nullptr, glfwDestroyWindow}
 {

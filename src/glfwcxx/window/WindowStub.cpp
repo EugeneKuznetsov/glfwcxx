@@ -29,6 +29,21 @@ auto glfwWindowHint(int hint, int value) -> void
     glfwcxx::WindowStub::window_int_hints_[hint] = value;
 }
 
+auto glfwPollEvents() -> void
+{
+    glfwcxx::WindowStub::poll_events_call_count_++;
+}
+
+auto glfwSwapBuffers(GLFWwindow* /*window*/) -> void
+{
+    glfwcxx::WindowStub::swap_buffers_call_count_++;
+}
+
+auto glfwWindowShouldClose(GLFWwindow* /*window*/) -> int
+{
+    return glfwcxx::WindowStub::close_window_ ? 1 : 0;
+}
+
 namespace glfwcxx {
 
 GLFWwindow* WindowStub::last_created_window_ = (GLFWwindow*)1234;
@@ -40,6 +55,9 @@ std::string WindowStub::last_passed_title_ = "";
 GLFWmonitor* WindowStub::last_passed_monitor_ = nullptr;
 GLFWwindow* WindowStub::last_passed_share_ = nullptr;
 window_hints_int_map WindowStub::window_int_hints_ = {};
+std::size_t WindowStub::poll_events_call_count_ = 0;
+std::size_t WindowStub::swap_buffers_call_count_ = 0;
+bool WindowStub::close_window_ = false;
 
 auto WindowStub::reset() -> void
 {
@@ -52,6 +70,9 @@ auto WindowStub::reset() -> void
     last_passed_monitor_ = nullptr;
     last_passed_share_ = nullptr;
     window_int_hints_.clear();
+    poll_events_call_count_ = 0;
+    swap_buffers_call_count_ = 0;
+    close_window_ = false;
     CommonStub::reset();
 }
 
@@ -63,6 +84,11 @@ auto WindowStub::create_window_failure() -> void
 auto WindowStub::make_context_current_failure() -> void
 {
     CommonStub::set_error(1, "error message");
+}
+
+auto WindowStub::close_window() -> void
+{
+    close_window_ = true;
 }
 
 auto WindowStub::created_window_with_arguments(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> bool
@@ -86,6 +112,16 @@ auto WindowStub::window_hint_applied(int hint, int value) -> bool
 auto WindowStub::was_destroyed() -> bool
 {
     return was_destroyed_;
+}
+
+auto WindowStub::poll_events_call_count() -> std::size_t
+{
+    return poll_events_call_count_;
+}
+
+auto WindowStub::swap_buffers_call_count() -> std::size_t
+{
+    return swap_buffers_call_count_;
 }
 
 }  // namespace glfwcxx
