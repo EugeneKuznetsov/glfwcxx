@@ -26,6 +26,8 @@ public:
     static auto window_hint_applied_count() -> std::size_t;
     static auto window_hint_applied(int hint, int value) -> bool;
     static auto was_destroyed() -> bool;
+    static auto poll_events_call_count() -> std::size_t;
+    static auto swap_buffers_call_count() -> std::size_t;
 
 private:
     static GLFWwindow* last_created_window_;
@@ -37,6 +39,8 @@ private:
     static GLFWmonitor* last_passed_monitor_;
     static GLFWwindow* last_passed_share_;
     static window_hints_int_map window_int_hints_;
+    static std::size_t poll_events_call_count_;
+    static std::size_t swap_buffers_call_count_;
 
     friend auto ::glfwCreateWindow(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> GLFWwindow*;
     friend auto ::glfwDestroyWindow(GLFWwindow* window) -> void;

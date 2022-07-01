@@ -21,12 +21,15 @@ class Window final {
 public:
     ~Window();
 
+public:
     [[nodiscard]] static auto create_window(const WindowSize& size, const std::string& title) -> std::unique_ptr<Window>;
     [[nodiscard]] static auto create_window(const WindowSize& size, const std::string& title, const WindowHints& hints)
         -> std::unique_ptr<Window>;
 
 public:
     auto make_context_current() -> void;
+    auto poll_events() -> void;
+    auto swap_buffers() -> void;
 
 private:
     std::unique_ptr<WindowDetails> window_;

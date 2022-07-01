@@ -85,3 +85,19 @@ TEST_F(glfwcxx_window, successfully_created_with_context_version_window_hint)
 {
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_version({3, 2}), {{GLFW_CONTEXT_VERSION_MAJOR, 3}, {GLFW_CONTEXT_VERSION_MINOR, 2}});
 }
+
+TEST_F(glfwcxx_window, should_poll_events_successfully)
+{
+    ASSERT_EQ(glfwcxx::WindowStub::poll_events_call_count(), 0);
+    auto window = glfwcxx::Window::create_window({800, 600}, "");
+    window->poll_events();
+    ASSERT_EQ(glfwcxx::WindowStub::poll_events_call_count(), 1);
+}
+
+TEST_F(glfwcxx_window, should_swap_buffers_successfully)
+{
+    ASSERT_EQ(glfwcxx::WindowStub::swap_buffers_call_count(), 0);
+    auto window = glfwcxx::Window::create_window({800, 600}, "");
+    window->swap_buffers();
+    ASSERT_EQ(glfwcxx::WindowStub::swap_buffers_call_count(), 1);
+}
