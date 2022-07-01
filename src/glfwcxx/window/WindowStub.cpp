@@ -29,6 +29,16 @@ auto glfwWindowHint(int hint, int value) -> void
     glfwcxx::WindowStub::window_int_hints_[hint] = value;
 }
 
+auto glfwPollEvents() -> void
+{
+    glfwcxx::WindowStub::poll_events_call_count_++;
+}
+
+auto glfwSwapBuffers(GLFWwindow* /*window*/) -> void
+{
+    glfwcxx::WindowStub::swap_buffers_call_count_++;
+}
+
 namespace glfwcxx {
 
 GLFWwindow* WindowStub::last_created_window_ = (GLFWwindow*)1234;
