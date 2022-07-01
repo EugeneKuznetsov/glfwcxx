@@ -23,6 +23,7 @@ public:
 
     static auto create_window_failure() -> void;
     static auto make_context_current_failure() -> void;
+    static auto close_window() -> void;
 
     static auto created_window_with_arguments(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> bool;
     static auto window_hint_applied_count() -> std::size_t;

@@ -91,7 +91,7 @@ TEST_F(glfwcxx_window, should_poll_events_successfully)
     ASSERT_EQ(glfwcxx::WindowStub::poll_events_call_count(), 0);
     auto window = glfwcxx::Window::create_window({800, 600}, "");
     window->poll_events();
-    ASSERT_EQ(glfwcxx::WindowStub::poll_events_call_count(), 1);
+    EXPECT_EQ(glfwcxx::WindowStub::poll_events_call_count(), 1);
 }
 
 TEST_F(glfwcxx_window, should_swap_buffers_successfully)
@@ -99,5 +99,13 @@ TEST_F(glfwcxx_window, should_swap_buffers_successfully)
     ASSERT_EQ(glfwcxx::WindowStub::swap_buffers_call_count(), 0);
     auto window = glfwcxx::Window::create_window({800, 600}, "");
     window->swap_buffers();
-    ASSERT_EQ(glfwcxx::WindowStub::swap_buffers_call_count(), 1);
+    EXPECT_EQ(glfwcxx::WindowStub::swap_buffers_call_count(), 1);
+}
+
+TEST_F(glfwcxx_window, should_close_returns_true_when_requested_to_close_window)
+{
+    auto window = glfwcxx::Window::create_window({800, 600}, "");
+    EXPECT_FALSE(window->should_close());
+    glfwcxx::WindowStub::close_window();
+    EXPECT_TRUE(window->should_close());
 }

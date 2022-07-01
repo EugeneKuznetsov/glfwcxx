@@ -31,6 +31,9 @@ public:
     auto poll_events() -> void;
     auto swap_buffers() -> void;
 
+public:
+    auto should_close() -> bool;
+
 private:
     std::unique_ptr<WindowDetails> window_;
     static const WindowHints default_window_hints_;

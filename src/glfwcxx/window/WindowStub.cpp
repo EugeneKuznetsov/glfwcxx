@@ -79,6 +79,8 @@ auto WindowStub::make_context_current_failure() -> void
     CommonStub::set_error(1, "error message");
 }
 
+auto WindowStub::close_window() -> void {}
+
 auto WindowStub::created_window_with_arguments(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> bool
 {
     return last_passed_width_ == width && last_passed_height_ == height && last_passed_title_ == title && last_passed_monitor_ == monitor &&
