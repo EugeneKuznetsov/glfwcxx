@@ -32,7 +32,7 @@ public:
     auto swap_buffers() -> void;
 
 public:
-    auto should_close() -> bool;
+    auto should_close() const -> bool;
 
 private:
     std::unique_ptr<WindowDetails> window_;

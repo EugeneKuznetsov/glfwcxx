@@ -68,9 +68,9 @@ auto Window::swap_buffers() -> void
     glfwSwapBuffers(window_->glfw_window());
 }
 
-auto Window::should_close() -> bool
+auto Window::should_close() const -> bool
 {
-    return false;
+    return 0 != glfwWindowShouldClose(window_->glfw_window());
 }
 
 Window::WindowDetails::WindowDetails(const WindowSize& size, const std::string& title)

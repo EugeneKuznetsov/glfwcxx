@@ -12,6 +12,7 @@ extern auto glfwMakeContextCurrent(GLFWwindow* window) -> void;
 extern auto glfwWindowHint(int hint, int value) -> void;
 extern auto glfwPollEvents() -> void;
 extern auto glfwSwapBuffers(GLFWwindow* window) -> void;
+extern auto glfwWindowShouldClose(GLFWwindow* window) -> int;
 
 namespace glfwcxx {
 
@@ -44,6 +45,7 @@ private:
     static window_hints_int_map window_int_hints_;
     static std::size_t poll_events_call_count_;
     static std::size_t swap_buffers_call_count_;
+    static bool close_window_;
 
     friend auto ::glfwCreateWindow(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> GLFWwindow*;
     friend auto ::glfwDestroyWindow(GLFWwindow* window) -> void;
@@ -51,6 +53,7 @@ private:
     friend auto ::glfwWindowHint(int hint, int value) -> void;
     friend auto ::glfwPollEvents() -> void;
     friend auto ::glfwSwapBuffers(GLFWwindow* window) -> void;
+    friend auto ::glfwWindowShouldClose(GLFWwindow* window) -> int;
 };
 
 }  // namespace glfwcxx
