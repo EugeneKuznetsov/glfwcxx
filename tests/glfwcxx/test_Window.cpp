@@ -88,10 +88,13 @@ TEST_F(glfwcxx_window, successfully_created_with_context_version_window_hint)
 
 TEST_F(glfwcxx_window, should_poll_events_successfully)
 {
+    auto callback_works = false;
+    glfwcxx::WindowStub::poll_events_call_callback([&callback_works]() -> void { callback_works = true; });
     ASSERT_EQ(glfwcxx::WindowStub::poll_events_call_count(), 0);
     auto window = glfwcxx::Window::create_window({800, 600}, "");
     window->poll_events();
     EXPECT_EQ(glfwcxx::WindowStub::poll_events_call_count(), 1);
+    EXPECT_EQ(callback_works, true);
 }
 
 TEST_F(glfwcxx_window, should_swap_buffers_successfully)

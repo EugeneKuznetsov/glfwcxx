@@ -1,3 +1,4 @@
+include(GNUInstallDirs)
 include(ProjectUtils)
 
 add_subdirectory(glfwcxx/common)
