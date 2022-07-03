@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <string>
 #include <unordered_map>
 
@@ -16,6 +17,7 @@ extern auto glfwWindowShouldClose(GLFWwindow* window) -> int;
 
 namespace glfwcxx {
 
+using callback_function = std::function<void()>;
 using window_hints_int_map = std::unordered_map<int, int>;
 
 class WindowStub {
@@ -33,6 +35,8 @@ public:
     static auto poll_events_call_count() -> std::size_t;
     static auto swap_buffers_call_count() -> std::size_t;
 
+    static auto poll_events_call_callback(callback_function callback) -> void;
+
 private:
     static GLFWwindow* last_created_window_;
     static GLFWwindow* last_destroyed_window_;
@@ -46,6 +50,7 @@ private:
     static std::size_t poll_events_call_count_;
     static std::size_t swap_buffers_call_count_;
     static bool close_window_;
+    static callback_function poll_events_callback_;
 
     friend auto ::glfwCreateWindow(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> GLFWwindow*;
     friend auto ::glfwDestroyWindow(GLFWwindow* window) -> void;

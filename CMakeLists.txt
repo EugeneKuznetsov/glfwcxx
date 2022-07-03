@@ -2,14 +2,12 @@ cmake_minimum_required(VERSION 3.20)
 
 project(
     glfwcxx
-    VERSION 1.2.0
+    VERSION 1.3.0
     LANGUAGES CXX)
 
 include(BuildSettings)
 include(CompilerSettings)
 include(Packages)
-include(GNUInstallDirs)
-include(GenerateExportHeader)
 
 add_subdirectory(src)
 

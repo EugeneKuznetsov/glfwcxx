@@ -32,6 +32,8 @@ auto glfwWindowHint(int hint, int value) -> void
 auto glfwPollEvents() -> void
 {
     glfwcxx::WindowStub::poll_events_call_count_++;
+    if (nullptr != glfwcxx::WindowStub::poll_events_callback_)
+        glfwcxx::WindowStub::poll_events_callback_();
 }
 
 auto glfwSwapBuffers(GLFWwindow* /*window*/) -> void
@@ -58,6 +60,7 @@ window_hints_int_map WindowStub::window_int_hints_ = {};
 std::size_t WindowStub::poll_events_call_count_ = 0;
 std::size_t WindowStub::swap_buffers_call_count_ = 0;
 bool WindowStub::close_window_ = false;
+callback_function WindowStub::poll_events_callback_ = nullptr;
 
 auto WindowStub::reset() -> void
 {
@@ -73,6 +76,7 @@ auto WindowStub::reset() -> void
     poll_events_call_count_ = 0;
     swap_buffers_call_count_ = 0;
     close_window_ = false;
+    poll_events_callback_ = nullptr;
     CommonStub::reset();
 }
 
@@ -122,6 +126,11 @@ auto WindowStub::poll_events_call_count() -> std::size_t
 auto WindowStub::swap_buffers_call_count() -> std::size_t
 {
     return swap_buffers_call_count_;
+}
+
+auto WindowStub::poll_events_call_callback(callback_function callback) -> void
+{
+    poll_events_callback_ = callback;
 }
 
 }  // namespace glfwcxx
