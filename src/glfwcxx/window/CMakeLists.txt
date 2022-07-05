@@ -1,16 +1,22 @@
 set(TARGET_NAME window)
-set(SOURCES Window.cpp WindowHints.cpp)
-set(STUB_SOURCES WindowStub.cpp)
 
 add_glfwcxx_target(
-    NAME
+    GLFWCXX_TARGET_NAME
     ${TARGET_NAME}
-    SOURCES
-    ${SOURCES}
-    STUB_SOURCES
-    ${STUB_SOURCES}
-    EXTRA_PRIVATE_LIBS
-    glfwcxx::common
-    EXTRA_PRIVATE_STUB_LIBS
+    TARGET_SOURCES
+    Window.cpp
+    WindowHints.cpp
+    PRIVATE_DEPENDENCY_TARGETS
+    glfw::glfw
+    glfwcxx::common)
+add_glfwcxx_stub_target(
+    GLFWCXX_TARGET_NAME
+    ${TARGET_NAME}
+    TARGET_SOURCES
+    WindowStub.cpp
+    PRIVATE_DEPENDENCY_TARGETS
+    glfwstub
     glfwcxx::common-stub)
-install_glfwcxx_target(NAME ${TARGET_NAME})
+
+install_glfwcxx_target(GLFWCXX_TARGET_NAME ${TARGET_NAME})
+install_glfwcxx_stub_target(GLFWCXX_TARGET_NAME ${TARGET_NAME})
