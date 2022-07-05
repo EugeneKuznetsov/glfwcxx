@@ -12,6 +12,8 @@ class GLFWCXX(ConanFile):
     description = "C++17 wrapper of GLFW"
     url = "git@github.com:EugeneKuznetsov/glfwcxx.git"
     scm = {"type": "git", "url": "auto", "revision": "auto"}
+    default_user = "gamedev"
+    default_channel = "stable"
     generators = "cmake_find_package"
     settings = "os", "compiler", "arch", "build_type"
     tool_requires = "cmake/[>3.20.x]", "ninja/[^1.11.x]", "gtest/[~1.11.x]"

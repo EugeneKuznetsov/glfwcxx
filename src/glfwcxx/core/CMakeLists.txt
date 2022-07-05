@@ -1,16 +1,22 @@
 set(TARGET_NAME core)
-set(SOURCES Core.cpp CoreInitHints.cpp)
-set(STUB_SOURCES CoreStub.cpp)
 
 add_glfwcxx_target(
-    NAME
+    GLFWCXX_TARGET_NAME
     ${TARGET_NAME}
-    SOURCES
-    ${SOURCES}
-    STUB_SOURCES
-    ${STUB_SOURCES}
-    EXTRA_PRIVATE_LIBS
-    glfwcxx::common
-    EXTRA_PRIVATE_STUB_LIBS
+    TARGET_SOURCES
+    Core.cpp
+    CoreInitHints.cpp
+    PRIVATE_DEPENDENCY_TARGETS
+    glfw::glfw
+    glfwcxx::common)
+add_glfwcxx_stub_target(
+    GLFWCXX_TARGET_NAME
+    ${TARGET_NAME}
+    TARGET_SOURCES
+    CoreStub.cpp
+    PRIVATE_DEPENDENCY_TARGETS
+    glfwstub
     glfwcxx::common-stub)
-install_glfwcxx_target(NAME ${TARGET_NAME})
+
+install_glfwcxx_target(GLFWCXX_TARGET_NAME ${TARGET_NAME})
+install_glfwcxx_stub_target(GLFWCXX_TARGET_NAME ${TARGET_NAME})
