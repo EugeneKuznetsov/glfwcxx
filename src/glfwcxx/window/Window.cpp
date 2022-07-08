@@ -179,6 +179,9 @@ auto Window::setup_preset_window_hints(const WindowHints& hints) -> void
 {
     if (default_window_hints_.opengl_profile_ != hints.opengl_profile_)
         glfwWindowHint(GLFW_OPENGL_PROFILE, static_cast<int>(hints.opengl_profile_));
+
+    if (default_window_hints_.client_api_ != hints.client_api_)
+        glfwWindowHint(GLFW_CLIENT_API, static_cast<int>(hints.client_api_));
 }
 
 Window::WindowDetails::WindowDetails(const WindowSize& size, const std::string& title)

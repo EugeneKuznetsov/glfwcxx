@@ -110,9 +110,15 @@ auto WindowHints::cocoa_graphics_switching(const bool value /*= false*/) -> Wind
     return *this;
 }
 
-auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
+auto WindowHints::opengl_profile(const OpenGLProfile& value /*= OpenGLProfile::ANY_PROFILE*/) -> WindowHints&
 {
     opengl_profile_ = value;
+    return *this;
+}
+
+auto WindowHints::client_api(const ClientAPI& value /*= ClientAPI::OPENGL*/) -> WindowHints&
+{
+    client_api_ = value;
     return *this;
 }
 

@@ -38,6 +38,7 @@ static constexpr int GLFW_SAMPLES = 0x0002100D;
 static constexpr int GLFW_SRGB_CAPABLE = 0x0002100D;
 static constexpr int GLFW_REFRESH_RATE = 0x0002100F;
 static constexpr int GLFW_DOUBLEBUFFER = 0x00021010;
+static constexpr int GLFW_CLIENT_API = 0x00022001;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_FORWARD_COMPAT = 0x00022006;
@@ -46,6 +47,10 @@ static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
 static constexpr int GLFW_SCALE_TO_MONITOR = 0x0002200C;
 static constexpr int GLFW_COCOA_RETINA_FRAMEBUFFER = 0x00023001;
 static constexpr int GLFW_COCOA_GRAPHICS_SWITCHING = 0x00023003;
+
+static constexpr int GLFW_NO_API = 0;
+static constexpr int GLFW_OPENGL_API = 0x00030001;
+static constexpr int GLFW_OPENGL_ES_API = 0x00030002;
 
 static constexpr int GLFW_OPENGL_ANY_PROFILE = 0;
 static constexpr int GLFW_OPENGL_CORE_PROFILE = 0x00032001;

@@ -6,6 +6,8 @@ static constexpr int DONT_CARE = -1;
 
 enum class OpenGLProfile : int { ANY_PROFILE = 0, CORE_PROFILE = 0x00032001, COMPAT_PROFILE = 0x00032002 };
 
+enum class ClientAPI : int { NO_API = 0, OPENGL = 0x00030001, OPENGL_ES = 0x00030002 };
+
 struct ContextVersion {
     int major;
     int minor;
@@ -39,7 +41,8 @@ public:
     auto opengl_debug_context(const bool value = false) -> WindowHints&;
     auto cocoa_retina_framebuffer(const bool value = true) -> WindowHints&;
     auto cocoa_graphics_switching(const bool value = false) -> WindowHints&;
-    auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
+    auto opengl_profile(const OpenGLProfile& value = OpenGLProfile::ANY_PROFILE) -> WindowHints&;
+    auto client_api(const ClientAPI& value = ClientAPI::OPENGL) -> WindowHints&;
     auto context_version(const ContextVersion& value = {1, 0}) -> WindowHints&;
     auto red_bits(const int value = 8) -> WindowHints&;
     auto green_bits(const int value = 8) -> WindowHints&;
@@ -75,6 +78,7 @@ private:
     bool cocoa_retina_framebuffer_{true};
     bool cocoa_graphics_switching_{false};
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
+    ClientAPI client_api_{ClientAPI::OPENGL};
     ContextVersion context_version_{1, 0};
     int red_bits_{8};
     int green_bits_{8};
