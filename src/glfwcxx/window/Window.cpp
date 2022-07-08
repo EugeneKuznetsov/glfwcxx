@@ -128,6 +128,9 @@ auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.depth_bits_ != hints.depth_bits_)
         glfwWindowHint(GLFW_DEPTH_BITS, hints.depth_bits_);
+
+    if (default_window_hints_.stencil_bits_ != hints.stencil_bits_)
+        glfwWindowHint(GLFW_STENCIL_BITS, hints.stencil_bits_);
 }
 
 auto Window::setup_preset_window_hints(const WindowHints& hints) -> void

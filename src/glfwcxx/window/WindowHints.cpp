@@ -110,4 +110,10 @@ auto WindowHints::depth_bits(const int value /*= 24*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::stencil_bits(const int value /*= 8*/) -> WindowHints&
+{
+    stencil_bits_ = value;
+    return *this;
+}
+
 }  // namespace glfwcxx

@@ -27,6 +27,7 @@ static constexpr int GLFW_GREEN_BITS = 0x00021002;
 static constexpr int GLFW_BLUE_BITS = 0x00021003;
 static constexpr int GLFW_ALPHA_BITS = 0x00021004;
 static constexpr int GLFW_DEPTH_BITS = 0x00021005;
+static constexpr int GLFW_STENCIL_BITS = 0x00021006;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
