@@ -23,6 +23,7 @@ static constexpr int GLFW_FOCUS_ON_SHOW = 0x0002000C;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
+static constexpr int GLFW_SCALE_TO_MONITOR = 0x0002200C;
 
 static constexpr int GLFW_OPENGL_ANY_PROFILE = 0;
 static constexpr int GLFW_OPENGL_CORE_PROFILE = 0x00032001;

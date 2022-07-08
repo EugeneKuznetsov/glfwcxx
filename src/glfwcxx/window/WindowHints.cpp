@@ -62,6 +62,12 @@ auto WindowHints::focus_on_show(const bool value /*= true*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::scale_to_monitor(const bool value /*= false*/) -> WindowHints&
+{
+    scale_to_monitor_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;
