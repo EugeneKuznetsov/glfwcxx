@@ -37,6 +37,7 @@ public:
 private:
     static auto setup_boolean_window_hints(const WindowHints& hints) -> void;
     static auto setup_numeric_window_hints(const WindowHints& hints) -> void;
+    static auto setup_string_window_hints(const WindowHints& hints) -> void;
     static auto setup_preset_window_hints(const WindowHints& hints) -> void;
 
 private:

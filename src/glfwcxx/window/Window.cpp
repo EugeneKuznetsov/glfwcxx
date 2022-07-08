@@ -44,6 +44,8 @@ auto Window::create_window(const WindowSize& size, const std::string& title, con
 
     setup_numeric_window_hints(hints);
 
+    setup_string_window_hints(hints);
+
     setup_preset_window_hints(hints);
 
     return std::unique_ptr<Window>{new Window{size, title}};
@@ -173,6 +175,12 @@ auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.refresh_rate_ != hints.refresh_rate_)
         glfwWindowHint(GLFW_REFRESH_RATE, hints.refresh_rate_);
+}
+
+auto Window::setup_string_window_hints(const WindowHints& hints) -> void
+{
+    if (default_window_hints_.cocoa_frame_name_ != hints.cocoa_frame_name_)
+        glfwWindowHintString(GLFW_COCOA_FRAME_NAME, hints.cocoa_frame_name_.c_str());
 }
 
 auto Window::setup_preset_window_hints(const WindowHints& hints) -> void

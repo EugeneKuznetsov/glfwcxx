@@ -225,4 +225,10 @@ auto WindowHints::refresh_rate(const int value /*= DONT_CARE*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::cocoa_frame_name(const std::string& value /*= {}*/) -> WindowHints&
+{
+    cocoa_frame_name_ = value;
+    return *this;
+}
+
 }  // namespace glfwcxx

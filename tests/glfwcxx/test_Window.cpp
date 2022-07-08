@@ -1,5 +1,6 @@
 #include <list>
 #include <utility>
+#include <variant>
 
 #include <GLFW/glfw3.h>
 
@@ -12,12 +13,22 @@ class glfwcxx_window : public testing::Test {
 public:
     auto SetUp() -> void { glfwcxx::WindowStub::reset(); }
 
-    auto CREATE_AND_EXPECT(const glfwcxx::WindowHints& actual_hints, const std::list<std::pair<int, int>>& expected_hints) -> void
+    auto CREATE_AND_EXPECT(const glfwcxx::WindowHints& actual_hints,
+                           const std::list<std::pair<int, std::variant<int, const char*>>>& expected_hints) -> void
     {
         EXPECT_NO_THROW(static_cast<void>(glfwcxx::Window::create_window({800, 600}, "", actual_hints)));
-        EXPECT_EQ(glfwcxx::WindowStub::window_hint_applied_count(), expected_hints.size());
-        for (const auto& expected_hint : expected_hints)
-            EXPECT_TRUE(glfwcxx::WindowStub::window_hint_applied(expected_hint.first, expected_hint.second));
+        EXPECT_EQ(glfwcxx::WindowStub::window_int_hint_applied_count() + glfwcxx::WindowStub::window_str_hint_applied_count(),
+                  expected_hints.size());
+        for (const auto& expected_hint : expected_hints) {
+            if (std::holds_alternative<int>(expected_hint.second)) {
+                auto expected_value = std::get<int>(expected_hint.second);
+                EXPECT_TRUE(glfwcxx::WindowStub::window_int_hint_applied(expected_hint.first, expected_value));
+            }
+            else {
+                auto expected_value = std::get<const char*>(expected_hint.second);
+                EXPECT_TRUE(glfwcxx::WindowStub::window_str_hint_applied(expected_hint.first, expected_value));
+            }
+        }
     }
 };
 
@@ -54,7 +65,7 @@ TEST_F(glfwcxx_window, successfully_created_with_predefined_default_window_hints
 {
     ASSERT_NO_THROW(static_cast<void>(glfwcxx::Window::create_window({123, 456}, "abc")));
     EXPECT_TRUE(glfwcxx::WindowStub::created_window_with_arguments(123, 456, "abc", nullptr, nullptr));
-    ASSERT_EQ(glfwcxx::WindowStub::window_hint_applied_count(), 0);
+    ASSERT_EQ(glfwcxx::WindowStub::window_int_hint_applied_count(), 0);
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_resizable_window_hint_without_underlying_call)
@@ -309,7 +320,6 @@ TEST_F(glfwcxx_window, successfully_created_with_context_robustness_lose_context
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_robustness(robustness), {{GLFW_CONTEXT_ROBUSTNESS, GLFW_LOSE_CONTEXT_ON_RESET}});
 }
 
-//--
 TEST_F(glfwcxx_window, successfully_created_with_context_release_behavior_any_release_behavior_window_hint_without_underlying_call)
 {
     const auto& behavior = glfwcxx::ContextReleaseBehavior::ANY_RELEASE_BEHAVIOR;
@@ -329,7 +339,6 @@ TEST_F(glfwcxx_window, successfully_created_with_context_release_behavior_none_w
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_release_behavior(behavior),
                       {{GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_RELEASE_BEHAVIOR_NONE}});
 }
-//--
 
 TEST_F(glfwcxx_window, successfully_created_with_context_version_window_hint_without_underlying_call)
 {
@@ -469,6 +478,16 @@ TEST_F(glfwcxx_window, successfully_created_with_refresh_rate_window_hint_withou
 TEST_F(glfwcxx_window, successfully_created_with_refresh_rate_0_window_hint)
 {
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.refresh_rate(0), {{GLFW_REFRESH_RATE, 0}});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_cocoa_frame_name_empty_string_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.cocoa_frame_name(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_cocoa_frame_name_abcd_window_hint)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.cocoa_frame_name("abcd"), {{GLFW_COCOA_FRAME_NAME, "abcd"}});
 }
 
 TEST_F(glfwcxx_window, should_poll_events_successfully)

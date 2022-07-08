@@ -29,6 +29,11 @@ auto glfwWindowHint(int hint, int value) -> void
     glfwcxx::WindowStub::window_int_hints_[hint] = value;
 }
 
+auto glfwWindowHintString(int hint, const char* value) -> void
+{
+    glfwcxx::WindowStub::window_str_hints_[hint] = value;
+}
+
 auto glfwPollEvents() -> void
 {
     glfwcxx::WindowStub::poll_events_call_count_++;
@@ -57,6 +62,7 @@ std::string WindowStub::last_passed_title_ = "";
 GLFWmonitor* WindowStub::last_passed_monitor_ = nullptr;
 GLFWwindow* WindowStub::last_passed_share_ = nullptr;
 window_hints_int_map WindowStub::window_int_hints_ = {};
+window_hints_str_map WindowStub::window_str_hints_ = {};
 std::size_t WindowStub::poll_events_call_count_ = 0;
 std::size_t WindowStub::swap_buffers_call_count_ = 0;
 bool WindowStub::close_window_ = false;
@@ -73,6 +79,7 @@ auto WindowStub::reset() -> void
     last_passed_monitor_ = nullptr;
     last_passed_share_ = nullptr;
     window_int_hints_.clear();
+    window_str_hints_.clear();
     poll_events_call_count_ = 0;
     swap_buffers_call_count_ = 0;
     close_window_ = false;
@@ -101,16 +108,28 @@ auto WindowStub::created_window_with_arguments(int width, int height, const char
            last_passed_share_ == share;
 }
 
-auto WindowStub::window_hint_applied_count() -> std::size_t
+auto WindowStub::window_int_hint_applied_count() -> std::size_t
 {
     return window_int_hints_.size();
 }
 
-auto WindowStub::window_hint_applied(int hint, int value) -> bool
+auto WindowStub::window_str_hint_applied_count() -> std::size_t
+{
+    return window_str_hints_.size();
+}
+
+auto WindowStub::window_int_hint_applied(int hint, int value) -> bool
 {
     if (window_int_hints_.cend() == window_int_hints_.find(hint))
         return false;
     return window_int_hints_[hint] == value;
+}
+
+auto WindowStub::window_str_hint_applied(int hint, const char* value) -> bool
+{
+    if (window_str_hints_.cend() == window_str_hints_.find(hint))
+        return false;
+    return window_str_hints_[hint] == std::string{value};
 }
 
 auto WindowStub::was_destroyed() -> bool

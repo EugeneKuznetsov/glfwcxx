@@ -49,6 +49,7 @@ static constexpr int GLFW_CONTEXT_RELEASE_BEHAVIOR = 0x00022008;
 static constexpr int GLFW_CONTEXT_CREATION_API = 0x0002200B;
 static constexpr int GLFW_SCALE_TO_MONITOR = 0x0002200C;
 static constexpr int GLFW_COCOA_RETINA_FRAMEBUFFER = 0x00023001;
+static constexpr int GLFW_COCOA_FRAME_NAME = 0x00023002;
 static constexpr int GLFW_COCOA_GRAPHICS_SWITCHING = 0x00023003;
 
 static constexpr int GLFW_NO_API = 0;
@@ -84,6 +85,7 @@ extern auto glfwCreateWindow(int width, int height, const char* title, GLFWmonit
 extern auto glfwDestroyWindow(GLFWwindow* window) -> void;
 extern auto glfwMakeContextCurrent(GLFWwindow* window) -> void;
 extern auto glfwWindowHint(int hint, int value) -> void;
+extern auto glfwWindowHintString(int hint, const char* value) -> void;
 extern auto glfwPollEvents() -> void;
 extern auto glfwSwapBuffers(GLFWwindow* window) -> void;
 extern auto glfwWindowShouldClose(GLFWwindow* window) -> int;
