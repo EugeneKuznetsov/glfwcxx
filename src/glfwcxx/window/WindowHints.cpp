@@ -74,7 +74,7 @@ auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
     return *this;
 }
 
-auto WindowHints::context_version(const ContextVersion& value) -> WindowHints&
+auto WindowHints::context_version(const ContextVersion& value /*= {1, 0}*/) -> WindowHints&
 {
     context_version_ = value;
     return *this;

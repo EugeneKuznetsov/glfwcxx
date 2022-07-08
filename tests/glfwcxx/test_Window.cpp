@@ -185,7 +185,12 @@ TEST_F(glfwcxx_window, successfully_created_with_opengl_compat_profile_window_hi
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_profile(profile), {{GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE}});
 }
 
-TEST_F(glfwcxx_window, successfully_created_with_context_version_window_hint)
+TEST_F(glfwcxx_window, successfully_created_with_context_version_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_version(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_context_version_3_2_window_hint)
 {
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_version({3, 2}), {{GLFW_CONTEXT_VERSION_MAJOR, 3}, {GLFW_CONTEXT_VERSION_MINOR, 2}});
 }
