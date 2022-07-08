@@ -8,6 +8,12 @@ auto WindowHints::resizable(const bool value /*= true*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::visible(const bool value /*= true*/) -> WindowHints&
+{
+    visible_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;

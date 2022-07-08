@@ -11,6 +11,7 @@ static constexpr int GLFW_NO_ERROR = 0;
 static constexpr int GLFW_NOT_INITIALIZED = 0x00010001;
 
 static constexpr int GLFW_RESIZABLE = 0x00020003;
+static constexpr int GLFW_VISIBLE = 0x00020004;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;

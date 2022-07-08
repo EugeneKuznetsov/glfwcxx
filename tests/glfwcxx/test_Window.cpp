@@ -67,6 +67,16 @@ TEST_F(glfwcxx_window, successfully_created_with_resizable_window_hint_set_to_fa
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.resizable(false), {{GLFW_RESIZABLE, GLFW_FALSE}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_visible_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.visible(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_visible_window_hint_set_to_false)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.visible(false), {{GLFW_VISIBLE, GLFW_FALSE}});
+}
+
 TEST_F(glfwcxx_window, successfully_created_with_opengl_any_profile_window_hint_without_underlying_call)
 {
     const auto& profile = glfwcxx::OpenGLProfile::ANY_PROFILE;
