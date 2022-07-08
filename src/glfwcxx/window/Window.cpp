@@ -40,6 +40,39 @@ auto Window::create_window(const WindowSize& size, const std::string& title) -> 
 
 auto Window::create_window(const WindowSize& size, const std::string& title, const WindowHints& hints) -> std::unique_ptr<Window>
 {
+    setup_boolean_window_hints(hints);
+
+    setup_numeric_window_hints(hints);
+
+    setup_preset_window_hints(hints);
+
+    return std::unique_ptr<Window>{new Window{size, title}};
+}
+
+auto Window::make_context_current() -> void
+{
+    glfwMakeContextCurrent(window_->glfw_window());
+    if (auto last_error = get_last_error(); Error::NO_ERROR != last_error.first)
+        throw std::runtime_error("Failed to make context current: " + last_error.second);
+}
+
+auto Window::poll_events() -> void
+{
+    glfwPollEvents();
+}
+
+auto Window::swap_buffers() -> void
+{
+    glfwSwapBuffers(window_->glfw_window());
+}
+
+auto Window::should_close() const -> bool
+{
+    return 0 != glfwWindowShouldClose(window_->glfw_window());
+}
+
+auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
+{
     if (default_window_hints_.resizable_ != hints.resizable_)
         glfwWindowHint(GLFW_RESIZABLE, hints.resizable_ ? GLFW_TRUE : GLFW_FALSE);
 
@@ -72,38 +105,20 @@ auto Window::create_window(const WindowSize& size, const std::string& title, con
 
     if (default_window_hints_.scale_to_monitor_ != hints.scale_to_monitor_)
         glfwWindowHint(GLFW_SCALE_TO_MONITOR, hints.scale_to_monitor_ ? GLFW_TRUE : GLFW_FALSE);
+}
 
-    if (default_window_hints_.opengl_profile_ != hints.opengl_profile_)
-        glfwWindowHint(GLFW_OPENGL_PROFILE, static_cast<int>(hints.opengl_profile_));
-
+auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
+{
     if (default_window_hints_.context_version_ != hints.context_version_) {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, hints.context_version_.major);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, hints.context_version_.minor);
     }
-
-    return std::unique_ptr<Window>{new Window{size, title}};
 }
 
-auto Window::make_context_current() -> void
+auto Window::setup_preset_window_hints(const WindowHints& hints) -> void
 {
-    glfwMakeContextCurrent(window_->glfw_window());
-    if (auto last_error = get_last_error(); Error::NO_ERROR != last_error.first)
-        throw std::runtime_error("Failed to make context current: " + last_error.second);
-}
-
-auto Window::poll_events() -> void
-{
-    glfwPollEvents();
-}
-
-auto Window::swap_buffers() -> void
-{
-    glfwSwapBuffers(window_->glfw_window());
-}
-
-auto Window::should_close() const -> bool
-{
-    return 0 != glfwWindowShouldClose(window_->glfw_window());
+    if (default_window_hints_.opengl_profile_ != hints.opengl_profile_)
+        glfwWindowHint(GLFW_OPENGL_PROFILE, static_cast<int>(hints.opengl_profile_));
 }
 
 Window::WindowDetails::WindowDetails(const WindowSize& size, const std::string& title)
