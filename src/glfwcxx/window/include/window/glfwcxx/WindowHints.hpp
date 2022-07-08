@@ -26,6 +26,7 @@ public:
     auto auto_iconify(const bool value = true) -> WindowHints&;
     auto floating(const bool value = false) -> WindowHints&;
     auto maximized(const bool value = false) -> WindowHints&;
+    auto center_cursor(const bool value = true) -> WindowHints&;
     auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
     auto context_version(const ContextVersion& value) -> WindowHints&;
 
@@ -37,6 +38,7 @@ private:
     bool auto_iconify_{true};
     bool floating_{false};
     bool maximized_{false};
+    bool center_cursor_{true};
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ContextVersion context_version_{1, 0};
 

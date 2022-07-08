@@ -44,6 +44,12 @@ auto WindowHints::maximized(const bool value /*= false*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::center_cursor(const bool value /*= true*/) -> WindowHints&
+{
+    center_cursor_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;
