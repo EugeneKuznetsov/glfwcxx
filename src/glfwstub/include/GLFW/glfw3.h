@@ -10,6 +10,7 @@ static constexpr int GLFW_COCOA_MENUBAR = 0x00051002;
 static constexpr int GLFW_NO_ERROR = 0;
 static constexpr int GLFW_NOT_INITIALIZED = 0x00010001;
 
+static constexpr int GLFW_FOCUSED = 0x00020001;
 static constexpr int GLFW_RESIZABLE = 0x00020003;
 static constexpr int GLFW_VISIBLE = 0x00020004;
 static constexpr int GLFW_DECORATED = 0x00020005;

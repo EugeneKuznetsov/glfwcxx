@@ -49,6 +49,9 @@ auto Window::create_window(const WindowSize& size, const std::string& title, con
     if (default_window_hints_.decorated_ != hints.decorated_)
         glfwWindowHint(GLFW_DECORATED, hints.decorated_ ? GLFW_TRUE : GLFW_FALSE);
 
+    if (default_window_hints_.focused_ != hints.focused_)
+        glfwWindowHint(GLFW_FOCUSED, hints.focused_ ? GLFW_TRUE : GLFW_FALSE);
+
     if (default_window_hints_.opengl_profile_ != hints.opengl_profile_)
         glfwWindowHint(GLFW_OPENGL_PROFILE, static_cast<int>(hints.opengl_profile_));
 
