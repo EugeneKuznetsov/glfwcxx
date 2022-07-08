@@ -315,6 +315,16 @@ TEST_F(glfwcxx_window, successfully_created_with_samples_dont_care_window_hint)
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.samples(glfwcxx::DONT_CARE), {{GLFW_SAMPLES, GLFW_DONT_CARE}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_refresh_rate_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.refresh_rate(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_refresh_rate_0_window_hint)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.refresh_rate(0), {{GLFW_REFRESH_RATE, 0}});
+}
+
 TEST_F(glfwcxx_window, should_poll_events_successfully)
 {
     auto callback_works = false;

@@ -149,6 +149,9 @@ auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.samples_ != hints.samples_)
         glfwWindowHint(GLFW_SAMPLES, hints.samples_);
+
+    if (default_window_hints_.refresh_rate_ != hints.refresh_rate_)
+        glfwWindowHint(GLFW_REFRESH_RATE, hints.refresh_rate_);
 }
 
 auto Window::setup_preset_window_hints(const WindowHints& hints) -> void

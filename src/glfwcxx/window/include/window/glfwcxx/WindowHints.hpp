@@ -46,6 +46,7 @@ public:
     auto accum_alpha_bits(const int value = 0) -> WindowHints&;
     auto aux_buffers(const int value = 0) -> WindowHints&;
     auto samples(const int value = 0) -> WindowHints&;
+    auto refresh_rate(const int value = DONT_CARE) -> WindowHints&;
 
 private:
     bool resizable_{true};
@@ -73,6 +74,7 @@ private:
     int accum_alpha_bits_{0};
     int aux_buffers_{0};
     int samples_{0};
+    int refresh_rate_{DONT_CARE};
 
     friend class Window;
 };

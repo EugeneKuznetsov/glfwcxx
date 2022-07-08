@@ -152,4 +152,10 @@ auto WindowHints::samples(const int value /*= 0*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::refresh_rate(const int value /*= DONT_CARE*/) -> WindowHints&
+{
+    refresh_rate_ = value;
+    return *this;
+}
+
 }  // namespace glfwcxx
