@@ -56,6 +56,12 @@ auto WindowHints::transparent_framebuffer(const bool value /*= false*/) -> Windo
     return *this;
 }
 
+auto WindowHints::focus_on_show(const bool value /*= true*/) -> WindowHints&
+{
+    focus_on_show_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;

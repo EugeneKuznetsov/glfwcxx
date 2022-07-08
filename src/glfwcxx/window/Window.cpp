@@ -67,6 +67,9 @@ auto Window::create_window(const WindowSize& size, const std::string& title, con
     if (default_window_hints_.transparent_framebuffer_ != hints.transparent_framebuffer_)
         glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, hints.transparent_framebuffer_ ? GLFW_TRUE : GLFW_FALSE);
 
+    if (default_window_hints_.focus_on_show_ != hints.focus_on_show_)
+        glfwWindowHint(GLFW_FOCUS_ON_SHOW, hints.focus_on_show_ ? GLFW_TRUE : GLFW_FALSE);
+
     if (default_window_hints_.opengl_profile_ != hints.opengl_profile_)
         glfwWindowHint(GLFW_OPENGL_PROFILE, static_cast<int>(hints.opengl_profile_));
 

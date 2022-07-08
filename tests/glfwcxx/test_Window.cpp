@@ -112,7 +112,7 @@ TEST_F(glfwcxx_window, successfully_created_with_floating_window_hint_without_un
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.floating(), {});
 }
 
-TEST_F(glfwcxx_window, successfully_created_with_floating_window_hint_set_to_false)
+TEST_F(glfwcxx_window, successfully_created_with_floating_window_hint_set_to_true)
 {
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.floating(true), {{GLFW_FLOATING, GLFW_TRUE}});
 }
@@ -122,7 +122,7 @@ TEST_F(glfwcxx_window, successfully_created_with_maximized_window_hint_without_u
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.maximized(), {});
 }
 
-TEST_F(glfwcxx_window, successfully_created_with_maximized_window_hint_set_to_false)
+TEST_F(glfwcxx_window, successfully_created_with_maximized_window_hint_set_to_true)
 {
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.maximized(true), {{GLFW_MAXIMIZED, GLFW_TRUE}});
 }
@@ -142,9 +142,19 @@ TEST_F(glfwcxx_window, successfully_created_with_transparent_framebuffer_window_
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.transparent_framebuffer(), {});
 }
 
-TEST_F(glfwcxx_window, successfully_created_with_transparent_framebuffer_window_hint_set_to_false)
+TEST_F(glfwcxx_window, successfully_created_with_transparent_framebuffer_window_hint_set_to_true)
 {
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.transparent_framebuffer(true), {{GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE}});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_focus_on_show_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.focus_on_show(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_focus_on_show_window_hint_set_to_false)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.focus_on_show(false), {{GLFW_FOCUS_ON_SHOW, GLFW_FALSE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_opengl_any_profile_window_hint_without_underlying_call)

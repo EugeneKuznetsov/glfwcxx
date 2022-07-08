@@ -28,6 +28,7 @@ public:
     auto maximized(const bool value = false) -> WindowHints&;
     auto center_cursor(const bool value = true) -> WindowHints&;
     auto transparent_framebuffer(const bool value = false) -> WindowHints&;
+    auto focus_on_show(const bool value = true) -> WindowHints&;
     auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
     auto context_version(const ContextVersion& value) -> WindowHints&;
 
@@ -41,6 +42,7 @@ private:
     bool maximized_{false};
     bool center_cursor_{true};
     bool transparent_framebuffer_{false};
+    bool focus_on_show_{true};
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ContextVersion context_version_{1, 0};
 
