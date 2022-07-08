@@ -146,4 +146,10 @@ auto WindowHints::aux_buffers(const int value /*= 0*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::samples(const int value /*= 0*/) -> WindowHints&
+{
+    samples_ = value;
+    return *this;
+}
+
 }  // namespace glfwcxx

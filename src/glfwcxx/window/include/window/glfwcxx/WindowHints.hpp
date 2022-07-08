@@ -45,6 +45,7 @@ public:
     auto accum_blue_bits(const int value = 0) -> WindowHints&;
     auto accum_alpha_bits(const int value = 0) -> WindowHints&;
     auto aux_buffers(const int value = 0) -> WindowHints&;
+    auto samples(const int value = 0) -> WindowHints&;
 
 private:
     bool resizable_{true};
@@ -71,6 +72,7 @@ private:
     int accum_blue_bits_{0};
     int accum_alpha_bits_{0};
     int aux_buffers_{0};
+    int samples_{0};
 
     friend class Window;
 };
