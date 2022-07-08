@@ -16,12 +16,14 @@ class WindowHints {
 public:
     auto resizable(const bool value = true) -> WindowHints&;
     auto visible(const bool value = true) -> WindowHints&;
+    auto decorated(const bool value = true) -> WindowHints&;
     auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
     auto context_version(const ContextVersion& value) -> WindowHints&;
 
 private:
     bool resizable_{true};
     bool visible_{true};
+    bool decorated_{true};
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ContextVersion context_version_{1, 0};
 

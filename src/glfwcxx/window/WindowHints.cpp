@@ -14,6 +14,12 @@ auto WindowHints::visible(const bool value /*= true*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::decorated(const bool value /*= true*/) -> WindowHints&
+{
+    decorated_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;
