@@ -128,6 +128,12 @@ auto WindowHints::context_creation_api(const ContextCreationAPI& value /*= Conte
     return *this;
 }
 
+auto WindowHints::context_robustness(const ContextRobustness& value /*= ContextRobustness::NO_ROBUSTNESS*/) -> WindowHints&
+{
+    context_robustness_ = value;
+    return *this;
+}
+
 auto WindowHints::context_version(const ContextVersion& value /*= {1, 0}*/) -> WindowHints&
 {
     context_version_ = value;

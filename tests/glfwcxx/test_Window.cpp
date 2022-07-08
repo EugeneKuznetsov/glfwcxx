@@ -291,6 +291,24 @@ TEST_F(glfwcxx_window, successfully_created_with_context_creation_api_osmesa_win
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_creation_api(api), {{GLFW_CONTEXT_CREATION_API, GLFW_OSMESA_CONTEXT_API}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_context_robustness_no_robustness_window_hint_without_underlying_call)
+{
+    const auto& robustness = glfwcxx::ContextRobustness::NO_ROBUSTNESS;
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_robustness(robustness), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_context_robustness_no_reset_notification_window_hint)
+{
+    const auto& robustness = glfwcxx::ContextRobustness::NO_RESET_NOTIFICATION;
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_robustness(robustness), {{GLFW_CONTEXT_ROBUSTNESS, GLFW_NO_RESET_NOTIFICATION}});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_context_robustness_lose_context_on_reset_window_hint)
+{
+    const auto& robustness = glfwcxx::ContextRobustness::LOSE_CONTEXT_ON_RESET;
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_robustness(robustness), {{GLFW_CONTEXT_ROBUSTNESS, GLFW_LOSE_CONTEXT_ON_RESET}});
+}
+
 TEST_F(glfwcxx_window, successfully_created_with_context_version_window_hint_without_underlying_call)
 {
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_version(), {});

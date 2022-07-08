@@ -10,6 +10,8 @@ enum class ClientAPI : int { NO_API = 0, OPENGL = 0x00030001, OPENGL_ES = 0x0003
 
 enum class ContextCreationAPI : int { NATIVE = 0x00036001, EGL = 0x00036002, OSMESA = 0x00036003 };
 
+enum class ContextRobustness : int { NO_ROBUSTNESS = 0, NO_RESET_NOTIFICATION = 0x00031001, LOSE_CONTEXT_ON_RESET = 0x00031002 };
+
 struct ContextVersion {
     int major;
     int minor;
@@ -46,6 +48,7 @@ public:
     auto opengl_profile(const OpenGLProfile& value = OpenGLProfile::ANY_PROFILE) -> WindowHints&;
     auto client_api(const ClientAPI& value = ClientAPI::OPENGL) -> WindowHints&;
     auto context_creation_api(const ContextCreationAPI& value = ContextCreationAPI::NATIVE) -> WindowHints&;
+    auto context_robustness(const ContextRobustness& value = ContextRobustness::NO_ROBUSTNESS) -> WindowHints&;
     auto context_version(const ContextVersion& value = {1, 0}) -> WindowHints&;
     auto red_bits(const int value = 8) -> WindowHints&;
     auto green_bits(const int value = 8) -> WindowHints&;
@@ -83,6 +86,7 @@ private:
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ClientAPI client_api_{ClientAPI::OPENGL};
     ContextCreationAPI context_creation_api_{ContextCreationAPI::NATIVE};
+    ContextRobustness context_robustness_{ContextRobustness::NO_ROBUSTNESS};
     ContextVersion context_version_{1, 0};
     int red_bits_{8};
     int green_bits_{8};

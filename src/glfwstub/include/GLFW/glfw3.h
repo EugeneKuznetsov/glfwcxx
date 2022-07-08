@@ -41,6 +41,7 @@ static constexpr int GLFW_DOUBLEBUFFER = 0x00021010;
 static constexpr int GLFW_CLIENT_API = 0x00022001;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
+static constexpr int GLFW_CONTEXT_ROBUSTNESS = 0x00022003;
 static constexpr int GLFW_OPENGL_FORWARD_COMPAT = 0x00022006;
 static constexpr int GLFW_OPENGL_DEBUG_CONTEXT = 0x00022007;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
@@ -52,6 +53,10 @@ static constexpr int GLFW_COCOA_GRAPHICS_SWITCHING = 0x00023003;
 static constexpr int GLFW_NO_API = 0;
 static constexpr int GLFW_OPENGL_API = 0x00030001;
 static constexpr int GLFW_OPENGL_ES_API = 0x00030002;
+
+static constexpr int GLFW_NO_ROBUSTNESS = 0;
+static constexpr int GLFW_NO_RESET_NOTIFICATION = 0x00031001;
+static constexpr int GLFW_LOSE_CONTEXT_ON_RESET = 0x00031002;
 
 static constexpr int GLFW_OPENGL_ANY_PROFILE = 0;
 static constexpr int GLFW_OPENGL_CORE_PROFILE = 0x00032001;
