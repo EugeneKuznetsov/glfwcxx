@@ -197,6 +197,16 @@ TEST_F(glfwcxx_window, successfully_created_with_doublebuffer_window_hint_set_to
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.doublebuffer(false), {{GLFW_DOUBLEBUFFER, GLFW_FALSE}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_opengl_forward_compat_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_forward_compat(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_opengl_forward_compat_window_hint_set_to_true)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_forward_compat(true), {{GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE}});
+}
+
 TEST_F(glfwcxx_window, successfully_created_with_opengl_any_profile_window_hint_without_underlying_call)
 {
     const auto& profile = glfwcxx::OpenGLProfile::ANY_PROFILE;

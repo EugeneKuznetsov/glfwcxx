@@ -80,9 +80,15 @@ auto WindowHints::srgb_capable(const bool value /*= false*/) -> WindowHints&
     return *this;
 }
 
-auto WindowHints::doublebuffer(const bool value /*= false*/) -> WindowHints&
+auto WindowHints::doublebuffer(const bool value /*= true*/) -> WindowHints&
 {
     doublebuffer_ = value;
+    return *this;
+}
+
+auto WindowHints::opengl_forward_compat(const bool value /*= false*/) -> WindowHints&
+{
+    opengl_forward_compat_ = value;
     return *this;
 }
 

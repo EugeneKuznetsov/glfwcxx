@@ -114,6 +114,9 @@ auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.doublebuffer_ != hints.doublebuffer_)
         glfwWindowHint(GLFW_DOUBLEBUFFER, hints.doublebuffer_ ? GLFW_TRUE : GLFW_FALSE);
+
+    if (default_window_hints_.opengl_forward_compat_ != hints.opengl_forward_compat_)
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, hints.opengl_forward_compat_ ? GLFW_TRUE : GLFW_FALSE);
 }
 
 auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
