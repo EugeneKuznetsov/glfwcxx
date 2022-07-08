@@ -50,6 +50,12 @@ auto WindowHints::center_cursor(const bool value /*= true*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::transparent_framebuffer(const bool value /*= false*/) -> WindowHints&
+{
+    transparent_framebuffer_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;

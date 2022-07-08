@@ -18,6 +18,7 @@ static constexpr int GLFW_AUTO_ICONIFY = 0x00020006;
 static constexpr int GLFW_FLOATING = 0x00020007;
 static constexpr int GLFW_MAXIMIZED = 0x00020008;
 static constexpr int GLFW_CENTER_CURSOR = 0x00020009;
+static constexpr int GLFW_TRANSPARENT_FRAMEBUFFER = 0x0002000A;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;

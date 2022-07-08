@@ -27,6 +27,7 @@ public:
     auto floating(const bool value = false) -> WindowHints&;
     auto maximized(const bool value = false) -> WindowHints&;
     auto center_cursor(const bool value = true) -> WindowHints&;
+    auto transparent_framebuffer(const bool value = false) -> WindowHints&;
     auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
     auto context_version(const ContextVersion& value) -> WindowHints&;
 
@@ -39,6 +40,7 @@ private:
     bool floating_{false};
     bool maximized_{false};
     bool center_cursor_{true};
+    bool transparent_framebuffer_{false};
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ContextVersion context_version_{1, 0};
 
