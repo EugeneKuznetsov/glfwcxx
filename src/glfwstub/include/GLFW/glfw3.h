@@ -16,6 +16,7 @@ static constexpr int GLFW_VISIBLE = 0x00020004;
 static constexpr int GLFW_DECORATED = 0x00020005;
 static constexpr int GLFW_AUTO_ICONIFY = 0x00020006;
 static constexpr int GLFW_FLOATING = 0x00020007;
+static constexpr int GLFW_MAXIMIZED = 0x00020008;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
