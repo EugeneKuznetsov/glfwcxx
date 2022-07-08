@@ -92,6 +92,12 @@ auto WindowHints::opengl_forward_compat(const bool value /*= false*/) -> WindowH
     return *this;
 }
 
+auto WindowHints::opengl_debug_context(const bool value /*= false*/) -> WindowHints&
+{
+    opengl_debug_context_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;

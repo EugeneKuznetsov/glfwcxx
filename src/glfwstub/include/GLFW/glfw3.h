@@ -41,6 +41,7 @@ static constexpr int GLFW_DOUBLEBUFFER = 0x00021010;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_FORWARD_COMPAT = 0x00022006;
+static constexpr int GLFW_OPENGL_DEBUG_CONTEXT = 0x00022007;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
 static constexpr int GLFW_SCALE_TO_MONITOR = 0x0002200C;
 

@@ -36,6 +36,7 @@ public:
     auto srgb_capable(const bool value = false) -> WindowHints&;
     auto doublebuffer(const bool value = true) -> WindowHints&;
     auto opengl_forward_compat(const bool value = false) -> WindowHints&;
+    auto opengl_debug_context(const bool value = false) -> WindowHints&;
     auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
     auto context_version(const ContextVersion& value = {1, 0}) -> WindowHints&;
     auto red_bits(const int value = 8) -> WindowHints&;
@@ -68,6 +69,7 @@ private:
     bool srgb_capable_{false};
     bool doublebuffer_{true};
     bool opengl_forward_compat_{false};
+    bool opengl_debug_context_{false};
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ContextVersion context_version_{1, 0};
     int red_bits_{8};
