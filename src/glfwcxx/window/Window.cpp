@@ -105,6 +105,9 @@ auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.scale_to_monitor_ != hints.scale_to_monitor_)
         glfwWindowHint(GLFW_SCALE_TO_MONITOR, hints.scale_to_monitor_ ? GLFW_TRUE : GLFW_FALSE);
+
+    if (default_window_hints_.stereo_ != hints.stereo_)
+        glfwWindowHint(GLFW_STEREO, hints.stereo_ ? GLFW_TRUE : GLFW_FALSE);
 }
 
 auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void

@@ -68,6 +68,12 @@ auto WindowHints::scale_to_monitor(const bool value /*= false*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::stereo(const bool value /*= false*/) -> WindowHints&
+{
+    stereo_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;
