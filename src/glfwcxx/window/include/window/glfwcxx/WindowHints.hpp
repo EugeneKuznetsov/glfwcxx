@@ -33,6 +33,7 @@ public:
     auto focus_on_show(const bool value = true) -> WindowHints&;
     auto scale_to_monitor(const bool value = false) -> WindowHints&;
     auto stereo(const bool value = false) -> WindowHints&;
+    auto srgb_capable(const bool value = false) -> WindowHints&;
     auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
     auto context_version(const ContextVersion& value = {1, 0}) -> WindowHints&;
     auto red_bits(const int value = 8) -> WindowHints&;
@@ -62,6 +63,7 @@ private:
     bool focus_on_show_{true};
     bool scale_to_monitor_{false};
     bool stereo_{false};
+    bool srgb_capable_{false};
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ContextVersion context_version_{1, 0};
     int red_bits_{8};

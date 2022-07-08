@@ -35,6 +35,7 @@ static constexpr int GLFW_ACCUM_ALPHA_BITS = 0x0002100A;
 static constexpr int GLFW_AUX_BUFFERS = 0x0002100B;
 static constexpr int GLFW_STEREO = 0x0002100C;
 static constexpr int GLFW_SAMPLES = 0x0002100D;
+static constexpr int GLFW_SRGB_CAPABLE = 0x0002100D;
 static constexpr int GLFW_REFRESH_RATE = 0x0002100F;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
