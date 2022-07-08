@@ -116,4 +116,28 @@ auto WindowHints::stencil_bits(const int value /*= 8*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::accum_red_bits(const int value /*= 0*/) -> WindowHints&
+{
+    accum_red_bits_ = value;
+    return *this;
+}
+
+auto WindowHints::accum_green_bits(const int value /*= 0*/) -> WindowHints&
+{
+    accum_green_bits_ = value;
+    return *this;
+}
+
+auto WindowHints::accum_blue_bits(const int value /*= 0*/) -> WindowHints&
+{
+    accum_blue_bits_ = value;
+    return *this;
+}
+
+auto WindowHints::accum_alpha_bits(const int value /*= 0*/) -> WindowHints&
+{
+    accum_alpha_bits_ = value;
+    return *this;
+}
+
 }  // namespace glfwcxx

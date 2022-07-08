@@ -40,6 +40,10 @@ public:
     auto alpha_bits(const int value = 8) -> WindowHints&;
     auto depth_bits(const int value = 24) -> WindowHints&;
     auto stencil_bits(const int value = 8) -> WindowHints&;
+    auto accum_red_bits(const int value = 0) -> WindowHints&;
+    auto accum_green_bits(const int value = 0) -> WindowHints&;
+    auto accum_blue_bits(const int value = 0) -> WindowHints&;
+    auto accum_alpha_bits(const int value = 0) -> WindowHints&;
 
 private:
     bool resizable_{true};
@@ -61,6 +65,10 @@ private:
     int alpha_bits_{8};
     int depth_bits_{24};
     int stencil_bits_{8};
+    int accum_red_bits_{0};
+    int accum_green_bits_{0};
+    int accum_blue_bits_{0};
+    int accum_alpha_bits_{0};
 
     friend class Window;
 };

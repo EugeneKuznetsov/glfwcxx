@@ -255,6 +255,46 @@ TEST_F(glfwcxx_window, successfully_created_with_stencil_bits_dont_care_window_h
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.stencil_bits(glfwcxx::DONT_CARE), {{GLFW_STENCIL_BITS, GLFW_DONT_CARE}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_accum_red_bits_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_red_bits(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_accum_red_bits_dont_care_window_hint)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_red_bits(glfwcxx::DONT_CARE), {{GLFW_ACCUM_RED_BITS, GLFW_DONT_CARE}});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_accum_green_bits_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_green_bits(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_accum_green_bits_dont_care_window_hint)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_green_bits(glfwcxx::DONT_CARE), {{GLFW_ACCUM_GREEN_BITS, GLFW_DONT_CARE}});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_accum_blue_bits_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_blue_bits(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_accum_blue_bits_dont_care_window_hint)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_blue_bits(glfwcxx::DONT_CARE), {{GLFW_ACCUM_BLUE_BITS, GLFW_DONT_CARE}});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_accum_alpha_bits_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_alpha_bits(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_accum_alpha_bits_dont_care_window_hint)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_alpha_bits(glfwcxx::DONT_CARE), {{GLFW_ACCUM_ALPHA_BITS, GLFW_DONT_CARE}});
+}
+
 TEST_F(glfwcxx_window, should_poll_events_successfully)
 {
     auto callback_works = false;

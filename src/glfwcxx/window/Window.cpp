@@ -131,6 +131,18 @@ auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.stencil_bits_ != hints.stencil_bits_)
         glfwWindowHint(GLFW_STENCIL_BITS, hints.stencil_bits_);
+
+    if (default_window_hints_.accum_red_bits_ != hints.accum_red_bits_)
+        glfwWindowHint(GLFW_ACCUM_RED_BITS, hints.accum_red_bits_);
+
+    if (default_window_hints_.accum_green_bits_ != hints.accum_green_bits_)
+        glfwWindowHint(GLFW_ACCUM_GREEN_BITS, hints.accum_green_bits_);
+
+    if (default_window_hints_.accum_blue_bits_ != hints.accum_blue_bits_)
+        glfwWindowHint(GLFW_ACCUM_BLUE_BITS, hints.accum_blue_bits_);
+
+    if (default_window_hints_.accum_alpha_bits_ != hints.accum_alpha_bits_)
+        glfwWindowHint(GLFW_ACCUM_ALPHA_BITS, hints.accum_alpha_bits_);
 }
 
 auto Window::setup_preset_window_hints(const WindowHints& hints) -> void
