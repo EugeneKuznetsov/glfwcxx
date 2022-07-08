@@ -37,6 +37,7 @@ public:
     auto red_bits(const int value = 8) -> WindowHints&;
     auto green_bits(const int value = 8) -> WindowHints&;
     auto blue_bits(const int value = 8) -> WindowHints&;
+    auto alpha_bits(const int value = 8) -> WindowHints&;
 
 private:
     bool resizable_{true};
@@ -55,6 +56,7 @@ private:
     int red_bits_{8};
     int green_bits_{8};
     int blue_bits_{8};
+    int alpha_bits_{8};
 
     friend class Window;
 };
