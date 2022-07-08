@@ -104,6 +104,12 @@ auto WindowHints::cocoa_retina_framebuffer(const bool value /*= true*/) -> Windo
     return *this;
 }
 
+auto WindowHints::cocoa_graphics_switching(const bool value /*= false*/) -> WindowHints&
+{
+    cocoa_graphics_switching_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;

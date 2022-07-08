@@ -45,6 +45,7 @@ static constexpr int GLFW_OPENGL_DEBUG_CONTEXT = 0x00022007;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
 static constexpr int GLFW_SCALE_TO_MONITOR = 0x0002200C;
 static constexpr int GLFW_COCOA_RETINA_FRAMEBUFFER = 0x00023001;
+static constexpr int GLFW_COCOA_GRAPHICS_SWITCHING = 0x00023003;
 
 static constexpr int GLFW_OPENGL_ANY_PROFILE = 0;
 static constexpr int GLFW_OPENGL_CORE_PROFILE = 0x00032001;
