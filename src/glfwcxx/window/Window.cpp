@@ -40,12 +40,15 @@ auto Window::create_window(const WindowSize& size, const std::string& title) -> 
 
 auto Window::create_window(const WindowSize& size, const std::string& title, const WindowHints& hints) -> std::unique_ptr<Window>
 {
-    if (default_window_hints_.profile != hints.profile)
-        glfwWindowHint(GLFW_OPENGL_PROFILE, static_cast<int>(hints.profile));
+    if (default_window_hints_.resizable_ != hints.resizable_)
+        glfwWindowHint(GLFW_RESIZABLE, hints.resizable_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.version != hints.version) {
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, hints.version.major);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, hints.version.minor);
+    if (default_window_hints_.opengl_profile_ != hints.opengl_profile_)
+        glfwWindowHint(GLFW_OPENGL_PROFILE, static_cast<int>(hints.opengl_profile_));
+
+    if (default_window_hints_.context_version_ != hints.context_version_) {
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, hints.context_version_.major);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, hints.context_version_.minor);
     }
 
     return std::unique_ptr<Window>{new Window{size, title}};

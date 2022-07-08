@@ -10,9 +10,14 @@ static constexpr int GLFW_COCOA_MENUBAR = 0x00051002;
 static constexpr int GLFW_NO_ERROR = 0;
 static constexpr int GLFW_NOT_INITIALIZED = 0x00010001;
 
+static constexpr int GLFW_RESIZABLE = 0x00020003;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
+
+static constexpr int GLFW_OPENGL_ANY_PROFILE = 0;
+static constexpr int GLFW_OPENGL_CORE_PROFILE = 0x00032001;
+static constexpr int GLFW_OPENGL_COMPAT_PROFILE = 0x00032002;
 
 struct GLFWmonitor;
 struct GLFWwindow;

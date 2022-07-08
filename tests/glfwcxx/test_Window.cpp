@@ -1,6 +1,8 @@
 #include <list>
 #include <utility>
 
+#include <GLFW/glfw3.h>
+
 #include <gtest/gtest.h>
 
 #include <glfwcxx/Window.hpp>
@@ -18,14 +20,6 @@ public:
             EXPECT_TRUE(glfwcxx::WindowStub::window_hint_applied(expected_hint.first, expected_hint.second));
     }
 };
-
-static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
-static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
-static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
-
-static constexpr int GLFW_OPENGL_ANY_PROFILE = 0;
-static constexpr int GLFW_OPENGL_CORE_PROFILE = 0x00032001;
-static constexpr int GLFW_OPENGL_COMPAT_PROFILE = 0x00032002;
 
 TEST_F(glfwcxx_window, throws_runtime_error_when_cannot_be_created_due_to_error)
 {
@@ -61,6 +55,16 @@ TEST_F(glfwcxx_window, successfully_created_with_predefined_default_window_hints
     ASSERT_NO_THROW(static_cast<void>(glfwcxx::Window::create_window({123, 456}, "abc")));
     EXPECT_TRUE(glfwcxx::WindowStub::created_window_with_arguments(123, 456, "abc", nullptr, nullptr));
     ASSERT_EQ(glfwcxx::WindowStub::window_hint_applied_count(), 0);
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_resizable_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.resizable(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_resizable_window_hint_set_to_false)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.resizable(false), {{GLFW_RESIZABLE, GLFW_FALSE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_opengl_any_profile_window_hint_without_underlying_call)

@@ -12,12 +12,18 @@ struct ContextVersion {
     auto operator!=(const ContextVersion& other) const -> bool { return !(*this == other); }
 };
 
-struct WindowHints {
-    OpenGLProfile profile{OpenGLProfile::ANY_PROFILE};
-    ContextVersion version{1, 0};
-
+class WindowHints {
+public:
+    auto resizable(const bool value = true) -> WindowHints&;
     auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
     auto context_version(const ContextVersion& value) -> WindowHints&;
+
+private:
+    bool resizable_{true};
+    OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
+    ContextVersion context_version_{1, 0};
+
+    friend class Window;
 };
 
 struct WindowSize {
