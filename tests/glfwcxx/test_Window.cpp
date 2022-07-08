@@ -273,6 +273,24 @@ TEST_F(glfwcxx_window, successfully_created_with_client_api_no_api_window_hint)
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.client_api(api), {{GLFW_CLIENT_API, GLFW_NO_API}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_context_creation_api_native_window_hint_without_underlying_call)
+{
+    const auto& api = glfwcxx::ContextCreationAPI::NATIVE;
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_creation_api(api), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_context_creation_api_egl_window_hint)
+{
+    const auto& api = glfwcxx::ContextCreationAPI::EGL;
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_creation_api(api), {{GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API}});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_context_creation_api_osmesa_window_hint)
+{
+    const auto& api = glfwcxx::ContextCreationAPI::OSMESA;
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_creation_api(api), {{GLFW_CONTEXT_CREATION_API, GLFW_OSMESA_CONTEXT_API}});
+}
+
 TEST_F(glfwcxx_window, successfully_created_with_context_version_window_hint_without_underlying_call)
 {
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_version(), {});

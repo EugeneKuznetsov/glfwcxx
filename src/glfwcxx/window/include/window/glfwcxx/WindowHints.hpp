@@ -8,6 +8,8 @@ enum class OpenGLProfile : int { ANY_PROFILE = 0, CORE_PROFILE = 0x00032001, COM
 
 enum class ClientAPI : int { NO_API = 0, OPENGL = 0x00030001, OPENGL_ES = 0x00030002 };
 
+enum class ContextCreationAPI : int { NATIVE = 0x00036001, EGL = 0x00036002, OSMESA = 0x00036003 };
+
 struct ContextVersion {
     int major;
     int minor;
@@ -43,6 +45,7 @@ public:
     auto cocoa_graphics_switching(const bool value = false) -> WindowHints&;
     auto opengl_profile(const OpenGLProfile& value = OpenGLProfile::ANY_PROFILE) -> WindowHints&;
     auto client_api(const ClientAPI& value = ClientAPI::OPENGL) -> WindowHints&;
+    auto context_creation_api(const ContextCreationAPI& value = ContextCreationAPI::NATIVE) -> WindowHints&;
     auto context_version(const ContextVersion& value = {1, 0}) -> WindowHints&;
     auto red_bits(const int value = 8) -> WindowHints&;
     auto green_bits(const int value = 8) -> WindowHints&;
@@ -79,6 +82,7 @@ private:
     bool cocoa_graphics_switching_{false};
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ClientAPI client_api_{ClientAPI::OPENGL};
+    ContextCreationAPI context_creation_api_{ContextCreationAPI::NATIVE};
     ContextVersion context_version_{1, 0};
     int red_bits_{8};
     int green_bits_{8};

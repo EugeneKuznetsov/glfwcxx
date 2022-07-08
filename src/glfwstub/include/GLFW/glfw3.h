@@ -44,6 +44,7 @@ static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_FORWARD_COMPAT = 0x00022006;
 static constexpr int GLFW_OPENGL_DEBUG_CONTEXT = 0x00022007;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
+static constexpr int GLFW_CONTEXT_CREATION_API = 0x0002200B;
 static constexpr int GLFW_SCALE_TO_MONITOR = 0x0002200C;
 static constexpr int GLFW_COCOA_RETINA_FRAMEBUFFER = 0x00023001;
 static constexpr int GLFW_COCOA_GRAPHICS_SWITCHING = 0x00023003;
@@ -55,6 +56,10 @@ static constexpr int GLFW_OPENGL_ES_API = 0x00030002;
 static constexpr int GLFW_OPENGL_ANY_PROFILE = 0;
 static constexpr int GLFW_OPENGL_CORE_PROFILE = 0x00032001;
 static constexpr int GLFW_OPENGL_COMPAT_PROFILE = 0x00032002;
+
+static constexpr int GLFW_NATIVE_CONTEXT_API = 0x00036001;
+static constexpr int GLFW_EGL_CONTEXT_API = 0x00036002;
+static constexpr int GLFW_OSMESA_CONTEXT_API = 0x00036003;
 
 struct GLFWmonitor;
 struct GLFWwindow;

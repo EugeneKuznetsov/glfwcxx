@@ -122,6 +122,12 @@ auto WindowHints::client_api(const ClientAPI& value /*= ClientAPI::OPENGL*/) -> 
     return *this;
 }
 
+auto WindowHints::context_creation_api(const ContextCreationAPI& value /*= ContextCreationAPI::NATIVE*/) -> WindowHints&
+{
+    context_creation_api_ = value;
+    return *this;
+}
+
 auto WindowHints::context_version(const ContextVersion& value /*= {1, 0}*/) -> WindowHints&
 {
     context_version_ = value;

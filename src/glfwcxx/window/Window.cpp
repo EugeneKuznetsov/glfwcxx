@@ -182,6 +182,9 @@ auto Window::setup_preset_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.client_api_ != hints.client_api_)
         glfwWindowHint(GLFW_CLIENT_API, static_cast<int>(hints.client_api_));
+
+    if (default_window_hints_.context_creation_api_ != hints.context_creation_api_)
+        glfwWindowHint(GLFW_CONTEXT_CREATION_API, static_cast<int>(hints.context_creation_api_));
 }
 
 Window::WindowDetails::WindowDetails(const WindowSize& size, const std::string& title)
