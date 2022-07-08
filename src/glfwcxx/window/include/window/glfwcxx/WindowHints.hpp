@@ -36,6 +36,7 @@ public:
     auto context_version(const ContextVersion& value = {1, 0}) -> WindowHints&;
     auto red_bits(const int value = 8) -> WindowHints&;
     auto green_bits(const int value = 8) -> WindowHints&;
+    auto blue_bits(const int value = 8) -> WindowHints&;
 
 private:
     bool resizable_{true};
@@ -53,6 +54,7 @@ private:
     ContextVersion context_version_{1, 0};
     int red_bits_{8};
     int green_bits_{8};
+    int blue_bits_{8};
 
     friend class Window;
 };

@@ -24,6 +24,7 @@ static constexpr int GLFW_TRANSPARENT_FRAMEBUFFER = 0x0002000A;
 static constexpr int GLFW_FOCUS_ON_SHOW = 0x0002000C;
 static constexpr int GLFW_RED_BITS = 0x00021001;
 static constexpr int GLFW_GREEN_BITS = 0x00021002;
+static constexpr int GLFW_BLUE_BITS = 0x00021003;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;

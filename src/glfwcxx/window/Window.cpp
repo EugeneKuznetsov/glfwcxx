@@ -119,6 +119,9 @@ auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.green_bits_ != hints.green_bits_)
         glfwWindowHint(GLFW_GREEN_BITS, hints.green_bits_);
+
+    if (default_window_hints_.blue_bits_ != hints.blue_bits_)
+        glfwWindowHint(GLFW_BLUE_BITS, hints.blue_bits_);
 }
 
 auto Window::setup_preset_window_hints(const WindowHints& hints) -> void
