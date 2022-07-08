@@ -295,6 +295,16 @@ TEST_F(glfwcxx_window, successfully_created_with_accum_alpha_bits_dont_care_wind
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_alpha_bits(glfwcxx::DONT_CARE), {{GLFW_ACCUM_ALPHA_BITS, GLFW_DONT_CARE}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_aux_buffers_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.aux_buffers(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_aux_buffers_dont_care_window_hint)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.aux_buffers(glfwcxx::DONT_CARE), {{GLFW_AUX_BUFFERS, GLFW_DONT_CARE}});
+}
+
 TEST_F(glfwcxx_window, should_poll_events_successfully)
 {
     auto callback_works = false;

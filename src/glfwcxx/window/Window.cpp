@@ -143,6 +143,9 @@ auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.accum_alpha_bits_ != hints.accum_alpha_bits_)
         glfwWindowHint(GLFW_ACCUM_ALPHA_BITS, hints.accum_alpha_bits_);
+
+    if (default_window_hints_.aux_buffers_ != hints.aux_buffers_)
+        glfwWindowHint(GLFW_AUX_BUFFERS, hints.aux_buffers_);
 }
 
 auto Window::setup_preset_window_hints(const WindowHints& hints) -> void

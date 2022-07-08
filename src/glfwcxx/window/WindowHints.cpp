@@ -140,4 +140,10 @@ auto WindowHints::accum_alpha_bits(const int value /*= 0*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::aux_buffers(const int value /*= 0*/) -> WindowHints&
+{
+    aux_buffers_ = value;
+    return *this;
+}
+
 }  // namespace glfwcxx
