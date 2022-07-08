@@ -104,4 +104,10 @@ auto WindowHints::alpha_bits(const int value /*= 8*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::depth_bits(const int value /*= 24*/) -> WindowHints&
+{
+    depth_bits_ = value;
+    return *this;
+}
+
 }  // namespace glfwcxx
