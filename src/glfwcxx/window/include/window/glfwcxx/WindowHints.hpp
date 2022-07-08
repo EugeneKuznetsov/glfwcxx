@@ -23,6 +23,7 @@ public:
     auto visible(const bool value = true) -> WindowHints&;
     auto decorated(const bool value = true) -> WindowHints&;
     auto focused(const bool value = true) -> WindowHints&;
+    auto auto_iconify(const bool value = true) -> WindowHints&;
     auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
     auto context_version(const ContextVersion& value) -> WindowHints&;
 
@@ -31,6 +32,7 @@ private:
     bool visible_{true};
     bool decorated_{true};
     bool focused_{true};
+    bool auto_iconify_{true};
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ContextVersion context_version_{1, 0};
 

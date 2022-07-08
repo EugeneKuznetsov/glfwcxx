@@ -26,6 +26,12 @@ auto WindowHints::focused(const bool value /*= true*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::auto_iconify(const bool value /*= true*/) -> WindowHints&
+{
+    auto_iconify_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;
