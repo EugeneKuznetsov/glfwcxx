@@ -73,6 +73,8 @@ public:
     auto samples(const int value = 0) -> WindowHints&;
     auto refresh_rate(const int value = DONT_CARE) -> WindowHints&;
     auto cocoa_frame_name(const std::string& value = {}) -> WindowHints&;
+    auto x11_class_name(const std::string& value = {}) -> WindowHints&;
+    auto x11_instance_name(const std::string& value = {}) -> WindowHints&;
 
 private:
     bool resizable_{true};
@@ -113,6 +115,8 @@ private:
     int samples_{0};
     int refresh_rate_{DONT_CARE};
     std::string cocoa_frame_name_{};
+    std::string x11_class_name_{};
+    std::string x11_instance_name_{};
 
     friend class Window;
 };

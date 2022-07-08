@@ -181,6 +181,12 @@ auto Window::setup_string_window_hints(const WindowHints& hints) -> void
 {
     if (default_window_hints_.cocoa_frame_name_ != hints.cocoa_frame_name_)
         glfwWindowHintString(GLFW_COCOA_FRAME_NAME, hints.cocoa_frame_name_.c_str());
+
+    if (default_window_hints_.x11_class_name_ != hints.x11_class_name_)
+        glfwWindowHintString(GLFW_X11_CLASS_NAME, hints.x11_class_name_.c_str());
+
+    if (default_window_hints_.x11_instance_name_ != hints.x11_instance_name_)
+        glfwWindowHintString(GLFW_X11_INSTANCE_NAME, hints.x11_instance_name_.c_str());
 }
 
 auto Window::setup_preset_window_hints(const WindowHints& hints) -> void

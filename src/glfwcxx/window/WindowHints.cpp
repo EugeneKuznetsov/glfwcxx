@@ -231,4 +231,16 @@ auto WindowHints::cocoa_frame_name(const std::string& value /*= {}*/) -> WindowH
     return *this;
 }
 
+auto WindowHints::x11_class_name(const std::string& value /*= {}*/) -> WindowHints&
+{
+    x11_class_name_ = value;
+    return *this;
+}
+
+auto WindowHints::x11_instance_name(const std::string& value /*= {}*/) -> WindowHints&
+{
+    x11_instance_name_ = value;
+    return *this;
+}
+
 }  // namespace glfwcxx

@@ -51,6 +51,8 @@ static constexpr int GLFW_SCALE_TO_MONITOR = 0x0002200C;
 static constexpr int GLFW_COCOA_RETINA_FRAMEBUFFER = 0x00023001;
 static constexpr int GLFW_COCOA_FRAME_NAME = 0x00023002;
 static constexpr int GLFW_COCOA_GRAPHICS_SWITCHING = 0x00023003;
+static constexpr int GLFW_X11_CLASS_NAME = 0x00024001;
+static constexpr int GLFW_X11_INSTANCE_NAME = 0x00024002;
 
 static constexpr int GLFW_NO_API = 0;
 static constexpr int GLFW_OPENGL_API = 0x00030001;

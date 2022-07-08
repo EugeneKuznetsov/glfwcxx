@@ -490,6 +490,26 @@ TEST_F(glfwcxx_window, successfully_created_with_cocoa_frame_name_abcd_window_hi
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.cocoa_frame_name("abcd"), {{GLFW_COCOA_FRAME_NAME, "abcd"}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_x11_class_name_empty_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.x11_class_name(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_x11_class_name_abcd_window_hint)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.x11_class_name("abcd"), {{GLFW_X11_CLASS_NAME, "abcd"}});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_x11_instance_name_empty_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.x11_instance_name(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_x11_instance_name_abcd_window_hint)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.x11_instance_name("abcd"), {{GLFW_X11_INSTANCE_NAME, "abcd"}});
+}
+
 TEST_F(glfwcxx_window, should_poll_events_successfully)
 {
     auto callback_works = false;
