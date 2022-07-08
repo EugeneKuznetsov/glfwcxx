@@ -80,6 +80,12 @@ auto WindowHints::srgb_capable(const bool value /*= false*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::doublebuffer(const bool value /*= false*/) -> WindowHints&
+{
+    doublebuffer_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;

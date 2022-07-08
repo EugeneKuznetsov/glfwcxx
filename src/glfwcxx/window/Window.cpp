@@ -111,6 +111,9 @@ auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.srgb_capable_ != hints.srgb_capable_)
         glfwWindowHint(GLFW_SRGB_CAPABLE, hints.srgb_capable_ ? GLFW_TRUE : GLFW_FALSE);
+
+    if (default_window_hints_.doublebuffer_ != hints.doublebuffer_)
+        glfwWindowHint(GLFW_DOUBLEBUFFER, hints.doublebuffer_ ? GLFW_TRUE : GLFW_FALSE);
 }
 
 auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
