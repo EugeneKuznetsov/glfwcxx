@@ -120,6 +120,9 @@ auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.opengl_debug_context_ != hints.opengl_debug_context_)
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, hints.opengl_debug_context_ ? GLFW_TRUE : GLFW_FALSE);
+
+    if (default_window_hints_.cocoa_retina_framebuffer_ != hints.cocoa_retina_framebuffer_)
+        glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, hints.cocoa_retina_framebuffer_ ? GLFW_TRUE : GLFW_FALSE);
 }
 
 auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void

@@ -217,6 +217,16 @@ TEST_F(glfwcxx_window, successfully_created_with_opengl_debug_context_window_hin
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_debug_context(true), {{GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_cocoa_retina_framebuffer_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.cocoa_retina_framebuffer(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_cocoa_retina_framebuffer_window_hint_set_to_false)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.cocoa_retina_framebuffer(false), {{GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_FALSE}});
+}
+
 TEST_F(glfwcxx_window, successfully_created_with_opengl_any_profile_window_hint_without_underlying_call)
 {
     const auto& profile = glfwcxx::OpenGLProfile::ANY_PROFILE;

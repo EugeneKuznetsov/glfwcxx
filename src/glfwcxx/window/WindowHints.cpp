@@ -98,6 +98,12 @@ auto WindowHints::opengl_debug_context(const bool value /*= false*/) -> WindowHi
     return *this;
 }
 
+auto WindowHints::cocoa_retina_framebuffer(const bool value /*= true*/) -> WindowHints&
+{
+    cocoa_retina_framebuffer_ = value;
+    return *this;
+}
+
 auto WindowHints::opengl_profile(const OpenGLProfile& value) -> WindowHints&
 {
     opengl_profile_ = value;
