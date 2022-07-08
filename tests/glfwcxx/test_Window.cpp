@@ -205,6 +205,16 @@ TEST_F(glfwcxx_window, successfully_created_with_red_bits_dont_care_window_hint)
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.red_bits(glfwcxx::DONT_CARE), {{GLFW_RED_BITS, GLFW_DONT_CARE}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_green_bits_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.green_bits(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_green_bits_dont_care_window_hint)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.green_bits(glfwcxx::DONT_CARE), {{GLFW_GREEN_BITS, GLFW_DONT_CARE}});
+}
+
 TEST_F(glfwcxx_window, should_poll_events_successfully)
 {
     auto callback_works = false;

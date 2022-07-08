@@ -86,4 +86,10 @@ auto WindowHints::red_bits(const int value /*= 8*/) -> WindowHints&
     return *this;
 }
 
+auto WindowHints::green_bits(const int value /*= 8*/) -> WindowHints&
+{
+    green_bits_ = value;
+    return *this;
+}
+
 }  // namespace glfwcxx

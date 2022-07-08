@@ -35,6 +35,7 @@ public:
     auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
     auto context_version(const ContextVersion& value = {1, 0}) -> WindowHints&;
     auto red_bits(const int value = 8) -> WindowHints&;
+    auto green_bits(const int value = 8) -> WindowHints&;
 
 private:
     bool resizable_{true};
@@ -51,6 +52,7 @@ private:
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ContextVersion context_version_{1, 0};
     int red_bits_{8};
+    int green_bits_{8};
 
     friend class Window;
 };
