@@ -80,4 +80,10 @@ auto WindowHints::context_version(const ContextVersion& value /*= {1, 0}*/) -> W
     return *this;
 }
 
+auto WindowHints::red_bits(const int value /*= 8*/) -> WindowHints&
+{
+    red_bits_ = value;
+    return *this;
+}
+
 }  // namespace glfwcxx

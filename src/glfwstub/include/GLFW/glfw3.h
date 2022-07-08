@@ -7,6 +7,8 @@ static constexpr int GLFW_JOYSTICK_HAT_BUTTONS = 0x00050001;
 static constexpr int GLFW_COCOA_CHDIR_RESOURCES = 0x00051001;
 static constexpr int GLFW_COCOA_MENUBAR = 0x00051002;
 
+static constexpr int GLFW_DONT_CARE = -1;
+
 static constexpr int GLFW_NO_ERROR = 0;
 static constexpr int GLFW_NOT_INITIALIZED = 0x00010001;
 
@@ -20,6 +22,7 @@ static constexpr int GLFW_MAXIMIZED = 0x00020008;
 static constexpr int GLFW_CENTER_CURSOR = 0x00020009;
 static constexpr int GLFW_TRANSPARENT_FRAMEBUFFER = 0x0002000A;
 static constexpr int GLFW_FOCUS_ON_SHOW = 0x0002000C;
+static constexpr int GLFW_RED_BITS = 0x00021001;
 static constexpr int GLFW_CONTEXT_VERSION_MAJOR = 0x00022002;
 static constexpr int GLFW_CONTEXT_VERSION_MINOR = 0x00022003;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;

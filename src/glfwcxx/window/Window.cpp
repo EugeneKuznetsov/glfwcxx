@@ -113,6 +113,10 @@ auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, hints.context_version_.major);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, hints.context_version_.minor);
     }
+
+    if (default_window_hints_.red_bits_ != hints.red_bits_) {
+        glfwWindowHint(GLFW_RED_BITS, hints.red_bits_);
+    }
 }
 
 auto Window::setup_preset_window_hints(const WindowHints& hints) -> void

@@ -2,6 +2,8 @@
 
 namespace glfwcxx {
 
+static constexpr int DONT_CARE = -1;
+
 enum class OpenGLProfile : int { ANY_PROFILE = 0, CORE_PROFILE = 0x00032001, COMPAT_PROFILE = 0x00032002 };
 
 struct ContextVersion {
@@ -32,6 +34,7 @@ public:
     auto scale_to_monitor(const bool value = false) -> WindowHints&;
     auto opengl_profile(const OpenGLProfile& value) -> WindowHints&;
     auto context_version(const ContextVersion& value = {1, 0}) -> WindowHints&;
+    auto red_bits(const int value = 8) -> WindowHints&;
 
 private:
     bool resizable_{true};
@@ -47,6 +50,7 @@ private:
     bool scale_to_monitor_{false};
     OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
     ContextVersion context_version_{1, 0};
+    int red_bits_{8};
 
     friend class Window;
 };
