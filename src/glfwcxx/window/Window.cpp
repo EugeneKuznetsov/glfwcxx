@@ -55,6 +55,9 @@ auto Window::create_window(const WindowSize& size, const std::string& title, con
     if (default_window_hints_.auto_iconify_ != hints.auto_iconify_)
         glfwWindowHint(GLFW_AUTO_ICONIFY, hints.auto_iconify_ ? GLFW_TRUE : GLFW_FALSE);
 
+    if (default_window_hints_.floating_ != hints.floating_)
+        glfwWindowHint(GLFW_FLOATING, hints.floating_ ? GLFW_TRUE : GLFW_FALSE);
+
     if (default_window_hints_.opengl_profile_ != hints.opengl_profile_)
         glfwWindowHint(GLFW_OPENGL_PROFILE, static_cast<int>(hints.opengl_profile_));
 

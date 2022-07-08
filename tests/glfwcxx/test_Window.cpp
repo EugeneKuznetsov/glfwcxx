@@ -107,6 +107,16 @@ TEST_F(glfwcxx_window, successfully_created_with_auto_iconify_window_hint_set_to
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.auto_iconify(false), {{GLFW_AUTO_ICONIFY, GLFW_FALSE}});
 }
 
+TEST_F(glfwcxx_window, successfully_created_with_floating_window_hint_without_underlying_call)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.floating(), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_floating_window_hint_set_to_false)
+{
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.floating(true), {{GLFW_FLOATING, GLFW_TRUE}});
+}
+
 TEST_F(glfwcxx_window, successfully_created_with_opengl_any_profile_window_hint_without_underlying_call)
 {
     const auto& profile = glfwcxx::OpenGLProfile::ANY_PROFILE;
