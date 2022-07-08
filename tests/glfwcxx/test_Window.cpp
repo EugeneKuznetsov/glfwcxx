@@ -309,6 +309,28 @@ TEST_F(glfwcxx_window, successfully_created_with_context_robustness_lose_context
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_robustness(robustness), {{GLFW_CONTEXT_ROBUSTNESS, GLFW_LOSE_CONTEXT_ON_RESET}});
 }
 
+//--
+TEST_F(glfwcxx_window, successfully_created_with_context_release_behavior_any_release_behavior_window_hint_without_underlying_call)
+{
+    const auto& behavior = glfwcxx::ContextReleaseBehavior::ANY_RELEASE_BEHAVIOR;
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_release_behavior(behavior), {});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_context_release_behavior_flush_window_hint)
+{
+    const auto& behavior = glfwcxx::ContextReleaseBehavior::RELEASE_BEHAVIOR_FLUSH;
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_release_behavior(behavior),
+                      {{GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_RELEASE_BEHAVIOR_FLUSH}});
+}
+
+TEST_F(glfwcxx_window, successfully_created_with_context_release_behavior_none_window_hint)
+{
+    const auto& behavior = glfwcxx::ContextReleaseBehavior::RELEASE_BEHAVIOR_NONE;
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_release_behavior(behavior),
+                      {{GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_RELEASE_BEHAVIOR_NONE}});
+}
+//--
+
 TEST_F(glfwcxx_window, successfully_created_with_context_version_window_hint_without_underlying_call)
 {
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_version(), {});

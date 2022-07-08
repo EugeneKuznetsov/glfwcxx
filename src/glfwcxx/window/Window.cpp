@@ -188,6 +188,9 @@ auto Window::setup_preset_window_hints(const WindowHints& hints) -> void
 
     if (default_window_hints_.context_robustness_ != hints.context_robustness_)
         glfwWindowHint(GLFW_CONTEXT_ROBUSTNESS, static_cast<int>(hints.context_robustness_));
+
+    if (default_window_hints_.context_release_behavior_ != hints.context_release_behavior_)
+        glfwWindowHint(GLFW_CONTEXT_RELEASE_BEHAVIOR, static_cast<int>(hints.context_release_behavior_));
 }
 
 Window::WindowDetails::WindowDetails(const WindowSize& size, const std::string& title)

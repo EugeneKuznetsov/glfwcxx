@@ -45,6 +45,7 @@ static constexpr int GLFW_CONTEXT_ROBUSTNESS = 0x00022003;
 static constexpr int GLFW_OPENGL_FORWARD_COMPAT = 0x00022006;
 static constexpr int GLFW_OPENGL_DEBUG_CONTEXT = 0x00022007;
 static constexpr int GLFW_OPENGL_PROFILE = 0x00022008;
+static constexpr int GLFW_CONTEXT_RELEASE_BEHAVIOR = 0x00022008;
 static constexpr int GLFW_CONTEXT_CREATION_API = 0x0002200B;
 static constexpr int GLFW_SCALE_TO_MONITOR = 0x0002200C;
 static constexpr int GLFW_COCOA_RETINA_FRAMEBUFFER = 0x00023001;
@@ -61,6 +62,10 @@ static constexpr int GLFW_LOSE_CONTEXT_ON_RESET = 0x00031002;
 static constexpr int GLFW_OPENGL_ANY_PROFILE = 0;
 static constexpr int GLFW_OPENGL_CORE_PROFILE = 0x00032001;
 static constexpr int GLFW_OPENGL_COMPAT_PROFILE = 0x00032002;
+
+static constexpr int GLFW_ANY_RELEASE_BEHAVIOR = 0;
+static constexpr int GLFW_RELEASE_BEHAVIOR_FLUSH = 0x00035001;
+static constexpr int GLFW_RELEASE_BEHAVIOR_NONE = 0x00035002;
 
 static constexpr int GLFW_NATIVE_CONTEXT_API = 0x00036001;
 static constexpr int GLFW_EGL_CONTEXT_API = 0x00036002;

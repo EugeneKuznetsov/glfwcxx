@@ -12,6 +12,12 @@ enum class ContextCreationAPI : int { NATIVE = 0x00036001, EGL = 0x00036002, OSM
 
 enum class ContextRobustness : int { NO_ROBUSTNESS = 0, NO_RESET_NOTIFICATION = 0x00031001, LOSE_CONTEXT_ON_RESET = 0x00031002 };
 
+enum class ContextReleaseBehavior : int {
+    ANY_RELEASE_BEHAVIOR = 0,
+    RELEASE_BEHAVIOR_FLUSH = 0x00035001,
+    RELEASE_BEHAVIOR_NONE = 0x00035002
+};
+
 struct ContextVersion {
     int major;
     int minor;
@@ -49,6 +55,7 @@ public:
     auto client_api(const ClientAPI& value = ClientAPI::OPENGL) -> WindowHints&;
     auto context_creation_api(const ContextCreationAPI& value = ContextCreationAPI::NATIVE) -> WindowHints&;
     auto context_robustness(const ContextRobustness& value = ContextRobustness::NO_ROBUSTNESS) -> WindowHints&;
+    auto context_release_behavior(const ContextReleaseBehavior& value = ContextReleaseBehavior::ANY_RELEASE_BEHAVIOR) -> WindowHints&;
     auto context_version(const ContextVersion& value = {1, 0}) -> WindowHints&;
     auto red_bits(const int value = 8) -> WindowHints&;
     auto green_bits(const int value = 8) -> WindowHints&;
@@ -87,6 +94,7 @@ private:
     ClientAPI client_api_{ClientAPI::OPENGL};
     ContextCreationAPI context_creation_api_{ContextCreationAPI::NATIVE};
     ContextRobustness context_robustness_{ContextRobustness::NO_ROBUSTNESS};
+    ContextReleaseBehavior context_release_behavior_{ContextReleaseBehavior::ANY_RELEASE_BEHAVIOR};
     ContextVersion context_version_{1, 0};
     int red_bits_{8};
     int green_bits_{8};

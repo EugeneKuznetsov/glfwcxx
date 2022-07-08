@@ -134,6 +134,13 @@ auto WindowHints::context_robustness(const ContextRobustness& value /*= ContextR
     return *this;
 }
 
+auto WindowHints::context_release_behavior(const ContextReleaseBehavior& value /*= ContextReleaseBehavior::ANY_RELEASE_BEHAVIOR*/)
+    -> WindowHints&
+{
+    context_release_behavior_ = value;
+    return *this;
+}
+
 auto WindowHints::context_version(const ContextVersion& value /*= {1, 0}*/) -> WindowHints&
 {
     context_version_ = value;
