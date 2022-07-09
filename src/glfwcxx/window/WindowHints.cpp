@@ -1,5 +1,15 @@
 #include "glfwcxx/WindowHints.hpp"
 
+#include <GLFW/glfw3.h>
+
+#define HINT_CASE(glfwcxx_key, glfw_key) \
+    case glfwcxx_key:                    \
+        return glfw_key;
+
+#define HINT_CASE_DEFAULT() \
+    default:                \
+        return -1;
+
 namespace glfwcxx {
 
 auto WindowHints::resizable(const bool value /*= true*/) -> WindowHints&
@@ -241,6 +251,104 @@ auto WindowHints::x11_instance_name(const std::string& value /*= {}*/) -> Window
 {
     x11_instance_name_ = value;
     return *this;
+}
+
+auto glfw_hint_key(const WindowHintsKeys& key) -> int
+{
+    switch (key) {
+        HINT_CASE(WindowHintsKeys::RESIZABLE, GLFW_RESIZABLE)
+        HINT_CASE(WindowHintsKeys::VISIBLE, GLFW_VISIBLE)
+        HINT_CASE(WindowHintsKeys::DECORATED, GLFW_DECORATED)
+        HINT_CASE(WindowHintsKeys::FOCUSED, GLFW_FOCUSED)
+        HINT_CASE(WindowHintsKeys::AUTO_ICONIFY, GLFW_AUTO_ICONIFY)
+        HINT_CASE(WindowHintsKeys::FLOATING, GLFW_FLOATING)
+        HINT_CASE(WindowHintsKeys::MAXIMIZED, GLFW_MAXIMIZED)
+        HINT_CASE(WindowHintsKeys::CENTER_CURSOR, GLFW_CENTER_CURSOR)
+        HINT_CASE(WindowHintsKeys::TRANSPARENT_FRAMEBUFFER, GLFW_TRANSPARENT_FRAMEBUFFER)
+        HINT_CASE(WindowHintsKeys::FOCUS_ON_SHOW, GLFW_FOCUS_ON_SHOW)
+        HINT_CASE(WindowHintsKeys::SCALE_TO_MONITOR, GLFW_SCALE_TO_MONITOR)
+        HINT_CASE(WindowHintsKeys::STEREO, GLFW_STEREO)
+        HINT_CASE(WindowHintsKeys::SRGB_CAPABLE, GLFW_SRGB_CAPABLE)
+        HINT_CASE(WindowHintsKeys::DOUBLEBUFFER, GLFW_DOUBLEBUFFER)
+        HINT_CASE(WindowHintsKeys::OPENGL_FORWARD_COMPAT, GLFW_OPENGL_FORWARD_COMPAT)
+        HINT_CASE(WindowHintsKeys::OPENGL_DEBUG_CONTEXT, GLFW_OPENGL_DEBUG_CONTEXT)
+        HINT_CASE(WindowHintsKeys::COCOA_RETINA_FRAMEBUFFER, GLFW_COCOA_RETINA_FRAMEBUFFER)
+        HINT_CASE(WindowHintsKeys::COCOA_GRAPHICS_SWITCHING, GLFW_COCOA_GRAPHICS_SWITCHING)
+        HINT_CASE(WindowHintsKeys::OPENGL_PROFILE, GLFW_OPENGL_PROFILE)
+        HINT_CASE(WindowHintsKeys::CLIENT_API, GLFW_CLIENT_API)
+        HINT_CASE(WindowHintsKeys::CONTEXT_CREATION_API, GLFW_CONTEXT_CREATION_API)
+        HINT_CASE(WindowHintsKeys::CONTEXT_ROBUSTNESS, GLFW_CONTEXT_ROBUSTNESS)
+        HINT_CASE(WindowHintsKeys::CONTEXT_RELEASE_BEHAVIOR, GLFW_CONTEXT_RELEASE_BEHAVIOR)
+        HINT_CASE(WindowHintsKeys::CONTEXT_VERSION_MAJOR, GLFW_CONTEXT_VERSION_MAJOR)
+        HINT_CASE(WindowHintsKeys::CONTEXT_VERSION_MINOR, GLFW_CONTEXT_VERSION_MINOR)
+        HINT_CASE(WindowHintsKeys::RED_BITS, GLFW_RED_BITS)
+        HINT_CASE(WindowHintsKeys::GREEN_BITS, GLFW_GREEN_BITS)
+        HINT_CASE(WindowHintsKeys::BLUE_BITS, GLFW_BLUE_BITS)
+        HINT_CASE(WindowHintsKeys::ALPHA_BITS, GLFW_ALPHA_BITS)
+        HINT_CASE(WindowHintsKeys::DEPTH_BITS, GLFW_DEPTH_BITS)
+        HINT_CASE(WindowHintsKeys::STENCIL_BITS, GLFW_STENCIL_BITS)
+        HINT_CASE(WindowHintsKeys::ACCUM_RED_BITS, GLFW_ACCUM_RED_BITS)
+        HINT_CASE(WindowHintsKeys::ACCUM_GREEN_BITS, GLFW_ACCUM_GREEN_BITS)
+        HINT_CASE(WindowHintsKeys::ACCUM_BLUE_BITS, GLFW_ACCUM_BLUE_BITS)
+        HINT_CASE(WindowHintsKeys::ACCUM_ALPHA_BITS, GLFW_ACCUM_ALPHA_BITS)
+        HINT_CASE(WindowHintsKeys::AUX_BUFFERS, GLFW_AUX_BUFFERS)
+        HINT_CASE(WindowHintsKeys::SAMPLES, GLFW_SAMPLES)
+        HINT_CASE(WindowHintsKeys::REFRESH_RATE, GLFW_REFRESH_RATE)
+        HINT_CASE(WindowHintsKeys::COCOA_FRAME_NAME, GLFW_COCOA_FRAME_NAME)
+        HINT_CASE(WindowHintsKeys::X11_CLASS_NAME, GLFW_X11_CLASS_NAME)
+        HINT_CASE(WindowHintsKeys::X11_INSTANCE_NAME, GLFW_X11_INSTANCE_NAME)
+        HINT_CASE_DEFAULT()
+    }
+}
+
+auto glfw_hint_value(const OpenGLProfile& value) -> int
+{
+    switch (value) {
+        HINT_CASE(OpenGLProfile::ANY_PROFILE, GLFW_OPENGL_ANY_PROFILE);
+        HINT_CASE(OpenGLProfile::CORE_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        HINT_CASE(OpenGLProfile::COMPAT_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+        HINT_CASE_DEFAULT()
+    }
+}
+
+auto glfw_hint_value(const ClientAPI& value) -> int
+{
+    switch (value) {
+        HINT_CASE(ClientAPI::NO_API, GLFW_NO_API);
+        HINT_CASE(ClientAPI::OPENGL, GLFW_OPENGL_API);
+        HINT_CASE(ClientAPI::OPENGL_ES, GLFW_OPENGL_ES_API);
+        HINT_CASE_DEFAULT()
+    }
+}
+
+auto glfw_hint_value(const ContextCreationAPI& value) -> int
+{
+    switch (value) {
+        HINT_CASE(ContextCreationAPI::NATIVE, GLFW_NATIVE_CONTEXT_API);
+        HINT_CASE(ContextCreationAPI::EGL, GLFW_EGL_CONTEXT_API);
+        HINT_CASE(ContextCreationAPI::OSMESA, GLFW_OSMESA_CONTEXT_API);
+        HINT_CASE_DEFAULT()
+    }
+}
+
+auto glfw_hint_value(const ContextRobustness& value) -> int
+{
+    switch (value) {
+        HINT_CASE(ContextRobustness::NO_ROBUSTNESS, GLFW_NO_ROBUSTNESS);
+        HINT_CASE(ContextRobustness::NO_RESET_NOTIFICATION, GLFW_NO_RESET_NOTIFICATION);
+        HINT_CASE(ContextRobustness::LOSE_CONTEXT_ON_RESET, GLFW_LOSE_CONTEXT_ON_RESET);
+        HINT_CASE_DEFAULT()
+    }
+}
+
+auto glfw_hint_value(const ContextReleaseBehavior& value) -> int
+{
+    switch (value) {
+        HINT_CASE(ContextReleaseBehavior::ANY_RELEASE_BEHAVIOR, GLFW_ANY_RELEASE_BEHAVIOR);
+        HINT_CASE(ContextReleaseBehavior::RELEASE_BEHAVIOR_FLUSH, GLFW_RELEASE_BEHAVIOR_FLUSH);
+        HINT_CASE(ContextReleaseBehavior::RELEASE_BEHAVIOR_NONE, GLFW_RELEASE_BEHAVIOR_NONE);
+        HINT_CASE_DEFAULT()
+    }
 }
 
 }  // namespace glfwcxx

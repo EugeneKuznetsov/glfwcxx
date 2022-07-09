@@ -6,19 +6,59 @@ namespace glfwcxx {
 
 static constexpr int DONT_CARE = -1;
 
-enum class OpenGLProfile : int { ANY_PROFILE = 0, CORE_PROFILE = 0x00032001, COMPAT_PROFILE = 0x00032002 };
-
-enum class ClientAPI : int { NO_API = 0, OPENGL = 0x00030001, OPENGL_ES = 0x00030002 };
-
-enum class ContextCreationAPI : int { NATIVE = 0x00036001, EGL = 0x00036002, OSMESA = 0x00036003 };
-
-enum class ContextRobustness : int { NO_ROBUSTNESS = 0, NO_RESET_NOTIFICATION = 0x00031001, LOSE_CONTEXT_ON_RESET = 0x00031002 };
-
-enum class ContextReleaseBehavior : int {
-    ANY_RELEASE_BEHAVIOR = 0,
-    RELEASE_BEHAVIOR_FLUSH = 0x00035001,
-    RELEASE_BEHAVIOR_NONE = 0x00035002
+enum class WindowHintsKeys {
+    RESIZABLE,
+    VISIBLE,
+    DECORATED,
+    FOCUSED,
+    AUTO_ICONIFY,
+    FLOATING,
+    MAXIMIZED,
+    CENTER_CURSOR,
+    TRANSPARENT_FRAMEBUFFER,
+    FOCUS_ON_SHOW,
+    SCALE_TO_MONITOR,
+    STEREO,
+    SRGB_CAPABLE,
+    DOUBLEBUFFER,
+    OPENGL_FORWARD_COMPAT,
+    OPENGL_DEBUG_CONTEXT,
+    COCOA_RETINA_FRAMEBUFFER,
+    COCOA_GRAPHICS_SWITCHING,
+    OPENGL_PROFILE,
+    CLIENT_API,
+    CONTEXT_CREATION_API,
+    CONTEXT_ROBUSTNESS,
+    CONTEXT_RELEASE_BEHAVIOR,
+    CONTEXT_VERSION_MAJOR,
+    CONTEXT_VERSION_MINOR,
+    RED_BITS,
+    GREEN_BITS,
+    BLUE_BITS,
+    ALPHA_BITS,
+    DEPTH_BITS,
+    STENCIL_BITS,
+    ACCUM_RED_BITS,
+    ACCUM_GREEN_BITS,
+    ACCUM_BLUE_BITS,
+    ACCUM_ALPHA_BITS,
+    AUX_BUFFERS,
+    SAMPLES,
+    REFRESH_RATE,
+    COCOA_FRAME_NAME,
+    X11_CLASS_NAME,
+    X11_INSTANCE_NAME
 };
+
+enum class OpenGLProfile { ANY_PROFILE, CORE_PROFILE, COMPAT_PROFILE };
+
+enum class ClientAPI { NO_API, OPENGL, OPENGL_ES };
+
+enum class ContextCreationAPI { NATIVE, EGL, OSMESA };
+
+enum class ContextRobustness { NO_ROBUSTNESS, NO_RESET_NOTIFICATION, LOSE_CONTEXT_ON_RESET };
+
+enum class ContextReleaseBehavior { ANY_RELEASE_BEHAVIOR, RELEASE_BEHAVIOR_FLUSH, RELEASE_BEHAVIOR_NONE };
 
 struct ContextVersion {
     int major;
@@ -120,5 +160,12 @@ private:
 
     friend class Window;
 };
+
+auto glfw_hint_key(const WindowHintsKeys& key) -> int;
+auto glfw_hint_value(const OpenGLProfile& value) -> int;
+auto glfw_hint_value(const ClientAPI& value) -> int;
+auto glfw_hint_value(const ContextCreationAPI& value) -> int;
+auto glfw_hint_value(const ContextRobustness& value) -> int;
+auto glfw_hint_value(const ContextReleaseBehavior& value) -> int;
 
 }  // namespace glfwcxx
