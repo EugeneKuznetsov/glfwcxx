@@ -1,7 +1,7 @@
 function(add_glfwcxx_target)
     set(options)
     set(oneValueArgs GLFWCXX_TARGET_NAME)
-    set(multiValueArgs TARGET_SOURCES PRIVATE_DEPENDENCY_TARGETS)
+    set(multiValueArgs TARGET_SOURCES PRIVATE_DEPENDENCY_TARGETS PRIVATE_INCLUDE_DIRECTORIES)
     cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     set(GLFWCXX_TARGET ${ARG_GLFWCXX_TARGET_NAME})
@@ -12,6 +12,10 @@ function(add_glfwcxx_target)
     target_include_directories(
         ${GLFWCXX_OBJECT_TARGET}
         PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include/${GLFWCXX_TARGET}>)
+    foreach(DEPENDENCY_INCLUDE_DIRECTORY IN LISTS ARG_PRIVATE_INCLUDE_DIRECTORIES)
+        target_include_directories(${GLFWCXX_OBJECT_TARGET}
+                                   PRIVATE $<BUILD_INTERFACE:${DEPENDENCY_INCLUDE_DIRECTORY}>)
+    endforeach()
     foreach(DEPENDENCY_TARGET IN LISTS ARG_PRIVATE_DEPENDENCY_TARGETS)
         if(NOT TARGET ${DEPENDENCY_TARGET})
             message(FATAL_ERROR "${DEPENDENCY_TARGET} is not a real target")
@@ -35,7 +39,7 @@ endfunction()
 function(add_glfwcxx_stub_target)
     set(options)
     set(oneValueArgs GLFWCXX_TARGET_NAME)
-    set(multiValueArgs TARGET_SOURCES PRIVATE_DEPENDENCY_TARGETS)
+    set(multiValueArgs TARGET_SOURCES PRIVATE_DEPENDENCY_TARGETS PUBLIC_INCLUDE_DIRECTORIES)
     cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     set(GLFWCXX_TARGET ${ARG_GLFWCXX_TARGET_NAME})
@@ -48,6 +52,10 @@ function(add_glfwcxx_stub_target)
         ${GLFWCXX_STUB_TARGET}
         PUBLIC $<TARGET_PROPERTY:${GLFWCXX_OBJECT_TARGET},INTERFACE_INCLUDE_DIRECTORIES>
                $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include/stub>)
+    foreach(DEPENDENCY_INCLUDE_DIRECTORY IN LISTS ARG_PUBLIC_INCLUDE_DIRECTORIES)
+        target_include_directories(${GLFWCXX_STUB_TARGET}
+                                   PUBLIC $<BUILD_INTERFACE:${DEPENDENCY_INCLUDE_DIRECTORY}>)
+    endforeach()
     foreach(DEPENDENCY_TARGET IN LISTS ARG_PRIVATE_DEPENDENCY_TARGETS)
         target_link_libraries(${GLFWCXX_STUB_TARGET}
                               PRIVATE $<BUILD_INTERFACE:${DEPENDENCY_TARGET}>)
@@ -66,26 +74,27 @@ function(install_glfwcxx_target)
     install(
         TARGETS ${GLFWCXX_TARGET}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        INCLUDES
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/${GLFWCXX_TARGET}/glfwcxx
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/glfwcxx)
 endfunction()
 
 function(install_glfwcxx_stub_target)
     set(options)
     set(oneValueArgs GLFWCXX_TARGET_NAME)
-    set(multiValueArgs)
+    set(multiValueArgs EXTRA_INSTALL_DIRECTORIES)
     cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-    set(GLFWCXX_STUB_TARGET ${ARG_GLFWCXX_TARGET_NAME}-stub)
+    set(GLFWCXX_TARGET ${ARG_GLFWCXX_TARGET_NAME})
+    set(GLFWCXX_STUB_TARGET ${GLFWCXX_TARGET}-stub)
     install(
         TARGETS ${GLFWCXX_STUB_TARGET}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        INCLUDES
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/stub/glfwcxx
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/glfwcxxstub)
+    foreach(EXTRA_INSTALL_DIRECTORY IN LISTS ARG_EXTRA_INSTALL_DIRECTORIES)
+        install(DIRECTORY ${EXTRA_INSTALL_DIRECTORY}
+                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/glfwcxxstub)
+    endforeach()
 endfunction()

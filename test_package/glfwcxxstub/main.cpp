@@ -5,6 +5,7 @@
 #include <glfwcxx/CoreInitHints.hpp>
 #include <glfwcxx/CoreStub.hpp>
 #include <glfwcxx/Window.hpp>
+#include <glfwcxx/WindowHelper.hpp>
 
 auto main() -> int
 {

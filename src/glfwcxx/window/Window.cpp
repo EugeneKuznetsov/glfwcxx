@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 
 #include "glfwcxx/Common.hpp"
+#include "glfwcxx/WindowHelper.hpp"
 
 namespace glfwcxx {
 
@@ -88,6 +89,8 @@ auto Window::keyboard_input(const keyboard_callback_t& callback) -> void
 
 auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 {
+    using namespace glfwcxx::helpers;
+
     if (WindowDetails::default_window_hints_.resizable_ != hints.resizable_)
         glfwWindowHint(glfw_hint_key(WindowHintsKeys::resizable), hints.resizable_ ? GLFW_TRUE : GLFW_FALSE);
 
@@ -145,6 +148,8 @@ auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 
 auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
 {
+    using namespace glfwcxx::helpers;
+
     if (WindowDetails::default_window_hints_.context_version_ != hints.context_version_) {
         glfwWindowHint(glfw_hint_key(WindowHintsKeys::context_version_major), hints.context_version_.major);
         glfwWindowHint(glfw_hint_key(WindowHintsKeys::context_version_minor), hints.context_version_.minor);
@@ -192,6 +197,8 @@ auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
 
 auto Window::setup_string_window_hints(const WindowHints& hints) -> void
 {
+    using namespace glfwcxx::helpers;
+
     if (WindowDetails::default_window_hints_.cocoa_frame_name_ != hints.cocoa_frame_name_)
         glfwWindowHintString(glfw_hint_key(WindowHintsKeys::cocoa_frame_name), hints.cocoa_frame_name_.c_str());
 
@@ -204,6 +211,8 @@ auto Window::setup_string_window_hints(const WindowHints& hints) -> void
 
 auto Window::setup_preset_window_hints(const WindowHints& hints) -> void
 {
+    using namespace glfwcxx::helpers;
+
     if (WindowDetails::default_window_hints_.opengl_profile_ != hints.opengl_profile_)
         glfwWindowHint(glfw_hint_key(WindowHintsKeys::opengl_profile), glfw_hint_value(hints.opengl_profile_));
 

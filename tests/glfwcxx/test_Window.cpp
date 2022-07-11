@@ -317,13 +317,13 @@ TEST_F(glfwcxx_window, successfully_created_with_opengl_any_profile_window_hint_
 
 TEST_F(glfwcxx_window, successfully_created_with_opengl_core_profile_window_hint)
 {
-    const auto& profile = glfwcxx::OpenGLProfile::core_profile;
+    const auto& profile = glfwcxx::OpenGLProfile::core;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_profile(profile), {{GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_opengl_compat_profile_window_hint)
 {
-    const auto& profile = glfwcxx::OpenGLProfile::compat_profile;
+    const auto& profile = glfwcxx::OpenGLProfile::compat;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_profile(profile), {{GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE}});
 }
 
