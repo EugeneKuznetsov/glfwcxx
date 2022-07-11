@@ -44,21 +44,21 @@ class GLFWCXX(ConanFile):
         self.cpp_info.names["cmake_find_package"] = "glfwcxx"
 
         self.add_component(name="common", requires=["glfw::glfw"])
-        self.add_component(name="common-stub", defines=["GLFWCXX_STUB"])
+        self.add_component(name="common-stub", include_dirs=["include/glfwcxx", "include/glfwcxxstub"])
 
         self.add_component(name="core", requires=["common"])
-        self.add_component(name="core-stub", requires=["common-stub"], defines=["GLFWCXX_STUB"])
+        self.add_component(name="core-stub", requires=["common-stub"], include_dirs=["include/glfwcxx", "include/glfwcxxstub"])
 
         self.add_component(name="window", requires=["common"])
-        self.add_component(name="window-stub", requires=["common-stub"], defines=["GLFWCXX_STUB"])
+        self.add_component(name="window-stub", requires=["common-stub"], include_dirs=["include/glfwcxx", "include/glfwcxxstub"])
 
         self.deps_cpp_info["glfw"].include_paths.clear()
 
-    def add_component(self, name, requires = [], defines = []):
+    def add_component(self, name, requires = [], include_dirs = ["include/glfwcxx"]):
         self.cpp_info.components[name].names["cmake_find_package"] = name
         self.cpp_info.components[name].libs = [name]
         self.cpp_info.components[name].requires = requires
-        self.cpp_info.components[name].defines = defines
+        self.cpp_info.components[name].includedirs = include_dirs
 
     @property
     def cmake(self):
