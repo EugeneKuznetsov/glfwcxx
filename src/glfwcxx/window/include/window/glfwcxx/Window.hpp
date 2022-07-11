@@ -50,7 +50,6 @@ private:
 
 private:
     std::unique_ptr<WindowDetails> window_;
-    static const WindowHints default_window_hints_;
 };
 
 }  // namespace glfwcxx
