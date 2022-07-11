@@ -210,6 +210,8 @@ static constexpr int GLFW_MOD_NUM_LOCK = 0x0020;
 struct GLFWmonitor;
 struct GLFWwindow;
 
+using GLFWkeyfun = void (*)(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 extern auto glfwGetError(const char** description) -> int;
 
 extern auto glfwInit() -> int;
@@ -224,3 +226,6 @@ extern auto glfwWindowHintString(int hint, const char* value) -> void;
 extern auto glfwPollEvents() -> void;
 extern auto glfwSwapBuffers(GLFWwindow* window) -> void;
 extern auto glfwWindowShouldClose(GLFWwindow* window) -> int;
+extern auto glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun callback) -> GLFWkeyfun;
+extern auto glfwSetWindowUserPointer(GLFWwindow* window, void* pointer) -> void;
+extern auto glfwGetWindowUserPointer(GLFWwindow* window) -> void*;

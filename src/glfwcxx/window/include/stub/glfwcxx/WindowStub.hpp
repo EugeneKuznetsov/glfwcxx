@@ -8,6 +8,8 @@
 struct GLFWmonitor;
 struct GLFWwindow;
 
+using GLFWkeyfun = void (*)(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 extern auto glfwCreateWindow(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> GLFWwindow*;
 extern auto glfwDestroyWindow(GLFWwindow* window) -> void;
 extern auto glfwMakeContextCurrent(GLFWwindow* window) -> void;
@@ -16,6 +18,9 @@ extern auto glfwWindowHintString(int hint, const char* value) -> void;
 extern auto glfwPollEvents() -> void;
 extern auto glfwSwapBuffers(GLFWwindow* window) -> void;
 extern auto glfwWindowShouldClose(GLFWwindow* window) -> int;
+extern auto glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun callback) -> GLFWkeyfun;
+extern auto glfwSetWindowUserPointer(GLFWwindow* window, void* pointer) -> void;
+extern auto glfwGetWindowUserPointer(GLFWwindow* window) -> void*;
 
 namespace glfwcxx {
 
@@ -30,7 +35,7 @@ public:
     static auto create_window_failure() -> void;
     static auto make_context_current_failure() -> void;
     static auto close_window() -> void;
-    static auto keyboard_input(int key, std::set<int> modifiers, int action) -> void;
+    static auto keyboard_input(int key, int action, std::set<int> modifiers) -> void;
 
     static auto created_window_with_arguments(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> bool;
     static auto window_int_hint_applied_count() -> std::size_t;
@@ -58,6 +63,8 @@ private:
     static std::size_t swap_buffers_call_count_;
     static bool close_window_;
     static callback_function_t poll_events_callback_;
+    static GLFWkeyfun keyboard_callback_;
+    static void* window_user_pointer_;
 
     friend auto ::glfwCreateWindow(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> GLFWwindow*;
     friend auto ::glfwDestroyWindow(GLFWwindow* window) -> void;
@@ -67,6 +74,9 @@ private:
     friend auto ::glfwPollEvents() -> void;
     friend auto ::glfwSwapBuffers(GLFWwindow* window) -> void;
     friend auto ::glfwWindowShouldClose(GLFWwindow* window) -> int;
+    friend auto ::glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun callback) -> GLFWkeyfun;
+    friend auto ::glfwSetWindowUserPointer(GLFWwindow* window, void* pointer) -> void;
+    friend auto ::glfwGetWindowUserPointer(GLFWwindow* window) -> void*;
 };
 
 }  // namespace glfwcxx

@@ -11,6 +11,10 @@ namespace glfwcxx {
 class Window::WindowDetails {
 public:
     WindowDetails(const WindowSize& size, const std::string& title);
+    ~WindowDetails();
+
+public:
+    auto keyboard_input(const keyboard_callback_t& callback) -> void;
 
 public:
     auto glfw_window() const -> GLFWwindow*;
@@ -22,6 +26,7 @@ private:
     using Deleter = void(__cdecl&)(GLFWwindow*);
 #endif
     std::unique_ptr<GLFWwindow, Deleter> glfw_window_;
+    keyboard_callback_t keyboard_input_;
 };
 
 const WindowHints Window::default_window_hints_ = {};
@@ -73,7 +78,10 @@ auto Window::should_close() const -> bool
     return 0 != glfwWindowShouldClose(window_->glfw_window());
 }
 
-auto Window::keyboard_input(const keyboard_callback_t& /*callback*/) -> void {}
+auto Window::keyboard_input(const keyboard_callback_t& callback) -> void
+{
+    window_->keyboard_input(callback);
+}
 
 auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 {
@@ -211,10 +219,40 @@ auto Window::setup_preset_window_hints(const WindowHints& hints) -> void
 
 Window::WindowDetails::WindowDetails(const WindowSize& size, const std::string& title)
     : glfw_window_{nullptr, glfwDestroyWindow}
+    , keyboard_input_{nullptr}
 {
     glfw_window_.reset(glfwCreateWindow(size.width, size.height, title.c_str(), nullptr, nullptr));
     if (nullptr == glfw_window_)
         throw std::runtime_error("Failed to create GLFW window: " + get_last_error().second);
+}
+
+Window::WindowDetails::~WindowDetails()
+{
+    glfwSetWindowUserPointer(glfw_window(), nullptr);
+    glfwSetKeyCallback(glfw_window(), nullptr);
+}
+
+auto Window::WindowDetails::keyboard_input(const keyboard_callback_t& callback) -> void
+{
+    keyboard_input_ = callback;
+
+    glfwSetWindowUserPointer(glfw_window(), this);
+    glfwSetKeyCallback(glfw_window(), [](GLFWwindow* window, int key, int, int action, int mods) -> void {
+        auto self = static_cast<Window::WindowDetails*>(glfwGetWindowUserPointer(window));
+        using namespace glfwcxx::input;
+        std::set<KeyboardKeyModifier> modifiers;
+        const auto insert_modifier_if = [&modifiers, &mods](auto glfw_modifier, auto glfwcxx_modifier) -> void {
+            if (glfw_modifier & mods)
+                modifiers.insert(glfwcxx_modifier);
+        };
+        insert_modifier_if(GLFW_MOD_SHIFT, KeyboardKeyModifier::mod_shift);
+        insert_modifier_if(GLFW_MOD_CONTROL, KeyboardKeyModifier::mod_control);
+        insert_modifier_if(GLFW_MOD_ALT, KeyboardKeyModifier::mod_alt);
+        insert_modifier_if(GLFW_MOD_SUPER, KeyboardKeyModifier::mod_super);
+        insert_modifier_if(GLFW_MOD_CAPS_LOCK, KeyboardKeyModifier::mod_caps_lock);
+        insert_modifier_if(GLFW_MOD_NUM_LOCK, KeyboardKeyModifier::mod_num_lock);
+        self->keyboard_input_(static_cast<KeyboardKeys>(key), static_cast<KeyboardActions>(action), modifiers);
+    });
 }
 
 auto Window::WindowDetails::glfw_window() const -> GLFWwindow*

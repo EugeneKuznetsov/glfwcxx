@@ -624,7 +624,7 @@ TEST_P(glfwcxx_window_keyboard_input, should_successfully_invoke_callback)
             EXPECT_TRUE(modifiers.find(expected_modifier) != modifiers.cend());
         EXPECT_EQ(action, test_case_param.expected_action);
     });
-    glfwcxx::WindowStub::keyboard_input(test_case_param.actual_key, test_case_param.actual_modifiers, test_case_param.actual_action);
+    glfwcxx::WindowStub::keyboard_input(test_case_param.actual_key, test_case_param.actual_action, test_case_param.actual_modifiers);
     EXPECT_TRUE(invoked);
 }
 
