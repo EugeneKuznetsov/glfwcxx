@@ -1,8 +1,9 @@
 #pragma once
 
 #include <functional>
+#include <set>
 #include <string>
-#include <unordered_map>
+#include <map>
 
 struct GLFWmonitor;
 struct GLFWwindow;
@@ -18,9 +19,9 @@ extern auto glfwWindowShouldClose(GLFWwindow* window) -> int;
 
 namespace glfwcxx {
 
-using callback_function = std::function<void()>;
-using window_hints_int_map = std::unordered_map<int, int>;
-using window_hints_str_map = std::unordered_map<int, std::string>;
+using callback_function_t = std::function<void()>;
+using window_hints_int_map_t = std::map<int, int>;
+using window_hints_str_map_t = std::map<int, std::string>;
 
 class WindowStub {
 public:
@@ -29,7 +30,7 @@ public:
     static auto create_window_failure() -> void;
     static auto make_context_current_failure() -> void;
     static auto close_window() -> void;
-    static auto keyboard_input(int key, int action) -> void;
+    static auto keyboard_input(int key, std::set<int> modifiers, int action) -> void;
 
     static auto created_window_with_arguments(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> bool;
     static auto window_int_hint_applied_count() -> std::size_t;
@@ -40,7 +41,7 @@ public:
     static auto poll_events_call_count() -> std::size_t;
     static auto swap_buffers_call_count() -> std::size_t;
 
-    static auto poll_events_call_callback(callback_function callback) -> void;
+    static auto poll_events_call_callback(callback_function_t callback) -> void;
 
 private:
     static GLFWwindow* last_created_window_;
@@ -51,12 +52,12 @@ private:
     static std::string last_passed_title_;
     static GLFWmonitor* last_passed_monitor_;
     static GLFWwindow* last_passed_share_;
-    static window_hints_int_map window_int_hints_;
-    static window_hints_str_map window_str_hints_;
+    static window_hints_int_map_t window_int_hints_;
+    static window_hints_str_map_t window_str_hints_;
     static std::size_t poll_events_call_count_;
     static std::size_t swap_buffers_call_count_;
     static bool close_window_;
-    static callback_function poll_events_callback_;
+    static callback_function_t poll_events_callback_;
 
     friend auto ::glfwCreateWindow(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> GLFWwindow*;
     friend auto ::glfwDestroyWindow(GLFWwindow* window) -> void;

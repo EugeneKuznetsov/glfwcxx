@@ -61,12 +61,12 @@ int WindowStub::last_passed_height_ = -1;
 std::string WindowStub::last_passed_title_ = "";
 GLFWmonitor* WindowStub::last_passed_monitor_ = nullptr;
 GLFWwindow* WindowStub::last_passed_share_ = nullptr;
-window_hints_int_map WindowStub::window_int_hints_ = {};
-window_hints_str_map WindowStub::window_str_hints_ = {};
+window_hints_int_map_t WindowStub::window_int_hints_ = {};
+window_hints_str_map_t WindowStub::window_str_hints_ = {};
 std::size_t WindowStub::poll_events_call_count_ = 0;
 std::size_t WindowStub::swap_buffers_call_count_ = 0;
 bool WindowStub::close_window_ = false;
-callback_function WindowStub::poll_events_callback_ = nullptr;
+callback_function_t WindowStub::poll_events_callback_ = nullptr;
 
 auto WindowStub::reset() -> void
 {
@@ -102,7 +102,7 @@ auto WindowStub::close_window() -> void
     close_window_ = true;
 }
 
-auto WindowStub::keyboard_input(int /*key*/, int /*action*/) -> void {}
+auto WindowStub::keyboard_input(int /*key*/, std::set<int> /*modifiers*/, int /*action*/) -> void {}
 
 auto WindowStub::created_window_with_arguments(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> bool
 {
@@ -149,7 +149,7 @@ auto WindowStub::swap_buffers_call_count() -> std::size_t
     return swap_buffers_call_count_;
 }
 
-auto WindowStub::poll_events_call_callback(callback_function callback) -> void
+auto WindowStub::poll_events_call_callback(callback_function_t callback) -> void
 {
     poll_events_callback_ = callback;
 }

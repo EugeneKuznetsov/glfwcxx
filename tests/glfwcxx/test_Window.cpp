@@ -34,9 +34,52 @@ public:
 
 struct glfwcxx_window_keyboard_input_params {
     int actual_key;
+    std::set<int> actual_modifiers;
     int actual_action;
     glfwcxx::input::KeyboardKeys expected_key;
+    std::set<glfwcxx::input::KeyboardKeyModifier> expected_modifiers;
     glfwcxx::input::KeyboardActions expected_action;
+
+    glfwcxx_window_keyboard_input_params(int actual_key,
+                                         int actual_action,
+                                         glfwcxx::input::KeyboardKeys expected_key,
+                                         glfwcxx::input::KeyboardActions expected_action)
+        : actual_key{actual_key}
+        , actual_modifiers{}
+        , actual_action{actual_action}
+        , expected_key{expected_key}
+        , expected_modifiers{}
+        , expected_action{expected_action}
+    {
+    }
+
+    glfwcxx_window_keyboard_input_params(int actual_key,
+                                         std::set<int> actual_modifiers,
+                                         glfwcxx::input::KeyboardKeys expected_key,
+                                         std::set<glfwcxx::input::KeyboardKeyModifier> expected_modifiers)
+        : actual_key{actual_key}
+        , actual_modifiers{std::move(actual_modifiers)}
+        , actual_action{GLFW_PRESS}
+        , expected_key{expected_key}
+        , expected_modifiers{std::move(expected_modifiers)}
+        , expected_action{glfwcxx::input::KeyboardActions::press}
+    {
+    }
+
+    glfwcxx_window_keyboard_input_params(int actual_key,
+                                         std::set<int> actual_modifiers,
+                                         int actual_action,
+                                         glfwcxx::input::KeyboardKeys expected_key,
+                                         std::set<glfwcxx::input::KeyboardKeyModifier> expected_modifiers,
+                                         glfwcxx::input::KeyboardActions expected_action)
+        : actual_key{actual_key}
+        , actual_modifiers{std::move(actual_modifiers)}
+        , actual_action{actual_action}
+        , expected_key{expected_key}
+        , expected_modifiers{std::move(expected_modifiers)}
+        , expected_action{expected_action}
+    {
+    }
 };
 
 class glfwcxx_window_keyboard_input : public testing::TestWithParam<glfwcxx_window_keyboard_input_params> {
@@ -555,22 +598,35 @@ TEST_F(glfwcxx_window, should_close_returns_true_when_requested_to_close_window)
     EXPECT_TRUE(window->should_close());
 }
 
-#define _S glfwcxx_window_keyboard_input_params
-const auto should_successfully_invoke_callback_params =
-    testing::Values(_S{GLFW_KEY_ESCAPE, GLFW_PRESS, glfwcxx::input::KeyboardKeys::ESCAPE, glfwcxx::input::KeyboardActions::PRESS});
-#undef _S
+#define _ glfwcxx_window_keyboard_input_params
+const auto should_successfully_invoke_callback_key_action_params =
+    testing::Values(_{GLFW_KEY_UNKNOWN, GLFW_PRESS, glfwcxx::input::KeyboardKeys::key_unknown, glfwcxx::input::KeyboardActions::press},
+                    _{GLFW_KEY_A, GLFW_RELEASE, glfwcxx::input::KeyboardKeys::key_a, glfwcxx::input::KeyboardActions::release},
+                    _{GLFW_KEY_ESCAPE, GLFW_REPEAT, glfwcxx::input::KeyboardKeys::key_escape, glfwcxx::input::KeyboardActions::repeat});
+
+const auto should_successfully_invoke_callback_key_modifier_params =
+    testing::Values(_{GLFW_KEY_0, {GLFW_MOD_SHIFT}, glfwcxx::input::KeyboardKeys::key_0, {glfwcxx::input::KeyboardKeyModifier::mod_shift}},
+                    _{GLFW_KEY_X,
+                      {GLFW_MOD_SHIFT, GLFW_MOD_CONTROL},
+                      glfwcxx::input::KeyboardKeys::key_x,
+                      {glfwcxx::input::KeyboardKeyModifier::mod_shift, glfwcxx::input::KeyboardKeyModifier::mod_control}});
+#undef _
 
 TEST_P(glfwcxx_window_keyboard_input, should_successfully_invoke_callback)
 {
-    const auto test_case_params = GetParam();
+    const auto test_case_param = GetParam();
     bool invoked = false;
-    window_->keyboard_input([&invoked, &test_case_params](auto key, auto action) -> void {
+    window_->keyboard_input([&invoked, &test_case_param](const auto key, const auto action, const auto modifiers) -> void {
         invoked = true;
-        EXPECT_EQ(key, test_case_params.expected_key);
-        EXPECT_EQ(action, test_case_params.expected_action);
+        EXPECT_EQ(key, test_case_param.expected_key);
+        EXPECT_EQ(modifiers.size(), test_case_param.expected_modifiers.size());
+        for (const auto& expected_modifier : test_case_param.expected_modifiers)
+            EXPECT_TRUE(modifiers.find(expected_modifier) != modifiers.cend());
+        EXPECT_EQ(action, test_case_param.expected_action);
     });
-    glfwcxx::WindowStub::keyboard_input(test_case_params.actual_key, test_case_params.actual_action);
+    glfwcxx::WindowStub::keyboard_input(test_case_param.actual_key, test_case_param.actual_modifiers, test_case_param.actual_action);
     EXPECT_TRUE(invoked);
 }
 
-INSTANTIATE_TEST_SUITE_P(, glfwcxx_window_keyboard_input, should_successfully_invoke_callback_params);
+INSTANTIATE_TEST_SUITE_P(keys_actions, glfwcxx_window_keyboard_input, should_successfully_invoke_callback_key_action_params);
+INSTANTIATE_TEST_SUITE_P(keys_modifiers, glfwcxx_window_keyboard_input, should_successfully_invoke_callback_key_modifier_params);

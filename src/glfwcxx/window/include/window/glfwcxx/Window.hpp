@@ -2,24 +2,18 @@
 
 #include <functional>
 #include <memory>
+#include <set>
 #include <string>
 
+#include <glfwcxx/KeyboardInput.hpp>
 #include <glfwcxx/WindowHints.hpp>
 
 namespace glfwcxx {
 
-namespace input {
-
-enum class KeyboardKeys { ESCAPE };
-
-enum class KeyboardActions { PRESS };
-
-}  // namespace input
-
 class Window final {
     class WindowDetails;
 
-    using keyboard_callback_t = std::function<void(input::KeyboardKeys, input::KeyboardActions)>;
+    using keyboard_callback_t = std::function<void(input::KeyboardKeys, input::KeyboardActions, std::set<input::KeyboardKeyModifier>)>;
 
     Window(const Window&) = delete;
     Window& operator=(const Window&) = delete;
