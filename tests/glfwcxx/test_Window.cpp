@@ -32,6 +32,67 @@ public:
     }
 };
 
+struct glfwcxx_window_keyboard_input_params {
+    int actual_key;
+    std::set<int> actual_modifiers;
+    int actual_action;
+    glfwcxx::input::KeyboardKeys expected_key;
+    std::set<glfwcxx::input::KeyboardKeyModifier> expected_modifiers;
+    glfwcxx::input::KeyboardActions expected_action;
+
+    glfwcxx_window_keyboard_input_params(int actual_key,
+                                         int actual_action,
+                                         glfwcxx::input::KeyboardKeys expected_key,
+                                         glfwcxx::input::KeyboardActions expected_action)
+        : actual_key{actual_key}
+        , actual_modifiers{}
+        , actual_action{actual_action}
+        , expected_key{expected_key}
+        , expected_modifiers{}
+        , expected_action{expected_action}
+    {
+    }
+
+    glfwcxx_window_keyboard_input_params(int actual_key,
+                                         std::set<int> actual_modifiers,
+                                         glfwcxx::input::KeyboardKeys expected_key,
+                                         std::set<glfwcxx::input::KeyboardKeyModifier> expected_modifiers)
+        : actual_key{actual_key}
+        , actual_modifiers{std::move(actual_modifiers)}
+        , actual_action{GLFW_PRESS}
+        , expected_key{expected_key}
+        , expected_modifiers{std::move(expected_modifiers)}
+        , expected_action{glfwcxx::input::KeyboardActions::press}
+    {
+    }
+
+    glfwcxx_window_keyboard_input_params(int actual_key,
+                                         std::set<int> actual_modifiers,
+                                         int actual_action,
+                                         glfwcxx::input::KeyboardKeys expected_key,
+                                         std::set<glfwcxx::input::KeyboardKeyModifier> expected_modifiers,
+                                         glfwcxx::input::KeyboardActions expected_action)
+        : actual_key{actual_key}
+        , actual_modifiers{std::move(actual_modifiers)}
+        , actual_action{actual_action}
+        , expected_key{expected_key}
+        , expected_modifiers{std::move(expected_modifiers)}
+        , expected_action{expected_action}
+    {
+    }
+};
+
+class glfwcxx_window_keyboard_input : public testing::TestWithParam<glfwcxx_window_keyboard_input_params> {
+public:
+    auto SetUp() -> void
+    {
+        glfwcxx::WindowStub::reset();
+        window_ = glfwcxx::Window::create_window({800, 600}, "");
+    }
+
+    std::unique_ptr<glfwcxx::Window> window_{nullptr};
+};
+
 TEST_F(glfwcxx_window, throws_runtime_error_when_cannot_be_created_due_to_error)
 {
     glfwcxx::WindowStub::create_window_failure();
@@ -250,92 +311,92 @@ TEST_F(glfwcxx_window, successfully_created_with_cocoa_graphics_switching_window
 
 TEST_F(glfwcxx_window, successfully_created_with_opengl_any_profile_window_hint_without_underlying_call)
 {
-    const auto& profile = glfwcxx::OpenGLProfile::ANY_PROFILE;
+    const auto& profile = glfwcxx::OpenGLProfile::any_profile;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_profile(profile), {});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_opengl_core_profile_window_hint)
 {
-    const auto& profile = glfwcxx::OpenGLProfile::CORE_PROFILE;
+    const auto& profile = glfwcxx::OpenGLProfile::core_profile;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_profile(profile), {{GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_opengl_compat_profile_window_hint)
 {
-    const auto& profile = glfwcxx::OpenGLProfile::COMPAT_PROFILE;
+    const auto& profile = glfwcxx::OpenGLProfile::compat_profile;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.opengl_profile(profile), {{GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_client_api_opengl_window_hint_without_underlying_call)
 {
-    const auto& api = glfwcxx::ClientAPI::OPENGL;
+    const auto& api = glfwcxx::ClientAPI::opengl;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.client_api(api), {});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_client_api_opengl_es_window_hint)
 {
-    const auto& api = glfwcxx::ClientAPI::OPENGL_ES;
+    const auto& api = glfwcxx::ClientAPI::opengl_es;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.client_api(api), {{GLFW_CLIENT_API, GLFW_OPENGL_ES_API}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_client_api_no_api_window_hint)
 {
-    const auto& api = glfwcxx::ClientAPI::NO_API;
+    const auto& api = glfwcxx::ClientAPI::no_api;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.client_api(api), {{GLFW_CLIENT_API, GLFW_NO_API}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_context_creation_api_native_window_hint_without_underlying_call)
 {
-    const auto& api = glfwcxx::ContextCreationAPI::NATIVE;
+    const auto& api = glfwcxx::ContextCreationAPI::native;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_creation_api(api), {});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_context_creation_api_egl_window_hint)
 {
-    const auto& api = glfwcxx::ContextCreationAPI::EGL;
+    const auto& api = glfwcxx::ContextCreationAPI::egl;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_creation_api(api), {{GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_context_creation_api_osmesa_window_hint)
 {
-    const auto& api = glfwcxx::ContextCreationAPI::OSMESA;
+    const auto& api = glfwcxx::ContextCreationAPI::osmesa;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_creation_api(api), {{GLFW_CONTEXT_CREATION_API, GLFW_OSMESA_CONTEXT_API}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_context_robustness_no_robustness_window_hint_without_underlying_call)
 {
-    const auto& robustness = glfwcxx::ContextRobustness::NO_ROBUSTNESS;
+    const auto& robustness = glfwcxx::ContextRobustness::no_robustness;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_robustness(robustness), {});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_context_robustness_no_reset_notification_window_hint)
 {
-    const auto& robustness = glfwcxx::ContextRobustness::NO_RESET_NOTIFICATION;
+    const auto& robustness = glfwcxx::ContextRobustness::no_reset_notification;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_robustness(robustness), {{GLFW_CONTEXT_ROBUSTNESS, GLFW_NO_RESET_NOTIFICATION}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_context_robustness_lose_context_on_reset_window_hint)
 {
-    const auto& robustness = glfwcxx::ContextRobustness::LOSE_CONTEXT_ON_RESET;
+    const auto& robustness = glfwcxx::ContextRobustness::lose_context_on_reset;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_robustness(robustness), {{GLFW_CONTEXT_ROBUSTNESS, GLFW_LOSE_CONTEXT_ON_RESET}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_context_release_behavior_any_release_behavior_window_hint_without_underlying_call)
 {
-    const auto& behavior = glfwcxx::ContextReleaseBehavior::ANY_RELEASE_BEHAVIOR;
+    const auto& behavior = glfwcxx::ContextReleaseBehavior::any_release_behavior;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_release_behavior(behavior), {});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_context_release_behavior_flush_window_hint)
 {
-    const auto& behavior = glfwcxx::ContextReleaseBehavior::RELEASE_BEHAVIOR_FLUSH;
+    const auto& behavior = glfwcxx::ContextReleaseBehavior::release_behavior_flush;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_release_behavior(behavior),
                       {{GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_RELEASE_BEHAVIOR_FLUSH}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_context_release_behavior_none_window_hint)
 {
-    const auto& behavior = glfwcxx::ContextReleaseBehavior::RELEASE_BEHAVIOR_NONE;
+    const auto& behavior = glfwcxx::ContextReleaseBehavior::release_behavior_none;
     CREATE_AND_EXPECT(glfwcxx::WindowHints{}.context_release_behavior(behavior),
                       {{GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_RELEASE_BEHAVIOR_NONE}});
 }
@@ -357,7 +418,7 @@ TEST_F(glfwcxx_window, successfully_created_with_red_bits_window_hint_without_un
 
 TEST_F(glfwcxx_window, successfully_created_with_red_bits_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.red_bits(glfwcxx::DONT_CARE), {{GLFW_RED_BITS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.red_bits(glfwcxx::dont_care), {{GLFW_RED_BITS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_green_bits_window_hint_without_underlying_call)
@@ -367,7 +428,7 @@ TEST_F(glfwcxx_window, successfully_created_with_green_bits_window_hint_without_
 
 TEST_F(glfwcxx_window, successfully_created_with_green_bits_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.green_bits(glfwcxx::DONT_CARE), {{GLFW_GREEN_BITS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.green_bits(glfwcxx::dont_care), {{GLFW_GREEN_BITS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_blue_bits_window_hint_without_underlying_call)
@@ -377,7 +438,7 @@ TEST_F(glfwcxx_window, successfully_created_with_blue_bits_window_hint_without_u
 
 TEST_F(glfwcxx_window, successfully_created_with_blue_bits_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.blue_bits(glfwcxx::DONT_CARE), {{GLFW_BLUE_BITS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.blue_bits(glfwcxx::dont_care), {{GLFW_BLUE_BITS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_alpha_bits_window_hint_without_underlying_call)
@@ -387,7 +448,7 @@ TEST_F(glfwcxx_window, successfully_created_with_alpha_bits_window_hint_without_
 
 TEST_F(glfwcxx_window, successfully_created_with_alpha_bits_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.alpha_bits(glfwcxx::DONT_CARE), {{GLFW_ALPHA_BITS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.alpha_bits(glfwcxx::dont_care), {{GLFW_ALPHA_BITS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_depth_bits_window_hint_without_underlying_call)
@@ -397,7 +458,7 @@ TEST_F(glfwcxx_window, successfully_created_with_depth_bits_window_hint_without_
 
 TEST_F(glfwcxx_window, successfully_created_with_depth_bits_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.depth_bits(glfwcxx::DONT_CARE), {{GLFW_DEPTH_BITS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.depth_bits(glfwcxx::dont_care), {{GLFW_DEPTH_BITS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_stencil_bits_window_hint_without_underlying_call)
@@ -407,7 +468,7 @@ TEST_F(glfwcxx_window, successfully_created_with_stencil_bits_window_hint_withou
 
 TEST_F(glfwcxx_window, successfully_created_with_stencil_bits_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.stencil_bits(glfwcxx::DONT_CARE), {{GLFW_STENCIL_BITS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.stencil_bits(glfwcxx::dont_care), {{GLFW_STENCIL_BITS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_accum_red_bits_window_hint_without_underlying_call)
@@ -417,7 +478,7 @@ TEST_F(glfwcxx_window, successfully_created_with_accum_red_bits_window_hint_with
 
 TEST_F(glfwcxx_window, successfully_created_with_accum_red_bits_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_red_bits(glfwcxx::DONT_CARE), {{GLFW_ACCUM_RED_BITS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_red_bits(glfwcxx::dont_care), {{GLFW_ACCUM_RED_BITS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_accum_green_bits_window_hint_without_underlying_call)
@@ -427,7 +488,7 @@ TEST_F(glfwcxx_window, successfully_created_with_accum_green_bits_window_hint_wi
 
 TEST_F(glfwcxx_window, successfully_created_with_accum_green_bits_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_green_bits(glfwcxx::DONT_CARE), {{GLFW_ACCUM_GREEN_BITS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_green_bits(glfwcxx::dont_care), {{GLFW_ACCUM_GREEN_BITS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_accum_blue_bits_window_hint_without_underlying_call)
@@ -437,7 +498,7 @@ TEST_F(glfwcxx_window, successfully_created_with_accum_blue_bits_window_hint_wit
 
 TEST_F(glfwcxx_window, successfully_created_with_accum_blue_bits_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_blue_bits(glfwcxx::DONT_CARE), {{GLFW_ACCUM_BLUE_BITS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_blue_bits(glfwcxx::dont_care), {{GLFW_ACCUM_BLUE_BITS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_accum_alpha_bits_window_hint_without_underlying_call)
@@ -447,7 +508,7 @@ TEST_F(glfwcxx_window, successfully_created_with_accum_alpha_bits_window_hint_wi
 
 TEST_F(glfwcxx_window, successfully_created_with_accum_alpha_bits_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_alpha_bits(glfwcxx::DONT_CARE), {{GLFW_ACCUM_ALPHA_BITS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.accum_alpha_bits(glfwcxx::dont_care), {{GLFW_ACCUM_ALPHA_BITS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_aux_buffers_window_hint_without_underlying_call)
@@ -457,7 +518,7 @@ TEST_F(glfwcxx_window, successfully_created_with_aux_buffers_window_hint_without
 
 TEST_F(glfwcxx_window, successfully_created_with_aux_buffers_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.aux_buffers(glfwcxx::DONT_CARE), {{GLFW_AUX_BUFFERS, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.aux_buffers(glfwcxx::dont_care), {{GLFW_AUX_BUFFERS, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_samples_window_hint_without_underlying_call)
@@ -467,7 +528,7 @@ TEST_F(glfwcxx_window, successfully_created_with_samples_window_hint_without_und
 
 TEST_F(glfwcxx_window, successfully_created_with_samples_dont_care_window_hint)
 {
-    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.samples(glfwcxx::DONT_CARE), {{GLFW_SAMPLES, GLFW_DONT_CARE}});
+    CREATE_AND_EXPECT(glfwcxx::WindowHints{}.samples(glfwcxx::dont_care), {{GLFW_SAMPLES, GLFW_DONT_CARE}});
 }
 
 TEST_F(glfwcxx_window, successfully_created_with_refresh_rate_window_hint_without_underlying_call)
@@ -536,3 +597,36 @@ TEST_F(glfwcxx_window, should_close_returns_true_when_requested_to_close_window)
     glfwcxx::WindowStub::close_window();
     EXPECT_TRUE(window->should_close());
 }
+
+#define _ glfwcxx_window_keyboard_input_params
+const auto should_successfully_invoke_callback_key_action_params =
+    testing::Values(_{GLFW_KEY_UNKNOWN, GLFW_PRESS, glfwcxx::input::KeyboardKeys::key_unknown, glfwcxx::input::KeyboardActions::press},
+                    _{GLFW_KEY_A, GLFW_RELEASE, glfwcxx::input::KeyboardKeys::key_a, glfwcxx::input::KeyboardActions::release},
+                    _{GLFW_KEY_ESCAPE, GLFW_REPEAT, glfwcxx::input::KeyboardKeys::key_escape, glfwcxx::input::KeyboardActions::repeat});
+
+const auto should_successfully_invoke_callback_key_modifier_params =
+    testing::Values(_{GLFW_KEY_0, {GLFW_MOD_SHIFT}, glfwcxx::input::KeyboardKeys::key_0, {glfwcxx::input::KeyboardKeyModifier::mod_shift}},
+                    _{GLFW_KEY_X,
+                      {GLFW_MOD_SHIFT, GLFW_MOD_CONTROL},
+                      glfwcxx::input::KeyboardKeys::key_x,
+                      {glfwcxx::input::KeyboardKeyModifier::mod_shift, glfwcxx::input::KeyboardKeyModifier::mod_control}});
+#undef _
+
+TEST_P(glfwcxx_window_keyboard_input, should_successfully_invoke_callback)
+{
+    const auto test_case_param = GetParam();
+    bool invoked = false;
+    window_->keyboard_input([&invoked, &test_case_param](const auto key, const auto action, const auto modifiers) -> void {
+        invoked = true;
+        EXPECT_EQ(key, test_case_param.expected_key);
+        EXPECT_EQ(modifiers.size(), test_case_param.expected_modifiers.size());
+        for (const auto& expected_modifier : test_case_param.expected_modifiers)
+            EXPECT_TRUE(modifiers.find(expected_modifier) != modifiers.cend());
+        EXPECT_EQ(action, test_case_param.expected_action);
+    });
+    glfwcxx::WindowStub::keyboard_input(test_case_param.actual_key, test_case_param.actual_action, test_case_param.actual_modifiers);
+    EXPECT_TRUE(invoked);
+}
+
+INSTANTIATE_TEST_SUITE_P(keys_actions, glfwcxx_window_keyboard_input, should_successfully_invoke_callback_key_action_params);
+INSTANTIATE_TEST_SUITE_P(keys_modifiers, glfwcxx_window_keyboard_input, should_successfully_invoke_callback_key_modifier_params);

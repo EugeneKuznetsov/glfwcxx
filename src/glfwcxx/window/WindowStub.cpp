@@ -51,6 +51,22 @@ auto glfwWindowShouldClose(GLFWwindow* /*window*/) -> int
     return glfwcxx::WindowStub::close_window_ ? 1 : 0;
 }
 
+auto glfwSetKeyCallback(GLFWwindow* /*window*/, GLFWkeyfun callback) -> GLFWkeyfun
+{
+    glfwcxx::WindowStub::keyboard_callback_ = callback;
+    return glfwcxx::WindowStub::keyboard_callback_;
+}
+
+auto glfwSetWindowUserPointer(GLFWwindow* /*window*/, void* pointer) -> void
+{
+    glfwcxx::WindowStub::window_user_pointer_ = pointer;
+}
+
+auto glfwGetWindowUserPointer(GLFWwindow* /*window*/) -> void*
+{
+    return glfwcxx::WindowStub::window_user_pointer_;
+}
+
 namespace glfwcxx {
 
 GLFWwindow* WindowStub::last_created_window_ = (GLFWwindow*)1234;
@@ -61,12 +77,14 @@ int WindowStub::last_passed_height_ = -1;
 std::string WindowStub::last_passed_title_ = "";
 GLFWmonitor* WindowStub::last_passed_monitor_ = nullptr;
 GLFWwindow* WindowStub::last_passed_share_ = nullptr;
-window_hints_int_map WindowStub::window_int_hints_ = {};
-window_hints_str_map WindowStub::window_str_hints_ = {};
+window_hints_int_map_t WindowStub::window_int_hints_ = {};
+window_hints_str_map_t WindowStub::window_str_hints_ = {};
 std::size_t WindowStub::poll_events_call_count_ = 0;
 std::size_t WindowStub::swap_buffers_call_count_ = 0;
 bool WindowStub::close_window_ = false;
-callback_function WindowStub::poll_events_callback_ = nullptr;
+callback_function_t WindowStub::poll_events_callback_ = nullptr;
+GLFWkeyfun WindowStub::keyboard_callback_ = nullptr;
+void* WindowStub::window_user_pointer_ = nullptr;
 
 auto WindowStub::reset() -> void
 {
@@ -84,6 +102,8 @@ auto WindowStub::reset() -> void
     swap_buffers_call_count_ = 0;
     close_window_ = false;
     poll_events_callback_ = nullptr;
+    keyboard_callback_ = nullptr;
+    window_user_pointer_ = nullptr;
     CommonStub::reset();
 }
 
@@ -100,6 +120,18 @@ auto WindowStub::make_context_current_failure() -> void
 auto WindowStub::close_window() -> void
 {
     close_window_ = true;
+}
+
+auto WindowStub::keyboard_input(int key, int action, std::set<int> modifiers) -> void
+{
+    if (nullptr == keyboard_callback_)
+        return;
+
+    const int scancode = 0;
+    int mods = 0;
+    for (const auto& modifier : modifiers)
+        mods |= modifier;
+    keyboard_callback_(last_created_window_, key, scancode, action, mods);
 }
 
 auto WindowStub::created_window_with_arguments(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> bool
@@ -147,7 +179,7 @@ auto WindowStub::swap_buffers_call_count() -> std::size_t
     return swap_buffers_call_count_;
 }
 
-auto WindowStub::poll_events_call_callback(callback_function callback) -> void
+auto WindowStub::poll_events_call_callback(callback_function_t callback) -> void
 {
     poll_events_callback_ = callback;
 }

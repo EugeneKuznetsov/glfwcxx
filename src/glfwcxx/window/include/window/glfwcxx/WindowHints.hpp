@@ -4,21 +4,61 @@
 
 namespace glfwcxx {
 
-static constexpr int DONT_CARE = -1;
+static constexpr int dont_care = -1;
 
-enum class OpenGLProfile : int { ANY_PROFILE = 0, CORE_PROFILE = 0x00032001, COMPAT_PROFILE = 0x00032002 };
-
-enum class ClientAPI : int { NO_API = 0, OPENGL = 0x00030001, OPENGL_ES = 0x00030002 };
-
-enum class ContextCreationAPI : int { NATIVE = 0x00036001, EGL = 0x00036002, OSMESA = 0x00036003 };
-
-enum class ContextRobustness : int { NO_ROBUSTNESS = 0, NO_RESET_NOTIFICATION = 0x00031001, LOSE_CONTEXT_ON_RESET = 0x00031002 };
-
-enum class ContextReleaseBehavior : int {
-    ANY_RELEASE_BEHAVIOR = 0,
-    RELEASE_BEHAVIOR_FLUSH = 0x00035001,
-    RELEASE_BEHAVIOR_NONE = 0x00035002
+enum class WindowHintsKeys {
+    resizable,
+    visible,
+    decorated,
+    focused,
+    auto_iconify,
+    floating,
+    maximized,
+    center_cursor,
+    transparent_framebuffer,
+    focus_on_show,
+    scale_to_monitor,
+    stereo,
+    srgb_capable,
+    doublebuffer,
+    opengl_forward_compat,
+    opengl_debug_context,
+    cocoa_retina_framebuffer,
+    cocoa_graphics_switching,
+    opengl_profile,
+    client_api,
+    context_creation_api,
+    context_robustness,
+    context_release_behavior,
+    context_version_major,
+    context_version_minor,
+    red_bits,
+    green_bits,
+    blue_bits,
+    alpha_bits,
+    depth_bits,
+    stencil_bits,
+    accum_red_bits,
+    accum_green_bits,
+    accum_blue_bits,
+    accum_alpha_bits,
+    aux_buffers,
+    samples,
+    refresh_rate,
+    cocoa_frame_name,
+    x11_class_name,
+    x11_instance_name
 };
+
+enum class OpenGLProfile { any_profile, core_profile, compat_profile };
+
+enum class ClientAPI { no_api, opengl, opengl_es };
+
+enum class ContextCreationAPI { native, egl, osmesa };
+
+enum class ContextRobustness { no_robustness, no_reset_notification, lose_context_on_reset };
+
+enum class ContextReleaseBehavior { any_release_behavior, release_behavior_flush, release_behavior_none };
 
 struct ContextVersion {
     int major;
@@ -53,11 +93,11 @@ public:
     auto opengl_debug_context(const bool value = false) -> WindowHints&;
     auto cocoa_retina_framebuffer(const bool value = true) -> WindowHints&;
     auto cocoa_graphics_switching(const bool value = false) -> WindowHints&;
-    auto opengl_profile(const OpenGLProfile& value = OpenGLProfile::ANY_PROFILE) -> WindowHints&;
-    auto client_api(const ClientAPI& value = ClientAPI::OPENGL) -> WindowHints&;
-    auto context_creation_api(const ContextCreationAPI& value = ContextCreationAPI::NATIVE) -> WindowHints&;
-    auto context_robustness(const ContextRobustness& value = ContextRobustness::NO_ROBUSTNESS) -> WindowHints&;
-    auto context_release_behavior(const ContextReleaseBehavior& value = ContextReleaseBehavior::ANY_RELEASE_BEHAVIOR) -> WindowHints&;
+    auto opengl_profile(const OpenGLProfile& value = OpenGLProfile::any_profile) -> WindowHints&;
+    auto client_api(const ClientAPI& value = ClientAPI::opengl) -> WindowHints&;
+    auto context_creation_api(const ContextCreationAPI& value = ContextCreationAPI::native) -> WindowHints&;
+    auto context_robustness(const ContextRobustness& value = ContextRobustness::no_robustness) -> WindowHints&;
+    auto context_release_behavior(const ContextReleaseBehavior& value = ContextReleaseBehavior::any_release_behavior) -> WindowHints&;
     auto context_version(const ContextVersion& value = {1, 0}) -> WindowHints&;
     auto red_bits(const int value = 8) -> WindowHints&;
     auto green_bits(const int value = 8) -> WindowHints&;
@@ -71,7 +111,7 @@ public:
     auto accum_alpha_bits(const int value = 0) -> WindowHints&;
     auto aux_buffers(const int value = 0) -> WindowHints&;
     auto samples(const int value = 0) -> WindowHints&;
-    auto refresh_rate(const int value = DONT_CARE) -> WindowHints&;
+    auto refresh_rate(const int value = dont_care) -> WindowHints&;
     auto cocoa_frame_name(const std::string& value = {}) -> WindowHints&;
     auto x11_class_name(const std::string& value = {}) -> WindowHints&;
     auto x11_instance_name(const std::string& value = {}) -> WindowHints&;
@@ -95,11 +135,11 @@ private:
     bool opengl_debug_context_{false};
     bool cocoa_retina_framebuffer_{true};
     bool cocoa_graphics_switching_{false};
-    OpenGLProfile opengl_profile_{OpenGLProfile::ANY_PROFILE};
-    ClientAPI client_api_{ClientAPI::OPENGL};
-    ContextCreationAPI context_creation_api_{ContextCreationAPI::NATIVE};
-    ContextRobustness context_robustness_{ContextRobustness::NO_ROBUSTNESS};
-    ContextReleaseBehavior context_release_behavior_{ContextReleaseBehavior::ANY_RELEASE_BEHAVIOR};
+    OpenGLProfile opengl_profile_{OpenGLProfile::any_profile};
+    ClientAPI client_api_{ClientAPI::opengl};
+    ContextCreationAPI context_creation_api_{ContextCreationAPI::native};
+    ContextRobustness context_robustness_{ContextRobustness::no_robustness};
+    ContextReleaseBehavior context_release_behavior_{ContextReleaseBehavior::any_release_behavior};
     ContextVersion context_version_{1, 0};
     int red_bits_{8};
     int green_bits_{8};
@@ -113,12 +153,19 @@ private:
     int accum_alpha_bits_{0};
     int aux_buffers_{0};
     int samples_{0};
-    int refresh_rate_{DONT_CARE};
+    int refresh_rate_{dont_care};
     std::string cocoa_frame_name_{};
     std::string x11_class_name_{};
     std::string x11_instance_name_{};
 
     friend class Window;
 };
+
+auto glfw_hint_key(const WindowHintsKeys& key) -> int;
+auto glfw_hint_value(const OpenGLProfile& value) -> int;
+auto glfw_hint_value(const ClientAPI& value) -> int;
+auto glfw_hint_value(const ContextCreationAPI& value) -> int;
+auto glfw_hint_value(const ContextRobustness& value) -> int;
+auto glfw_hint_value(const ContextReleaseBehavior& value) -> int;
 
 }  // namespace glfwcxx

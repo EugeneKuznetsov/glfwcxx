@@ -11,9 +11,16 @@ namespace glfwcxx {
 class Window::WindowDetails {
 public:
     WindowDetails(const WindowSize& size, const std::string& title);
+    ~WindowDetails();
+
+public:
+    auto keyboard_input(const keyboard_callback_t& callback) -> void;
 
 public:
     auto glfw_window() const -> GLFWwindow*;
+
+public:
+    static const WindowHints default_window_hints_;
 
 private:
 #ifdef __linux__
@@ -22,9 +29,10 @@ private:
     using Deleter = void(__cdecl&)(GLFWwindow*);
 #endif
     std::unique_ptr<GLFWwindow, Deleter> glfw_window_;
+    keyboard_callback_t keyboard_input_;
 };
 
-const WindowHints Window::default_window_hints_ = {};
+const WindowHints Window::WindowDetails::default_window_hints_ = {};
 
 Window::Window(const WindowSize& size, const std::string& title)
     : window_{std::make_unique<WindowDetails>(size, title)}
@@ -35,7 +43,7 @@ Window::~Window() = default;
 
 auto Window::create_window(const WindowSize& size, const std::string& title) -> std::unique_ptr<Window>
 {
-    return create_window(size, title, default_window_hints_);
+    return create_window(size, title, WindowDetails::default_window_hints_);
 }
 
 auto Window::create_window(const WindowSize& size, const std::string& title, const WindowHints& hints) -> std::unique_ptr<Window>
@@ -73,146 +81,181 @@ auto Window::should_close() const -> bool
     return 0 != glfwWindowShouldClose(window_->glfw_window());
 }
 
+auto Window::keyboard_input(const keyboard_callback_t& callback) -> void
+{
+    window_->keyboard_input(callback);
+}
+
 auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 {
-    if (default_window_hints_.resizable_ != hints.resizable_)
-        glfwWindowHint(GLFW_RESIZABLE, hints.resizable_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.resizable_ != hints.resizable_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::resizable), hints.resizable_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.visible_ != hints.visible_)
-        glfwWindowHint(GLFW_VISIBLE, hints.visible_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.visible_ != hints.visible_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::visible), hints.visible_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.decorated_ != hints.decorated_)
-        glfwWindowHint(GLFW_DECORATED, hints.decorated_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.decorated_ != hints.decorated_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::decorated), hints.decorated_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.focused_ != hints.focused_)
-        glfwWindowHint(GLFW_FOCUSED, hints.focused_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.focused_ != hints.focused_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::focused), hints.focused_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.auto_iconify_ != hints.auto_iconify_)
-        glfwWindowHint(GLFW_AUTO_ICONIFY, hints.auto_iconify_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.auto_iconify_ != hints.auto_iconify_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::auto_iconify), hints.auto_iconify_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.floating_ != hints.floating_)
-        glfwWindowHint(GLFW_FLOATING, hints.floating_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.floating_ != hints.floating_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::floating), hints.floating_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.maximized_ != hints.maximized_)
-        glfwWindowHint(GLFW_MAXIMIZED, hints.maximized_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.maximized_ != hints.maximized_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::maximized), hints.maximized_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.center_cursor_ != hints.center_cursor_)
-        glfwWindowHint(GLFW_CENTER_CURSOR, hints.center_cursor_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.center_cursor_ != hints.center_cursor_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::center_cursor), hints.center_cursor_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.transparent_framebuffer_ != hints.transparent_framebuffer_)
-        glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, hints.transparent_framebuffer_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.transparent_framebuffer_ != hints.transparent_framebuffer_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::transparent_framebuffer), hints.transparent_framebuffer_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.focus_on_show_ != hints.focus_on_show_)
-        glfwWindowHint(GLFW_FOCUS_ON_SHOW, hints.focus_on_show_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.focus_on_show_ != hints.focus_on_show_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::focus_on_show), hints.focus_on_show_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.scale_to_monitor_ != hints.scale_to_monitor_)
-        glfwWindowHint(GLFW_SCALE_TO_MONITOR, hints.scale_to_monitor_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.scale_to_monitor_ != hints.scale_to_monitor_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::scale_to_monitor), hints.scale_to_monitor_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.stereo_ != hints.stereo_)
-        glfwWindowHint(GLFW_STEREO, hints.stereo_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.stereo_ != hints.stereo_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::stereo), hints.stereo_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.srgb_capable_ != hints.srgb_capable_)
-        glfwWindowHint(GLFW_SRGB_CAPABLE, hints.srgb_capable_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.srgb_capable_ != hints.srgb_capable_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::srgb_capable), hints.srgb_capable_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.doublebuffer_ != hints.doublebuffer_)
-        glfwWindowHint(GLFW_DOUBLEBUFFER, hints.doublebuffer_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.doublebuffer_ != hints.doublebuffer_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::doublebuffer), hints.doublebuffer_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.opengl_forward_compat_ != hints.opengl_forward_compat_)
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, hints.opengl_forward_compat_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.opengl_forward_compat_ != hints.opengl_forward_compat_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::opengl_forward_compat), hints.opengl_forward_compat_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.opengl_debug_context_ != hints.opengl_debug_context_)
-        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, hints.opengl_debug_context_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.opengl_debug_context_ != hints.opengl_debug_context_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::opengl_debug_context), hints.opengl_debug_context_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.cocoa_retina_framebuffer_ != hints.cocoa_retina_framebuffer_)
-        glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, hints.cocoa_retina_framebuffer_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.cocoa_retina_framebuffer_ != hints.cocoa_retina_framebuffer_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::cocoa_retina_framebuffer), hints.cocoa_retina_framebuffer_ ? GLFW_TRUE : GLFW_FALSE);
 
-    if (default_window_hints_.cocoa_graphics_switching_ != hints.cocoa_graphics_switching_)
-        glfwWindowHint(GLFW_COCOA_GRAPHICS_SWITCHING, hints.cocoa_graphics_switching_ ? GLFW_TRUE : GLFW_FALSE);
+    if (WindowDetails::default_window_hints_.cocoa_graphics_switching_ != hints.cocoa_graphics_switching_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::cocoa_graphics_switching), hints.cocoa_graphics_switching_ ? GLFW_TRUE : GLFW_FALSE);
 }
 
 auto Window::setup_numeric_window_hints(const WindowHints& hints) -> void
 {
-    if (default_window_hints_.context_version_ != hints.context_version_) {
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, hints.context_version_.major);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, hints.context_version_.minor);
+    if (WindowDetails::default_window_hints_.context_version_ != hints.context_version_) {
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::context_version_major), hints.context_version_.major);
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::context_version_minor), hints.context_version_.minor);
     }
 
-    if (default_window_hints_.red_bits_ != hints.red_bits_)
-        glfwWindowHint(GLFW_RED_BITS, hints.red_bits_);
+    if (WindowDetails::default_window_hints_.red_bits_ != hints.red_bits_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::red_bits), hints.red_bits_);
 
-    if (default_window_hints_.green_bits_ != hints.green_bits_)
-        glfwWindowHint(GLFW_GREEN_BITS, hints.green_bits_);
+    if (WindowDetails::default_window_hints_.green_bits_ != hints.green_bits_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::green_bits), hints.green_bits_);
 
-    if (default_window_hints_.blue_bits_ != hints.blue_bits_)
-        glfwWindowHint(GLFW_BLUE_BITS, hints.blue_bits_);
+    if (WindowDetails::default_window_hints_.blue_bits_ != hints.blue_bits_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::blue_bits), hints.blue_bits_);
 
-    if (default_window_hints_.alpha_bits_ != hints.alpha_bits_)
-        glfwWindowHint(GLFW_ALPHA_BITS, hints.alpha_bits_);
+    if (WindowDetails::default_window_hints_.alpha_bits_ != hints.alpha_bits_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::alpha_bits), hints.alpha_bits_);
 
-    if (default_window_hints_.depth_bits_ != hints.depth_bits_)
-        glfwWindowHint(GLFW_DEPTH_BITS, hints.depth_bits_);
+    if (WindowDetails::default_window_hints_.depth_bits_ != hints.depth_bits_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::depth_bits), hints.depth_bits_);
 
-    if (default_window_hints_.stencil_bits_ != hints.stencil_bits_)
-        glfwWindowHint(GLFW_STENCIL_BITS, hints.stencil_bits_);
+    if (WindowDetails::default_window_hints_.stencil_bits_ != hints.stencil_bits_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::stencil_bits), hints.stencil_bits_);
 
-    if (default_window_hints_.accum_red_bits_ != hints.accum_red_bits_)
-        glfwWindowHint(GLFW_ACCUM_RED_BITS, hints.accum_red_bits_);
+    if (WindowDetails::default_window_hints_.accum_red_bits_ != hints.accum_red_bits_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::accum_red_bits), hints.accum_red_bits_);
 
-    if (default_window_hints_.accum_green_bits_ != hints.accum_green_bits_)
-        glfwWindowHint(GLFW_ACCUM_GREEN_BITS, hints.accum_green_bits_);
+    if (WindowDetails::default_window_hints_.accum_green_bits_ != hints.accum_green_bits_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::accum_green_bits), hints.accum_green_bits_);
 
-    if (default_window_hints_.accum_blue_bits_ != hints.accum_blue_bits_)
-        glfwWindowHint(GLFW_ACCUM_BLUE_BITS, hints.accum_blue_bits_);
+    if (WindowDetails::default_window_hints_.accum_blue_bits_ != hints.accum_blue_bits_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::accum_blue_bits), hints.accum_blue_bits_);
 
-    if (default_window_hints_.accum_alpha_bits_ != hints.accum_alpha_bits_)
-        glfwWindowHint(GLFW_ACCUM_ALPHA_BITS, hints.accum_alpha_bits_);
+    if (WindowDetails::default_window_hints_.accum_alpha_bits_ != hints.accum_alpha_bits_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::accum_alpha_bits), hints.accum_alpha_bits_);
 
-    if (default_window_hints_.aux_buffers_ != hints.aux_buffers_)
-        glfwWindowHint(GLFW_AUX_BUFFERS, hints.aux_buffers_);
+    if (WindowDetails::default_window_hints_.aux_buffers_ != hints.aux_buffers_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::aux_buffers), hints.aux_buffers_);
 
-    if (default_window_hints_.samples_ != hints.samples_)
-        glfwWindowHint(GLFW_SAMPLES, hints.samples_);
+    if (WindowDetails::default_window_hints_.samples_ != hints.samples_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::samples), hints.samples_);
 
-    if (default_window_hints_.refresh_rate_ != hints.refresh_rate_)
-        glfwWindowHint(GLFW_REFRESH_RATE, hints.refresh_rate_);
+    if (WindowDetails::default_window_hints_.refresh_rate_ != hints.refresh_rate_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::refresh_rate), hints.refresh_rate_);
 }
 
 auto Window::setup_string_window_hints(const WindowHints& hints) -> void
 {
-    if (default_window_hints_.cocoa_frame_name_ != hints.cocoa_frame_name_)
-        glfwWindowHintString(GLFW_COCOA_FRAME_NAME, hints.cocoa_frame_name_.c_str());
+    if (WindowDetails::default_window_hints_.cocoa_frame_name_ != hints.cocoa_frame_name_)
+        glfwWindowHintString(glfw_hint_key(WindowHintsKeys::cocoa_frame_name), hints.cocoa_frame_name_.c_str());
 
-    if (default_window_hints_.x11_class_name_ != hints.x11_class_name_)
-        glfwWindowHintString(GLFW_X11_CLASS_NAME, hints.x11_class_name_.c_str());
+    if (WindowDetails::default_window_hints_.x11_class_name_ != hints.x11_class_name_)
+        glfwWindowHintString(glfw_hint_key(WindowHintsKeys::x11_class_name), hints.x11_class_name_.c_str());
 
-    if (default_window_hints_.x11_instance_name_ != hints.x11_instance_name_)
-        glfwWindowHintString(GLFW_X11_INSTANCE_NAME, hints.x11_instance_name_.c_str());
+    if (WindowDetails::default_window_hints_.x11_instance_name_ != hints.x11_instance_name_)
+        glfwWindowHintString(glfw_hint_key(WindowHintsKeys::x11_instance_name), hints.x11_instance_name_.c_str());
 }
 
 auto Window::setup_preset_window_hints(const WindowHints& hints) -> void
 {
-    if (default_window_hints_.opengl_profile_ != hints.opengl_profile_)
-        glfwWindowHint(GLFW_OPENGL_PROFILE, static_cast<int>(hints.opengl_profile_));
+    if (WindowDetails::default_window_hints_.opengl_profile_ != hints.opengl_profile_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::opengl_profile), glfw_hint_value(hints.opengl_profile_));
 
-    if (default_window_hints_.client_api_ != hints.client_api_)
-        glfwWindowHint(GLFW_CLIENT_API, static_cast<int>(hints.client_api_));
+    if (WindowDetails::default_window_hints_.client_api_ != hints.client_api_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::client_api), glfw_hint_value(hints.client_api_));
 
-    if (default_window_hints_.context_creation_api_ != hints.context_creation_api_)
-        glfwWindowHint(GLFW_CONTEXT_CREATION_API, static_cast<int>(hints.context_creation_api_));
+    if (WindowDetails::default_window_hints_.context_creation_api_ != hints.context_creation_api_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::context_creation_api), glfw_hint_value(hints.context_creation_api_));
 
-    if (default_window_hints_.context_robustness_ != hints.context_robustness_)
-        glfwWindowHint(GLFW_CONTEXT_ROBUSTNESS, static_cast<int>(hints.context_robustness_));
+    if (WindowDetails::default_window_hints_.context_robustness_ != hints.context_robustness_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::context_robustness), glfw_hint_value(hints.context_robustness_));
 
-    if (default_window_hints_.context_release_behavior_ != hints.context_release_behavior_)
-        glfwWindowHint(GLFW_CONTEXT_RELEASE_BEHAVIOR, static_cast<int>(hints.context_release_behavior_));
+    if (WindowDetails::default_window_hints_.context_release_behavior_ != hints.context_release_behavior_)
+        glfwWindowHint(glfw_hint_key(WindowHintsKeys::context_release_behavior), glfw_hint_value(hints.context_release_behavior_));
 }
 
 Window::WindowDetails::WindowDetails(const WindowSize& size, const std::string& title)
     : glfw_window_{nullptr, glfwDestroyWindow}
+    , keyboard_input_{nullptr}
 {
     glfw_window_.reset(glfwCreateWindow(size.width, size.height, title.c_str(), nullptr, nullptr));
     if (nullptr == glfw_window_)
         throw std::runtime_error("Failed to create GLFW window: " + get_last_error().second);
+}
+
+Window::WindowDetails::~WindowDetails()
+{
+    glfwSetWindowUserPointer(glfw_window(), nullptr);
+    glfwSetKeyCallback(glfw_window(), nullptr);
+}
+
+auto Window::WindowDetails::keyboard_input(const keyboard_callback_t& callback) -> void
+{
+    keyboard_input_ = callback;
+
+    glfwSetWindowUserPointer(glfw_window(), this);
+    glfwSetKeyCallback(glfw_window(), [](GLFWwindow* window, int key, int, int action, int mods) -> void {
+        auto self = static_cast<Window::WindowDetails*>(glfwGetWindowUserPointer(window));
+        using namespace glfwcxx::input;
+        std::set<KeyboardKeyModifier> modifiers;
+        const auto insert_modifier_if = [&modifiers, &mods](auto glfw_modifier, auto glfwcxx_modifier) -> void {
+            if (glfw_modifier & mods)
+                modifiers.insert(glfwcxx_modifier);
+        };
+        insert_modifier_if(GLFW_MOD_SHIFT, KeyboardKeyModifier::mod_shift);
+        insert_modifier_if(GLFW_MOD_CONTROL, KeyboardKeyModifier::mod_control);
+        insert_modifier_if(GLFW_MOD_ALT, KeyboardKeyModifier::mod_alt);
+        insert_modifier_if(GLFW_MOD_SUPER, KeyboardKeyModifier::mod_super);
+        insert_modifier_if(GLFW_MOD_CAPS_LOCK, KeyboardKeyModifier::mod_caps_lock);
+        insert_modifier_if(GLFW_MOD_NUM_LOCK, KeyboardKeyModifier::mod_num_lock);
+        self->keyboard_input_(static_cast<KeyboardKeys>(key), static_cast<KeyboardActions>(action), modifiers);
+    });
 }
 
 auto Window::WindowDetails::glfw_window() const -> GLFWwindow*

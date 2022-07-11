@@ -1,14 +1,19 @@
 #pragma once
 
+#include <functional>
 #include <memory>
+#include <set>
 #include <string>
 
+#include <glfwcxx/KeyboardInput.hpp>
 #include <glfwcxx/WindowHints.hpp>
 
 namespace glfwcxx {
 
 class Window final {
     class WindowDetails;
+
+    using keyboard_callback_t = std::function<void(input::KeyboardKeys, input::KeyboardActions, std::set<input::KeyboardKeyModifier>)>;
 
     Window(const Window&) = delete;
     Window& operator=(const Window&) = delete;
@@ -34,6 +39,9 @@ public:
 public:
     auto should_close() const -> bool;
 
+public:
+    auto keyboard_input(const keyboard_callback_t& callback) -> void;
+
 private:
     static auto setup_boolean_window_hints(const WindowHints& hints) -> void;
     static auto setup_numeric_window_hints(const WindowHints& hints) -> void;
@@ -42,7 +50,6 @@ private:
 
 private:
     std::unique_ptr<WindowDetails> window_;
-    static const WindowHints default_window_hints_;
 };
 
 }  // namespace glfwcxx
