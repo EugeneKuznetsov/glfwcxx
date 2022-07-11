@@ -102,6 +102,8 @@ auto WindowStub::close_window() -> void
     close_window_ = true;
 }
 
+auto WindowStub::keyboard_input(int /*key*/, int /*action*/) -> void {}
+
 auto WindowStub::created_window_with_arguments(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> bool
 {
     return last_passed_width_ == width && last_passed_height_ == height && last_passed_title_ == title && last_passed_monitor_ == monitor &&

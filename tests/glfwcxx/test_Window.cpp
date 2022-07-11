@@ -536,3 +536,16 @@ TEST_F(glfwcxx_window, should_close_returns_true_when_requested_to_close_window)
     glfwcxx::WindowStub::close_window();
     EXPECT_TRUE(window->should_close());
 }
+
+TEST_F(glfwcxx_window, should_invoke_keyboard_callback_with_press_esc_key_successfully)
+{
+    auto window = glfwcxx::Window::create_window({800, 600}, "");
+    bool invoked = false;
+    window->keyboard_input([&invoked](auto key, auto action) -> void {
+        invoked = true;
+        EXPECT_EQ(key, glfwcxx::input::KeyboardKeys::ESCAPE);
+        EXPECT_EQ(action, glfwcxx::input::KeyboardActions::PRESS);
+    });
+    glfwcxx::WindowStub::keyboard_input(GLFW_KEY_ESCAPE, GLFW_PRESS);
+    EXPECT_TRUE(invoked);
+}

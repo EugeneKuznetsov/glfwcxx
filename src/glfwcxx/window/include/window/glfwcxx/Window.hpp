@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <string>
 
@@ -7,8 +8,18 @@
 
 namespace glfwcxx {
 
+namespace input {
+
+enum class KeyboardKeys { ESCAPE };
+
+enum class KeyboardActions { PRESS };
+
+}  // namespace input
+
 class Window final {
     class WindowDetails;
+
+    using keyboard_callback_t = std::function<void(input::KeyboardKeys, input::KeyboardActions)>;
 
     Window(const Window&) = delete;
     Window& operator=(const Window&) = delete;
@@ -33,6 +44,9 @@ public:
 
 public:
     auto should_close() const -> bool;
+
+public:
+    auto keyboard_input(const keyboard_callback_t& callback) -> void;
 
 private:
     static auto setup_boolean_window_hints(const WindowHints& hints) -> void;

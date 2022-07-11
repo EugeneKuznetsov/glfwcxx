@@ -73,6 +73,8 @@ auto Window::should_close() const -> bool
     return 0 != glfwWindowShouldClose(window_->glfw_window());
 }
 
+auto Window::keyboard_input(const keyboard_callback_t& /*callback*/) -> void {}
+
 auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 {
     if (default_window_hints_.resizable_ != hints.resizable_)

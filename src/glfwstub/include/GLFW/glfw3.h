@@ -74,6 +74,9 @@ static constexpr int GLFW_NATIVE_CONTEXT_API = 0x00036001;
 static constexpr int GLFW_EGL_CONTEXT_API = 0x00036002;
 static constexpr int GLFW_OSMESA_CONTEXT_API = 0x00036003;
 
+static constexpr int GLFW_KEY_ESCAPE = 256;
+static constexpr int GLFW_PRESS = 1;
+
 struct GLFWmonitor;
 struct GLFWwindow;
 
