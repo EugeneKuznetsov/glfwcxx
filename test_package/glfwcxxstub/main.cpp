@@ -6,6 +6,7 @@
 #include <glfwcxx/CoreStub.hpp>
 #include <glfwcxx/Window.hpp>
 #include <glfwcxx/WindowHelper.hpp>
+#include <glfwcxx/KeyboardHelper.hpp>
 
 auto main() -> int
 {

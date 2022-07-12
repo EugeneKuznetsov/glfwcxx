@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 
 #include "glfwcxx/Common.hpp"
+#include "glfwcxx/KeyboardHelper.hpp"
 #include "glfwcxx/WindowHelper.hpp"
 
 namespace glfwcxx {
@@ -263,7 +264,7 @@ auto Window::WindowDetails::keyboard_input(const keyboard_callback_t& callback) 
         insert_modifier_if(GLFW_MOD_SUPER, KeyboardKeyModifier::mod_super);
         insert_modifier_if(GLFW_MOD_CAPS_LOCK, KeyboardKeyModifier::mod_caps_lock);
         insert_modifier_if(GLFW_MOD_NUM_LOCK, KeyboardKeyModifier::mod_num_lock);
-        self->keyboard_input_(static_cast<KeyboardKeys>(key), static_cast<KeyboardActions>(action), modifiers);
+        self->keyboard_input_(glfwcxx::helpers::glfwcxx_keyboard_key(key), glfwcxx::helpers::glfwcxx_keyboard_action(action), modifiers);
     });
 }
 
