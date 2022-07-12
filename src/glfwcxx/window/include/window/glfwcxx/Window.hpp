@@ -13,7 +13,7 @@ namespace glfwcxx {
 class Window final {
     class WindowDetails;
 
-    using keyboard_callback_t = std::function<void(input::KeyboardKeys, input::KeyboardActions, std::set<input::KeyboardKeyModifier>)>;
+    using keyboard_callback_t = std::function<void(input::KeyboardKey, input::KeyboardAction, std::set<input::KeyboardKeyModifier>)>;
 
     Window(const Window&) = delete;
     Window& operator=(const Window&) = delete;

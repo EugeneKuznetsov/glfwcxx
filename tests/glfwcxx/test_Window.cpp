@@ -36,14 +36,14 @@ struct glfwcxx_window_keyboard_input_params {
     int actual_key;
     std::set<int> actual_modifiers;
     int actual_action;
-    glfwcxx::input::KeyboardKeys expected_key;
+    glfwcxx::input::KeyboardKey expected_key;
     std::set<glfwcxx::input::KeyboardKeyModifier> expected_modifiers;
-    glfwcxx::input::KeyboardActions expected_action;
+    glfwcxx::input::KeyboardAction expected_action;
 
     glfwcxx_window_keyboard_input_params(int actual_key,
                                          int actual_action,
-                                         glfwcxx::input::KeyboardKeys expected_key,
-                                         glfwcxx::input::KeyboardActions expected_action)
+                                         glfwcxx::input::KeyboardKey expected_key,
+                                         glfwcxx::input::KeyboardAction expected_action)
         : actual_key{actual_key}
         , actual_modifiers{}
         , actual_action{actual_action}
@@ -55,23 +55,23 @@ struct glfwcxx_window_keyboard_input_params {
 
     glfwcxx_window_keyboard_input_params(int actual_key,
                                          std::set<int> actual_modifiers,
-                                         glfwcxx::input::KeyboardKeys expected_key,
+                                         glfwcxx::input::KeyboardKey expected_key,
                                          std::set<glfwcxx::input::KeyboardKeyModifier> expected_modifiers)
         : actual_key{actual_key}
         , actual_modifiers{std::move(actual_modifiers)}
         , actual_action{GLFW_PRESS}
         , expected_key{expected_key}
         , expected_modifiers{std::move(expected_modifiers)}
-        , expected_action{glfwcxx::input::KeyboardActions::press}
+        , expected_action{glfwcxx::input::KeyboardAction::press}
     {
     }
 
     glfwcxx_window_keyboard_input_params(int actual_key,
                                          std::set<int> actual_modifiers,
                                          int actual_action,
-                                         glfwcxx::input::KeyboardKeys expected_key,
+                                         glfwcxx::input::KeyboardKey expected_key,
                                          std::set<glfwcxx::input::KeyboardKeyModifier> expected_modifiers,
-                                         glfwcxx::input::KeyboardActions expected_action)
+                                         glfwcxx::input::KeyboardAction expected_action)
         : actual_key{actual_key}
         , actual_modifiers{std::move(actual_modifiers)}
         , actual_action{actual_action}
@@ -600,15 +600,15 @@ TEST_F(glfwcxx_window, should_close_returns_true_when_requested_to_close_window)
 
 #define _ glfwcxx_window_keyboard_input_params
 const auto should_successfully_invoke_callback_key_action_params =
-    testing::Values(_{GLFW_KEY_UNKNOWN, GLFW_PRESS, glfwcxx::input::KeyboardKeys::key_unknown, glfwcxx::input::KeyboardActions::press},
-                    _{GLFW_KEY_A, GLFW_RELEASE, glfwcxx::input::KeyboardKeys::key_a, glfwcxx::input::KeyboardActions::release},
-                    _{GLFW_KEY_ESCAPE, GLFW_REPEAT, glfwcxx::input::KeyboardKeys::key_escape, glfwcxx::input::KeyboardActions::repeat});
+    testing::Values(_{GLFW_KEY_UNKNOWN, GLFW_PRESS, glfwcxx::input::KeyboardKey::key_unknown, glfwcxx::input::KeyboardAction::press},
+                    _{GLFW_KEY_A, GLFW_RELEASE, glfwcxx::input::KeyboardKey::key_a, glfwcxx::input::KeyboardAction::release},
+                    _{GLFW_KEY_ESCAPE, GLFW_REPEAT, glfwcxx::input::KeyboardKey::key_escape, glfwcxx::input::KeyboardAction::repeat});
 
 const auto should_successfully_invoke_callback_key_modifier_params =
-    testing::Values(_{GLFW_KEY_0, {GLFW_MOD_SHIFT}, glfwcxx::input::KeyboardKeys::key_0, {glfwcxx::input::KeyboardKeyModifier::mod_shift}},
+    testing::Values(_{GLFW_KEY_0, {GLFW_MOD_SHIFT}, glfwcxx::input::KeyboardKey::key_0, {glfwcxx::input::KeyboardKeyModifier::mod_shift}},
                     _{GLFW_KEY_X,
                       {GLFW_MOD_SHIFT, GLFW_MOD_CONTROL},
-                      glfwcxx::input::KeyboardKeys::key_x,
+                      glfwcxx::input::KeyboardKey::key_x,
                       {glfwcxx::input::KeyboardKeyModifier::mod_shift, glfwcxx::input::KeyboardKeyModifier::mod_control}});
 #undef _
 
