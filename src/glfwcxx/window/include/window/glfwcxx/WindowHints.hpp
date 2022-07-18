@@ -24,11 +24,6 @@ struct ContextVersion {
     auto operator!=(const ContextVersion& other) const -> bool { return !(*this == other); }
 };
 
-struct WindowSize {
-    int width;
-    int height;
-};
-
 class WindowHints {
 public:
     auto resizable(const bool value = true) -> WindowHints&;

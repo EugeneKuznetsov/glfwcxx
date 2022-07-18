@@ -88,10 +88,31 @@ auto Window::should_close() const -> bool
     return GLFW_FALSE != glfwWindowShouldClose(window_->glfw_window());
 }
 
+auto Window::window_size() const -> WindowSize
+{
+    return {0, 0};
+}
+
+auto Window::frame_buffer_size() const -> FrameBufferSize
+{
+    return {0, 0};
+}
+
+auto Window::window_content_scale() const -> WindowContentScale
+{
+    return {0.0f, 0.0f};
+}
+
 auto Window::keyboard_input(const keyboard_callback_t& callback) -> void
 {
     window_->keyboard_input(callback);
 }
+
+auto Window::window_size(const window_size_callback_t& /*callback*/) -> void {}
+
+auto Window::frame_buffer_size(const frame_buffer_size_callback_t& /*callback*/) -> void {}
+
+auto Window::window_content_scale(const window_content_scale_callback_t& /*callback*/) -> void {}
 
 auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 {

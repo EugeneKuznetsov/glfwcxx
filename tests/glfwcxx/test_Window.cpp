@@ -630,3 +630,60 @@ TEST_P(glfwcxx_window_keyboard_input, should_successfully_invoke_callback)
 
 INSTANTIATE_TEST_SUITE_P(keys_actions, glfwcxx_window_keyboard_input, should_successfully_invoke_callback_key_action_params);
 INSTANTIATE_TEST_SUITE_P(keys_modifiers, glfwcxx_window_keyboard_input, should_successfully_invoke_callback_key_modifier_params);
+
+TEST_F(glfwcxx_window, returns_window_size_when_requested)
+{
+    const auto expected_window_size = glfwcxx::WindowSize{1, 2};
+    auto window = glfwcxx::Window::create_window({800, 600}, "");
+    EXPECT_EQ(window->window_size(), expected_window_size);
+}
+
+TEST_F(glfwcxx_window, notifies_window_size_when_it_is_updated)
+{
+    const auto expected_window_size = glfwcxx::WindowSize{3, 4};
+    auto window = glfwcxx::Window::create_window({800, 600}, "");
+    bool invoked = false;
+    window->window_size([&expected_window_size, &invoked](const auto& window_size) {
+        invoked = true;
+        EXPECT_EQ(window_size, expected_window_size);
+    });
+    EXPECT_TRUE(invoked);
+}
+
+TEST_F(glfwcxx_window, returns_frame_buffer_size_when_requested)
+{
+    const auto expected_frame_buffer_size = glfwcxx::FrameBufferSize{5, 6};
+    auto window = glfwcxx::Window::create_window({800, 600}, "");
+    EXPECT_EQ(window->frame_buffer_size(), expected_frame_buffer_size);
+}
+
+TEST_F(glfwcxx_window, notifies_frame_buffer_size_when_it_is_updated)
+{
+    const auto expected_frame_buffer_size = glfwcxx::FrameBufferSize{7, 8};
+    auto window = glfwcxx::Window::create_window({800, 600}, "");
+    bool invoked = false;
+    window->frame_buffer_size([&expected_frame_buffer_size, &invoked](const auto& frame_buffer_size) {
+        invoked = true;
+        EXPECT_EQ(frame_buffer_size, expected_frame_buffer_size);
+    });
+    EXPECT_TRUE(invoked);
+}
+
+TEST_F(glfwcxx_window, returns_window_content_scale_when_requested)
+{
+    const auto expected_window_content_scale = glfwcxx::WindowContentScale{9.0f, 10.0f};
+    auto window = glfwcxx::Window::create_window({800, 600}, "");
+    EXPECT_EQ(window->window_content_scale(), expected_window_content_scale);
+}
+
+TEST_F(glfwcxx_window, notifies_window_content_scale_when_it_is_updated)
+{
+    const auto expected_window_content_scale = glfwcxx::WindowContentScale{11.0f, 12.0f};
+    auto window = glfwcxx::Window::create_window({800, 600}, "");
+    bool invoked = false;
+    window->window_content_scale([&expected_window_content_scale, &invoked](const auto& window_content_scale) {
+        invoked = true;
+        EXPECT_EQ(window_content_scale, expected_window_content_scale);
+    });
+    EXPECT_TRUE(invoked);
+}
