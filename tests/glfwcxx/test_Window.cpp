@@ -594,7 +594,7 @@ TEST_F(glfwcxx_window, should_close_returns_true_when_requested_to_close_window)
 {
     auto window = glfwcxx::Window::create_window({800, 600}, "");
     EXPECT_FALSE(window->should_close());
-    glfwcxx::WindowStub::close_window();
+    window->close();
     EXPECT_TRUE(window->should_close());
 }
 

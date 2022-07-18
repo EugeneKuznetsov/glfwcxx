@@ -226,6 +226,7 @@ extern auto glfwWindowHintString(int hint, const char* value) -> void;
 extern auto glfwPollEvents() -> void;
 extern auto glfwSwapBuffers(GLFWwindow* window) -> void;
 extern auto glfwWindowShouldClose(GLFWwindow* window) -> int;
+extern auto glfwSetWindowShouldClose(GLFWwindow* window, int value) -> void;
 extern auto glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun callback) -> GLFWkeyfun;
 extern auto glfwSetWindowUserPointer(GLFWwindow* window, void* pointer) -> void;
 extern auto glfwGetWindowUserPointer(GLFWwindow* window) -> void*;

@@ -2,6 +2,8 @@
 
 #include "glfwcxx/CommonStub.hpp"
 
+static constexpr int GLFW_FALSE = 0;
+
 struct GLFWmonitor {};
 
 struct GLFWwindow {};
@@ -49,6 +51,11 @@ auto glfwSwapBuffers(GLFWwindow* /*window*/) -> void
 auto glfwWindowShouldClose(GLFWwindow* /*window*/) -> int
 {
     return glfwcxx::WindowStub::close_window_ ? 1 : 0;
+}
+
+auto glfwSetWindowShouldClose(GLFWwindow* /*window*/, int value) -> void
+{
+    glfwcxx::WindowStub::close_window_ = GLFW_FALSE != value;
 }
 
 auto glfwSetKeyCallback(GLFWwindow* /*window*/, GLFWkeyfun callback) -> GLFWkeyfun

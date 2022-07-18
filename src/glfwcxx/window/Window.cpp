@@ -78,9 +78,14 @@ auto Window::swap_buffers() -> void
     glfwSwapBuffers(window_->glfw_window());
 }
 
+auto Window::close() -> void
+{
+    glfwSetWindowShouldClose(window_->glfw_window(), GLFW_TRUE);
+}
+
 auto Window::should_close() const -> bool
 {
-    return 0 != glfwWindowShouldClose(window_->glfw_window());
+    return GLFW_FALSE != glfwWindowShouldClose(window_->glfw_window());
 }
 
 auto Window::keyboard_input(const keyboard_callback_t& callback) -> void
