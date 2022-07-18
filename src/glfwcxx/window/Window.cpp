@@ -78,6 +78,8 @@ auto Window::swap_buffers() -> void
     glfwSwapBuffers(window_->glfw_window());
 }
 
+auto Window::close() -> void {}
+
 auto Window::should_close() const -> bool
 {
     return 0 != glfwWindowShouldClose(window_->glfw_window());

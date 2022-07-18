@@ -35,6 +35,7 @@ public:
     auto make_context_current() -> void;
     auto poll_events() -> void;
     auto swap_buffers() -> void;
+    auto close() -> void;
 
 public:
     auto should_close() const -> bool;
