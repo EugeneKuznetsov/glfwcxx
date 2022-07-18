@@ -211,6 +211,9 @@ struct GLFWmonitor;
 struct GLFWwindow;
 
 using GLFWkeyfun = void (*)(GLFWwindow* window, int key, int scancode, int action, int mods);
+using GLFWwindowsizefun = void (*)(GLFWwindow* window, int width, int height);
+using GLFWframebuffersizefun = void (*)(GLFWwindow* window, int width, int height);
+using GLFWwindowcontentscalefun = void (*)(GLFWwindow* window, float xscale, float yscale);
 
 extern auto glfwGetError(const char** description) -> int;
 
@@ -230,3 +233,9 @@ extern auto glfwSetWindowShouldClose(GLFWwindow* window, int value) -> void;
 extern auto glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun callback) -> GLFWkeyfun;
 extern auto glfwSetWindowUserPointer(GLFWwindow* window, void* pointer) -> void;
 extern auto glfwGetWindowUserPointer(GLFWwindow* window) -> void*;
+extern auto glfwGetWindowSize(GLFWwindow* window, int* width, int* height) -> void;
+extern auto glfwGetFramebufferSize(GLFWwindow* window, int* width, int* height) -> void;
+extern auto glfwGetWindowContentScale(GLFWwindow* window, float* xscale, float* yscale) -> void;
+extern auto glfwSetWindowSizeCallback(GLFWwindow* window, GLFWwindowsizefun callback) -> GLFWwindowsizefun;
+extern auto glfwSetFramebufferSizeCallback(GLFWwindow* window, GLFWframebuffersizefun callback) -> GLFWframebuffersizefun;
+extern auto glfwSetWindowContentScaleCallback(GLFWwindow* window, GLFWwindowcontentscalefun callback) -> GLFWwindowcontentscalefun;

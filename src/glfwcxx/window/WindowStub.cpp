@@ -61,7 +61,7 @@ auto glfwSetWindowShouldClose(GLFWwindow* /*window*/, int value) -> void
 auto glfwSetKeyCallback(GLFWwindow* /*window*/, GLFWkeyfun callback) -> GLFWkeyfun
 {
     glfwcxx::WindowStub::keyboard_callback_ = callback;
-    return glfwcxx::WindowStub::keyboard_callback_;
+    return callback;
 }
 
 auto glfwSetWindowUserPointer(GLFWwindow* /*window*/, void* pointer) -> void
@@ -72,6 +72,45 @@ auto glfwSetWindowUserPointer(GLFWwindow* /*window*/, void* pointer) -> void
 auto glfwGetWindowUserPointer(GLFWwindow* /*window*/) -> void*
 {
     return glfwcxx::WindowStub::window_user_pointer_;
+}
+
+auto glfwGetWindowSize(GLFWwindow* /*window*/, int* width, int* height) -> void
+{
+    const auto& size = glfwcxx::WindowStub::window_size_;
+    *width = size.width;
+    *height = size.height;
+}
+
+auto glfwGetFramebufferSize(GLFWwindow* /*window*/, int* width, int* height) -> void
+{
+    const auto& size = glfwcxx::WindowStub::frame_buffer_size_;
+    *width = size.width;
+    *height = size.height;
+}
+
+auto glfwGetWindowContentScale(GLFWwindow* /*window*/, float* xscale, float* yscale) -> void
+{
+    const auto& scale = glfwcxx::WindowStub::window_content_scale_;
+    *xscale = scale.xscale;
+    *yscale = scale.yscale;
+}
+
+auto glfwSetWindowSizeCallback(GLFWwindow* /*window*/, GLFWwindowsizefun callback) -> GLFWwindowsizefun
+{
+    glfwcxx::WindowStub::window_size_callback_ = callback;
+    return callback;
+}
+
+auto glfwSetFramebufferSizeCallback(GLFWwindow* /*window*/, GLFWframebuffersizefun callback) -> GLFWframebuffersizefun
+{
+    glfwcxx::WindowStub::frame_buffer_size_callback_ = callback;
+    return callback;
+}
+
+auto glfwSetWindowContentScaleCallback(GLFWwindow* /*window*/, GLFWwindowcontentscalefun callback) -> GLFWwindowcontentscalefun
+{
+    glfwcxx::WindowStub::window_content_scale_callback_ = callback;
+    return callback;
 }
 
 namespace glfwcxx {
@@ -91,7 +130,13 @@ std::size_t WindowStub::swap_buffers_call_count_ = 0;
 bool WindowStub::close_window_ = false;
 callback_function_t WindowStub::poll_events_callback_ = nullptr;
 GLFWkeyfun WindowStub::keyboard_callback_ = nullptr;
+GLFWwindowsizefun WindowStub::window_size_callback_ = nullptr;
+GLFWframebuffersizefun WindowStub::frame_buffer_size_callback_ = nullptr;
+GLFWwindowcontentscalefun WindowStub::window_content_scale_callback_ = nullptr;
 void* WindowStub::window_user_pointer_ = nullptr;
+WindowStub::WindowSize WindowStub::window_size_ = {0, 0};
+WindowStub::FrameBufferSize WindowStub::frame_buffer_size_ = {0, 0};
+WindowStub::WindowContentScale WindowStub::window_content_scale_ = {0.0f, 0.0f};
 
 auto WindowStub::reset() -> void
 {
@@ -110,7 +155,13 @@ auto WindowStub::reset() -> void
     close_window_ = false;
     poll_events_callback_ = nullptr;
     keyboard_callback_ = nullptr;
+    window_size_callback_ = nullptr;
+    frame_buffer_size_callback_ = nullptr;
+    window_content_scale_callback_ = nullptr;
     window_user_pointer_ = nullptr;
+    window_size_ = {0, 0};
+    frame_buffer_size_ = {0, 0};
+    window_content_scale_ = {0.0f, 0.0f};
     CommonStub::reset();
 }
 
@@ -139,6 +190,36 @@ auto WindowStub::keyboard_input(int key, int action, std::set<int> modifiers) ->
     for (const auto& modifier : modifiers)
         mods |= modifier;
     keyboard_callback_(last_created_window_, key, scancode, action, mods);
+}
+
+auto WindowStub::set_window_size(int width, int height) -> void
+{
+    window_size_ = {width, height};
+}
+
+auto WindowStub::set_frame_buffer_size(int width, int height) -> void
+{
+    frame_buffer_size_ = {width, height};
+}
+
+auto WindowStub::set_window_content_scale(float xscale, float yscale) -> void
+{
+    window_content_scale_ = {xscale, yscale};
+}
+
+auto WindowStub::notify_window_size() -> void
+{
+    window_size_callback_(last_created_window_, window_size_.width, window_size_.height);
+}
+
+auto WindowStub::notify_frame_buffer_size() -> void
+{
+    frame_buffer_size_callback_(last_created_window_, frame_buffer_size_.width, frame_buffer_size_.height);
+}
+
+auto WindowStub::notify_window_content_scale() -> void
+{
+    window_content_scale_callback_(last_created_window_, window_content_scale_.xscale, window_content_scale_.yscale);
 }
 
 auto WindowStub::created_window_with_arguments(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> bool
