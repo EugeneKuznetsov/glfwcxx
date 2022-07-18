@@ -651,6 +651,7 @@ TEST_F(glfwcxx_window, notifies_window_size_when_it_is_updated)
         invoked = true;
         EXPECT_EQ(window_size, expected_window_size);
     });
+    glfwcxx::WindowStub::notify_window_size();
     EXPECT_TRUE(invoked);
 }
 
@@ -674,6 +675,7 @@ TEST_F(glfwcxx_window, notifies_frame_buffer_size_when_it_is_updated)
         invoked = true;
         EXPECT_EQ(frame_buffer_size, expected_frame_buffer_size);
     });
+    glfwcxx::WindowStub::notify_frame_buffer_size();
     EXPECT_TRUE(invoked);
 }
 
@@ -697,5 +699,6 @@ TEST_F(glfwcxx_window, notifies_window_content_scale_when_it_is_updated)
         invoked = true;
         EXPECT_EQ(window_content_scale, expected_window_content_scale);
     });
+    glfwcxx::WindowStub::notify_window_content_scale();
     EXPECT_TRUE(invoked);
 }

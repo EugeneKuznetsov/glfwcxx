@@ -322,21 +322,30 @@ auto Window::WindowDetails::window_size(const window_size_callback_t& callback) 
 {
     window_size_notification_ = callback;
 
-    glfwSetWindowSizeCallback(glfw_window(), [](GLFWwindow* /*window*/, int /*width*/, int /*height*/) -> void {});
+    glfwSetWindowSizeCallback(glfw_window(), [](GLFWwindow* window, int width, int height) -> void {
+        auto self = static_cast<Window::WindowDetails*>(glfwGetWindowUserPointer(window));
+        self->window_size_notification_(glfwcxx::WindowSize{width, height});
+    });
 }
 
 auto Window::WindowDetails::frame_buffer_size(const frame_buffer_size_callback_t& callback) -> void
 {
     frame_buffer_size_notification_ = callback;
 
-    glfwSetFramebufferSizeCallback(glfw_window(), [](GLFWwindow* /*window*/, int /*width*/, int /*height*/) -> void {});
+    glfwSetFramebufferSizeCallback(glfw_window(), [](GLFWwindow* window, int width, int height) -> void {
+        auto self = static_cast<Window::WindowDetails*>(glfwGetWindowUserPointer(window));
+        self->frame_buffer_size_notification_(glfwcxx::FrameBufferSize{width, height});
+    });
 }
 
 auto Window::WindowDetails::window_content_scale(const window_content_scale_callback_t& callback) -> void
 {
     window_content_scale_notification_ = callback;
 
-    glfwSetWindowContentScaleCallback(glfw_window(), [](GLFWwindow* /*window*/, float /*xscale*/, float /*yscale*/) -> void {});
+    glfwSetWindowContentScaleCallback(glfw_window(), [](GLFWwindow* window, float xscale, float yscale) -> void {
+        auto self = static_cast<Window::WindowDetails*>(glfwGetWindowUserPointer(window));
+        self->window_content_scale_notification_(glfwcxx::WindowContentScale{xscale, yscale});
+    });
 }
 
 auto Window::WindowDetails::glfw_window() const -> GLFWwindow*
