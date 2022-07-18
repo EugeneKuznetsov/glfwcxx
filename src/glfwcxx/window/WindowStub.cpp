@@ -74,6 +74,27 @@ auto glfwGetWindowUserPointer(GLFWwindow* /*window*/) -> void*
     return glfwcxx::WindowStub::window_user_pointer_;
 }
 
+auto glfwGetWindowSize(GLFWwindow* /*window*/, int* /*width*/, int* /*height*/) -> void {}
+
+auto glfwGetFramebufferSize(GLFWwindow* /*window*/, int* /*width*/, int* /*height*/) -> void {}
+
+auto glfwGetWindowContentScale(GLFWwindow* /*window*/, float* /*xscale*/, float* /*yscale*/) -> void {}
+
+auto glfwSetWindowSizeCallback(GLFWwindow* /*window*/, GLFWwindowsizefun /*callback*/) -> GLFWwindowsizefun
+{
+    return nullptr;
+}
+
+auto glfwSetFramebufferSizeCallback(GLFWwindow* /*window*/, GLFWframebuffersizefun /*callback*/) -> GLFWframebuffersizefun
+{
+    return nullptr;
+}
+
+auto glfwSetWindowContentScaleCallback(GLFWwindow* /*window*/, GLFWwindowcontentscalefun /*callback*/) -> GLFWwindowcontentscalefun
+{
+    return nullptr;
+}
+
 namespace glfwcxx {
 
 GLFWwindow* WindowStub::last_created_window_ = (GLFWwindow*)1234;

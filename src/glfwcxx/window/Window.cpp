@@ -17,6 +17,9 @@ public:
 
 public:
     auto keyboard_input(const keyboard_callback_t& callback) -> void;
+    auto window_size(const window_size_callback_t& callback) -> void;
+    auto frame_buffer_size(const frame_buffer_size_callback_t& callback) -> void;
+    auto window_content_scale(const window_content_scale_callback_t& callback) -> void;
 
 public:
     auto glfw_window() const -> GLFWwindow*;
@@ -32,6 +35,9 @@ private:
 #endif
     std::unique_ptr<GLFWwindow, Deleter> glfw_window_;
     keyboard_callback_t keyboard_input_;
+    window_size_callback_t window_size_notification_;
+    frame_buffer_size_callback_t frame_buffer_size_notification_;
+    window_content_scale_callback_t window_content_scale_notification_;
 };
 
 const WindowHints Window::WindowDetails::default_window_hints_ = {};
@@ -90,17 +96,23 @@ auto Window::should_close() const -> bool
 
 auto Window::window_size() const -> WindowSize
 {
-    return {0, 0};
+    WindowSize size;
+    glfwGetWindowSize(window_->glfw_window(), &size.width, &size.height);
+    return size;
 }
 
 auto Window::frame_buffer_size() const -> FrameBufferSize
 {
-    return {0, 0};
+    FrameBufferSize size;
+    glfwGetFramebufferSize(window_->glfw_window(), &size.width, &size.height);
+    return size;
 }
 
 auto Window::window_content_scale() const -> WindowContentScale
 {
-    return {0.0f, 0.0f};
+    WindowContentScale scale;
+    glfwGetWindowContentScale(window_->glfw_window(), &scale.xscale, &scale.yscale);
+    return scale;
 }
 
 auto Window::keyboard_input(const keyboard_callback_t& callback) -> void
@@ -108,11 +120,20 @@ auto Window::keyboard_input(const keyboard_callback_t& callback) -> void
     window_->keyboard_input(callback);
 }
 
-auto Window::window_size(const window_size_callback_t& /*callback*/) -> void {}
+auto Window::window_size(const window_size_callback_t& callback) -> void
+{
+    window_->window_size(callback);
+}
 
-auto Window::frame_buffer_size(const frame_buffer_size_callback_t& /*callback*/) -> void {}
+auto Window::frame_buffer_size(const frame_buffer_size_callback_t& callback) -> void
+{
+    window_->frame_buffer_size(callback);
+}
 
-auto Window::window_content_scale(const window_content_scale_callback_t& /*callback*/) -> void {}
+auto Window::window_content_scale(const window_content_scale_callback_t& callback) -> void
+{
+    window_->window_content_scale(callback);
+}
 
 auto Window::setup_boolean_window_hints(const WindowHints& hints) -> void
 {
@@ -259,10 +280,14 @@ auto Window::setup_preset_window_hints(const WindowHints& hints) -> void
 Window::WindowDetails::WindowDetails(const WindowSize& size, const std::string& title)
     : glfw_window_{nullptr, glfwDestroyWindow}
     , keyboard_input_{nullptr}
+    , window_size_notification_{nullptr}
+    , frame_buffer_size_notification_{nullptr}
+    , window_content_scale_notification_{nullptr}
 {
     glfw_window_.reset(glfwCreateWindow(size.width, size.height, title.c_str(), nullptr, nullptr));
     if (nullptr == glfw_window_)
         throw std::runtime_error("Failed to create GLFW window: " + get_last_error().second);
+    glfwSetWindowUserPointer(glfw_window(), this);
 }
 
 Window::WindowDetails::~WindowDetails()
@@ -275,7 +300,6 @@ auto Window::WindowDetails::keyboard_input(const keyboard_callback_t& callback) 
 {
     keyboard_input_ = callback;
 
-    glfwSetWindowUserPointer(glfw_window(), this);
     glfwSetKeyCallback(glfw_window(), [](GLFWwindow* window, int key, int, int action, int mods) -> void {
         auto self = static_cast<Window::WindowDetails*>(glfwGetWindowUserPointer(window));
         using namespace glfwcxx::input;
@@ -292,6 +316,27 @@ auto Window::WindowDetails::keyboard_input(const keyboard_callback_t& callback) 
         insert_modifier_if(GLFW_MOD_NUM_LOCK, KeyboardKeyModifier::mod_num_lock);
         self->keyboard_input_(glfwcxx::helpers::glfwcxx_keyboard_key(key), glfwcxx::helpers::glfwcxx_keyboard_action(action), modifiers);
     });
+}
+
+auto Window::WindowDetails::window_size(const window_size_callback_t& callback) -> void
+{
+    window_size_notification_ = callback;
+
+    glfwSetWindowSizeCallback(glfw_window(), [](GLFWwindow* /*window*/, int /*width*/, int /*height*/) -> void {});
+}
+
+auto Window::WindowDetails::frame_buffer_size(const frame_buffer_size_callback_t& callback) -> void
+{
+    frame_buffer_size_notification_ = callback;
+
+    glfwSetFramebufferSizeCallback(glfw_window(), [](GLFWwindow* /*window*/, int /*width*/, int /*height*/) -> void {});
+}
+
+auto Window::WindowDetails::window_content_scale(const window_content_scale_callback_t& callback) -> void
+{
+    window_content_scale_notification_ = callback;
+
+    glfwSetWindowContentScaleCallback(glfw_window(), [](GLFWwindow* /*window*/, float /*xscale*/, float /*yscale*/) -> void {});
 }
 
 auto Window::WindowDetails::glfw_window() const -> GLFWwindow*
