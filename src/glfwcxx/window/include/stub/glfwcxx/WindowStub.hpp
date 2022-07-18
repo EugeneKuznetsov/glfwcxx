@@ -39,6 +39,21 @@ using window_hints_int_map_t = std::map<int, int>;
 using window_hints_str_map_t = std::map<int, std::string>;
 
 class WindowStub {
+    struct WindowSize {
+        int width;
+        int height;
+    };
+
+    struct FrameBufferSize {
+        int width;
+        int height;
+    };
+
+    struct WindowContentScale {
+        float xscale;
+        float yscale;
+    };
+
 public:
     static auto reset() -> void;
 
@@ -46,6 +61,12 @@ public:
     static auto make_context_current_failure() -> void;
     static auto close_window() -> void;
     static auto keyboard_input(int key, int action, std::set<int> modifiers) -> void;
+    static auto set_window_size(int width, int height) -> void;
+    static auto set_frame_buffer_size(int width, int height) -> void;
+    static auto set_window_content_scale(float xscale, float yscale) -> void;
+    static auto notify_window_size() -> void;
+    static auto notify_frame_buffer_size() -> void;
+    static auto notify_window_content_scale() -> void;
 
     static auto created_window_with_arguments(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> bool;
     static auto window_int_hint_applied_count() -> std::size_t;
@@ -74,7 +95,13 @@ private:
     static bool close_window_;
     static callback_function_t poll_events_callback_;
     static GLFWkeyfun keyboard_callback_;
+    static GLFWwindowsizefun window_size_callback_;
+    static GLFWframebuffersizefun frame_buffer_size_callback_;
+    static GLFWwindowcontentscalefun window_content_scale_callback_;
     static void* window_user_pointer_;
+    static WindowSize window_size_;
+    static FrameBufferSize frame_buffer_size_;
+    static WindowContentScale window_content_scale_;
 
     friend auto ::glfwCreateWindow(int width, int height, const char* title, GLFWmonitor* monitor, GLFWwindow* share) -> GLFWwindow*;
     friend auto ::glfwDestroyWindow(GLFWwindow* window) -> void;
