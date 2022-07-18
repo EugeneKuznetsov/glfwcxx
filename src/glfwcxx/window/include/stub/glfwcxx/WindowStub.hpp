@@ -18,6 +18,7 @@ extern auto glfwWindowHintString(int hint, const char* value) -> void;
 extern auto glfwPollEvents() -> void;
 extern auto glfwSwapBuffers(GLFWwindow* window) -> void;
 extern auto glfwWindowShouldClose(GLFWwindow* window) -> int;
+extern auto glfwSetWindowShouldClose(GLFWwindow* window, int value) -> void;
 extern auto glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun callback) -> GLFWkeyfun;
 extern auto glfwSetWindowUserPointer(GLFWwindow* window, void* pointer) -> void;
 extern auto glfwGetWindowUserPointer(GLFWwindow* window) -> void*;
@@ -74,6 +75,7 @@ private:
     friend auto ::glfwPollEvents() -> void;
     friend auto ::glfwSwapBuffers(GLFWwindow* window) -> void;
     friend auto ::glfwWindowShouldClose(GLFWwindow* window) -> int;
+    friend auto ::glfwSetWindowShouldClose(GLFWwindow* window, int value) -> void;
     friend auto ::glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun callback) -> GLFWkeyfun;
     friend auto ::glfwSetWindowUserPointer(GLFWwindow* window, void* pointer) -> void;
     friend auto ::glfwGetWindowUserPointer(GLFWwindow* window) -> void*;
